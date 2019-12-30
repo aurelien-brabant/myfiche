@@ -1,0 +1,15 @@
+{
+  "name": "myfiche",
+  "version": "1.0.0",
+  "description": "Community website where students can share knowledge",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Aurelle",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.0.1",
+    "express": "^4.17.1"
+  }
+}

@@ -1,0 +1,135 @@
+html {
+  height:100%;
+}
+
+body {
+  padding-top:100px;
+  font-family: 'Raleway';
+  background: #357DC1
+}
+
+/* Slides color : each slide has a different color, the first is of the color of the body. */
+
+#secondSlide {
+  background: #5c94c4;
+}
+
+#thirdSlide {
+  animation: 0.7s ease-out 0s 1 slideInFromLeft;
+  background: #2f6391;
+}
+
+#fourthSlide {
+  background: #7f77d4;
+  margin-bottom: 0; /* setting mb to 0 cause fourth slide is the last */
+}
+
+/* ===== LOGO ====== */
+
+#mainNavbar .navbar-brand {
+  color: white;
+  animation: 1.5s ease-out 0s 1 slideInFromLeft;
+}
+
+/* Little effect played when mouseovering the logo */
+#mainNavbar .navbar-brand:hover {
+    transition: 1s;
+    opacity:0.8;
+}
+
+/* ===== NAVBAR ===== */
+
+#mainNavbar {
+  background: #357DC1;
+  font-family: 'Patua One';
+}
+
+#mainNavbar .nav-link {
+  color:white;
+  font-size: 1.2rem;
+}
+
+#mainNavbar .nav-link:hover {
+  background-color: white;
+  color:#357DC1;
+  border-bottom: 2.5px solid rgba(255,255,255,0.2);
+  border-radius: 7px;
+  text-shadow: 0px 4px 3px rgba(255,255,255,0.4),
+				       0px 8px 13px rgba(255,255,255,0.1),
+				       0px 18px 23px rgba(255,255,255,0.1);
+  transition: all 0.4s;
+}
+
+/* This class is applied when scrolling - it is editing navbar's color */
+#mainNavbar.scrolled {
+  background: #357DE1;
+  transition: background 2s;
+}
+
+/* ===== Styling slides ===== */
+
+/* General aspect of a slide */
+.slide {
+  margin-bottom:70px;
+  color:white;
+}
+
+.slide h3 {
+  font-family: 'Patua One';
+  font-size: 2.5rem;
+  text-shadow: 0px 4px 3px rgba(0,0,0,0.4), 0px 8px 13px rgba(0,0,0,0.1), 0px 18px 23px rgba(0,0,0,0.1);
+}
+
+.slide p {
+  font-size: 1.5rem;
+}
+
+/* Style for font awesome components embeded into slides */
+.slides .fas {
+  font-size: 2.3rem;
+  text-shadow: 0px 4px 3px rgba(0,0,0,0.4),
+				 0px 8px 13px rgba(0,0,0,0.1),
+				 0px 18px 23px rgba(0,0,0,0.1);
+}
+
+/* Putting shadow on h3 for "white" slides */
+#secondSlide h3, #fourthSlide h3 {
+  text-shadow: 0px 4px 3px rgba(255,255,255,0.4),
+         0px 8px 13px rgba(255,255,255,0.1),
+         0px 18px 23px rgba(255,255,255,0.1);
+}
+
+/* other */
+#searchIcon {
+  border: 0px black solid;
+}
+
+
+/* Defining animations and using it */
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+#firstSlide, #thirdSlide {
+  animation: 0.7s ease-out 0s 1 slideInFromLeft;
+}
+
+#secondSlide, #fourthSlide {
+  animation: 0.7s ease-out 0s 1 slideInFromRight;
+  color:black;
+}
