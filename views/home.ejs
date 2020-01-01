@@ -1,68 +1,9 @@
-<!--  Myfiche homepage - design2-->
 
+<%- include("partials/header.ejs") %>
 
-<!doctype html>
-<html lang="en">
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- Presentation section -->
 
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css?family=Raleway|Patua+One&display=swap" rel="stylesheet">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-        crossorigin="anonymous">
-    <link rel="stylesheet" href="css/style.css">
-
-    <!-- FontAwesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="style.css">
-
-
-    <title>Accueil - Myfiche.fr</title>
-</head>
-
-<body>
-
-
-  <!-- Naviguation bar fixed to the top -->
-  <section>
-      <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNavbar">
-        <a class="navbar-brand px-5" href="#"><img src="img/logo.png" style="height:5rem;"></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarText">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#"><i class="fas fa-scroll mr-2"></i>Fiches<span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="quiz.html"><i class="fas fa-question-circle mr-2"></i>Quiz</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#"><i class="fas fa-palette mr-2"></i>Création</a>
-            </li>
-          </ul>
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#"><i class="fas fa-user mr-2"></i>Connexion<span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#"><i class="fas fa-user-plus mr-2"></i>Inscription</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
-  </section>
-
-  <!-- Presentation section -->
-
-<section class="slides">
+<section id="homeslides">
   <div class="container-fluid px-0 slide" id="firstSlide">
 
     <div class="row align-items-center m-0">
@@ -155,34 +96,4 @@
   </div>
 </section>
 
-
-
-
-
-
-
-
-
-
-
-
-</body>
-
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-    crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-    crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-    crossorigin="anonymous"></script>
-
-    <!-- Short script using jQuery, in order to edit navbar's bg on scroll -->
-    <script>
-        $(function () {
-            $(document).scroll(function () {
-                var $nav = $("#mainNavbar");
-                $nav.toggleClass("scrolled", $(this).scrollTop() > $nav.height());
-            });
-        });
-    </script>
+<%- include("partials/footer.ejs") %>

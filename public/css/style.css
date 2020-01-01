@@ -1,3 +1,9 @@
+/*=========================================================================================*/
+/*                                                                                         */
+/*                                  ~ GENERAL STUFF ~                                      */
+/*                                                                                         */
+/*=========================================================================================*/
+
 html {
   height:100%;
 }
@@ -8,23 +14,11 @@ body {
   background: #357DC1
 }
 
-/* Slides color : each slide has a different color, the first is of the color of the body. */
-
-#secondSlide {
-  background: #5c94c4;
-}
-
-#thirdSlide {
-  animation: 0.7s ease-out 0s 1 slideInFromLeft;
-  background: #2f6391;
-}
-
-#fourthSlide {
-  background: #7f77d4;
-  margin-bottom: 0; /* setting mb to 0 cause fourth slide is the last */
-}
-
-/* ===== LOGO ====== */
+/*=========================================================================================*/
+/*                                                                                         */
+/*                                      ~ NAVBAR ~                                         */
+/*                                                                                         */
+/*=========================================================================================*/
 
 #mainNavbar .navbar-brand {
   color: white;
@@ -37,9 +31,8 @@ body {
     opacity:0.8;
 }
 
-/* ===== NAVBAR ===== */
-
 #mainNavbar {
+  outline: none;
   background: #357DC1;
   font-family: 'Patua One';
 }
@@ -66,26 +59,52 @@ body {
   transition: background 2s;
 }
 
+/*=========================================================================================*/
+/*                                                                                         */
+/*                                      ~ HOMEPAGE ~                                       */
+/*     Note : to avoid any confusion, each style selector is applied for #homeslides       */
+/*            which is a section that contains all the homepage specific stuff             */
+/*=========================================================================================*/
+
+
+/* Slides color : each slide has a different color, the first is of the color of the body. */
+
+#secondSlide {
+  background: #5c94c4;
+}
+
+#thirdSlide {
+  animation: 0.7s ease-out 0s 1 slideInFromLeft;
+  background: #2f6391;
+}
+
+#fourthSlide {
+  background: #7f77d4;
+  margin-bottom: 0; /* setting mb to 0 cause fourth slide is the last */
+}
+
+
 /* ===== Styling slides ===== */
 
 /* General aspect of a slide */
-.slide {
+#homeslides .slide {
   margin-bottom:70px;
   color:white;
 }
 
-.slide h3 {
+
+#homeslides .slide h3 {
   font-family: 'Patua One';
   font-size: 2.5rem;
   text-shadow: 0px 4px 3px rgba(0,0,0,0.4), 0px 8px 13px rgba(0,0,0,0.1), 0px 18px 23px rgba(0,0,0,0.1);
 }
 
-.slide p {
+#homeslides .slide p {
   font-size: 1.5rem;
 }
 
 /* Style for font awesome components embeded into slides */
-.slides .fas {
+#homeslides .fas {
   font-size: 2.3rem;
   text-shadow: 0px 4px 3px rgba(0,0,0,0.4),
 				 0px 8px 13px rgba(0,0,0,0.1),
@@ -93,14 +112,14 @@ body {
 }
 
 /* Putting shadow on h3 for "white" slides */
-#secondSlide h3, #fourthSlide h3 {
+#homeslides #secondSlide h3, #fourthSlide h3 {
   text-shadow: 0px 4px 3px rgba(255,255,255,0.4),
          0px 8px 13px rgba(255,255,255,0.1),
          0px 18px 23px rgba(255,255,255,0.1);
 }
 
 /* other */
-#searchIcon {
+#homeslides #searchIcon {
   border: 0px black solid;
 }
 
@@ -125,11 +144,11 @@ body {
   }
 }
 
-#firstSlide, #thirdSlide {
+#homeslides #firstSlide, #thirdSlide {
   animation: 0.7s ease-out 0s 1 slideInFromLeft;
 }
 
-#secondSlide, #fourthSlide {
+#homeslides #secondSlide, #fourthSlide {
   animation: 0.7s ease-out 0s 1 slideInFromRight;
   color:black;
 }
