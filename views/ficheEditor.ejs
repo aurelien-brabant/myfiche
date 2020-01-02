@@ -8,7 +8,7 @@
   </div>
 
   <div class="container-fluid bg-white" id="ficheForm">
-    <form onsubmit="verifSubmit(event)">
+    <form action="/fiches/creer" method="POST" onsubmit="verifSubmit(event)">
       <div id="" class="text-center">
         <h2 class="p-3 border-bottom">Informations de base</h2>
         <p class="p-2"><u>Astuce</u> : vos titres doivent être percutants et bien choisis. La description est facultative mais peut constituer un bon moyen de donner envie aux utilisateurs de lire la fiche.</p>
@@ -17,13 +17,13 @@
         <div class="row justify-content-center">
           <div class="form-group d-flex align-items-center col-10 col-md-8 col-xl-6">
             <label for="ficheTitre" class="d-none d-md-flex"><i class="fas fa-asterisk mr-2"></i>Titre</label>
-            <input type="text" class="form-control" id="ficheTitre" placeholder="Titre de la fiche">
+            <input type="text" class="form-control" id="ficheTitre"name="ficheTitle" placeholder="Titre de la fiche">
           </div>
         </div>
         <div class="row justify-content-center">
           <div class="form-group d-flex align-items-center col-10 col-md-8 col-xl-6">
             <label for="ficheDescription" class="d-none d-md-flex">Description</label>
-            <textarea type="text" class="form-control" id="ficheDescription" placeholder="Courte description"></textarea>
+            <textarea type="text" class="form-control" id="ficheDescription" name="ficheDescription" placeholder="Courte description"></textarea>
           </div>
         </div>
       </div>
@@ -34,7 +34,7 @@
       </div>
       <div class="row justify-content-center">
         <div class="form-group d-flex align-items-center col-11">
-          <textarea type="text" class="form-control" id="ficheContent" placeholder="Le contenu de votre fiche"></textarea>
+          <textarea type="text" class="form-control" id="ficheContent" name="ficheContent" placeholder="Le contenu de votre fiche"></textarea>
         </div>
       </div>
 

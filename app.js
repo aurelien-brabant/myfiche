@@ -1,35 +1,58 @@
 var express = require("express"),
     app = express(),
+    mongoose = require("mongoose"),
+    bodyParser = require("body-parser"),
     rp = require("request-promise");
 
+/* connecting do database */
+mongoose.set('useUnifiedTopology', true);
+mongoose.connect('mongodb://localhost/myficheDB', {useNewUrlParser: true});
+
+/* app configuration */
 app.set("view engine", "ejs");
 app.use(express.static('public'));
+app.use(bodyParser.urlencoded({extended: true}));
+
+
+/* ROUTES */
 
 app.get("/", function(req, res){
 	res.render("home");
 });
 
 app.get("/fiches", function(req, res){
-
-  rp("https://myfiche.fr/api/service.php?apikey=myfiche_apikey&all=1")
-  .then((body) => {
-      var parsedData = JSON.parse(body);
-      var visibleArray = [];
-
-      parsedData.forEach(function(fiche){
-          if (fiche.locked == '0')
-          {
-            visibleArray.push(fiche);
-          }
-      })
-      console.log(visibleArray);
-      res.render("fiches", {fiches:visibleArray});
-  })
-  .catch((err) => {
-    console.log("An error occured while fetching!");
+  Fiche.find({}, function(err, fiches){
+    if (err){
+      console.log("Error attempting to find fiches in the database :" +err);
+    }
+    else {
+      res.render("fiches", {fiches : fiches});
+    }
   });
+});
 
+app.get("/fiches/creer", function(req, res){
+  res.render("ficheEditor")
+});
 
+var ficheSchema = new mongoose.Schema({
+    title: String,
+    description: String,
+    content: String
+})
+
+var Fiche = mongoose.model("Fiche", ficheSchema);
+
+app.post("/fiches/creer", function(req, res){
+  Fiche.create({title: req.body.ficheTitle, description: req.body.ficheDescription, content: req.body.ficheContent}, function(err, newFiche){
+    if (err)
+    {
+      console.log("Error : " +err);
+    }
+    else {
+      res.redirect("/fiches");
+    }
+  });
 });
 
 app.listen("3000", function(){
