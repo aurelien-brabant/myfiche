@@ -165,3 +165,69 @@ body {
 
 #fichesContainer .card {
 }
+
+/*=========================================================================================*/
+/*                                                                                         */
+/*                                      ~ FICHE EDITOR ~                                   */
+/*              Note : to avoid any confusion, each style selector is applied for          */
+/*  #ficheEditorContainer which is a section that contains all the fiches specific stuff   */
+/*=========================================================================================*/
+
+
+#ficheEditorContainer #ficheEditorHeader h1, #ficheEditorContainer #ficheEditorHeader h4 {
+  text-align: center;
+  text-transform: uppercase;
+  font-family: "Patua One", Arial;
+  letter-spacing: 1.1px;
+}
+
+#ficheEditorContainer #ficheEditorHeader h4 {
+  border-radius: 3px;
+}
+
+
+
+#ficheEditorContainer #ficheForm {
+  width: 80%;
+}
+
+#ficheEditorContainer #ficheBasicInfos {
+}
+
+#ficheEditorContainer #ficheBasicInfos .form-group {
+
+}
+
+
+
+
+#ficheEditorContainer .form-group label {
+  display:flex;
+  justify-content: left;
+  margin-bottom: 0;
+  width: 200px;
+}
+
+#ficheEditorContainer #ficheBasicInfos .form-group #ficheDescription {
+  max-height: 200px;
+  min-height:50px;
+}
+
+#ficheEditorContainer #ficheContent {
+  height: 300px;
+  min-height: 250px;
+  max-height: 750px;
+  margin-bottom: 10px;
+}
+
+@media (max-width:768px){
+  #ficheEditorContainer #ficheEditorHeader h1 {
+    font-size: 1.5rem;
+  }
+  #ficheEditorContainer #ficheEditorHeader h4 {
+    font-size: 1.2rem;
+  }
+  #ficheEditorContainer #ficheForm {
+    width: 100%;
+  }
+}

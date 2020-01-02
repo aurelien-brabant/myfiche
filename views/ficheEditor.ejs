@@ -1,0 +1,75 @@
+<%- include("partials/header") %>
+
+<div class="container-fluid p-0" id="ficheEditorContainer">
+  <div class="jumbotron text-center pb-1 d-flex flex-column align-items-center" id="ficheEditorHeader">
+    <h1><i class="fas fa-pencil-ruler mx-3 mx-lg-5"></i>éditeur de fiche<i class="fas fa-pencil-ruler mx-3 mx-lg-5"></i></h1>
+    <h4 class="badge-success col-3 col-md-2 col-xl-1">V. 1.0</h4>
+    <p class="mt-5"><i class="fas fa-exclamation-triangle mr-2 text-danger"></i>Avant de soumettre une fiche, assurez vous d'adhérer à la <a href="#">charte Myfiche</a></p>
+  </div>
+
+  <div class="container-fluid bg-white" id="ficheForm">
+    <form onsubmit="verifSubmit(event)">
+      <div id="" class="text-center">
+        <h2 class="p-3 border-bottom">Informations de base</h2>
+        <p class="p-2"><u>Astuce</u> : vos titres doivent être percutants et bien choisis. La description est facultative mais peut constituer un bon moyen de donner envie aux utilisateurs de lire la fiche.</p>
+      </div>
+      <div class="container p-3" id="ficheBasicInfos">
+        <div class="row justify-content-center">
+          <div class="form-group d-flex align-items-center col-10 col-md-8 col-xl-6">
+            <label for="ficheTitre" class="d-none d-md-flex"><i class="fas fa-asterisk mr-2"></i>Titre</label>
+            <input type="text" class="form-control" id="ficheTitre" placeholder="Titre de la fiche">
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="form-group d-flex align-items-center col-10 col-md-8 col-xl-6">
+            <label for="ficheDescription" class="d-none d-md-flex">Description</label>
+            <textarea type="text" class="form-control" id="ficheDescription" placeholder="Courte description"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div id="" class="text-center">
+        <h2 class="p-3 border-bottom"><i class="fas fa-asterisk"></i> Contenu</h2>
+        <p class="p-2">Étirez le champ pour lui donner la taille que vous désirez.</p>
+      </div>
+      <div class="row justify-content-center">
+        <div class="form-group d-flex align-items-center col-11">
+          <textarea type="text" class="form-control" id="ficheContent" placeholder="Le contenu de votre fiche"></textarea>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-center align-items-center pb-5">
+        <div class="form-group form-check mb-0 mx-3">
+            <input type="checkbox" class="form-check-input" id="agreeChart">
+            <label class="form-check-label d-flex flex-column" for="exampleCheck1">J'ai lu et adhéré à la <a href="#">charte Myfiche</a></label>
+          </div>
+          <button type="submit" class="btn btn-success mx-3">Envoyer</button>
+
+            <!-- Submit modal - will display errors if there are -->
+            <div class="modal fade" tabindex="-1" role="dialog" id="verifModal">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title text-center text-white" id="modalTitle">Erreur(s) lors de l'envoi de la fiche</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <span id="modalErrors">Template</span>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="submitButton">Fermer</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<%- include("partials/footer") %>
+<script type="text/javascript" src="/js/ficheCreate.js"></script>
