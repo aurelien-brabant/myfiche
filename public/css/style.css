@@ -32,7 +32,6 @@ body {
 }
 
 #mainNavbar {
-  outline: none;
   background: #357DC1;
   font-family: 'Patua One';
 }
@@ -151,4 +150,18 @@ body {
 #homeslides #secondSlide, #fourthSlide {
   animation: 0.7s ease-out 0s 1 slideInFromRight;
   color:black;
+}
+
+/*=========================================================================================*/
+/*                                                                                         */
+/*                                      ~ FICHES ~                                         */
+/*    Note : to avoid any confusion, each style selector is applied for #fichesContainer   */
+/*            which is a section that contains all the fiches specific stuff               */
+/*=========================================================================================*/
+
+#fichesContainer .jumbotron {
+  width: 100%;
+}
+
+#fichesContainer .card {
 }
