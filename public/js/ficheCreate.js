@@ -9,7 +9,7 @@ var titleLengthIndicator = document.querySelector("#titleLengthIndicator");
 var contentCharCount = document.querySelector("#contentCharCount");
 
 title.addEventListener("keyup", function(){
-  if (title.value.length < 50 && title.value.length > 10)
+  if (title.value.length < 150 && title.value.length > 10)
   {
     titleLengthIndicator.classList.remove("fa-times", "bg-danger");
     titleLengthIndicator.classList.add("fa-check", "bg-success");
@@ -26,9 +26,9 @@ function verifSubmit(ev)
   var errors = [];
   var agreeToChart = document.querySelector("#agreeChart").checked;
 
-  if (title.value.length > 50 || title.value.length < 10)
+  if (title.value.length > 150 || title.value.length < 10)
   {
-    errors.push("Le titre doit comporter <em>entre 10 et 50</em> caractères. <br>( Actuellement : " +title.value.length+" )");
+    errors.push("Le titre doit comporter <em>entre 10 et 100</em> caractères. <br>( Actuellement : " +title.value.length+" )");
   }
 
   if (content.value.length < 300 || content.value.length > 25000) {

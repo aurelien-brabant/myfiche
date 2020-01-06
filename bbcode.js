@@ -12,7 +12,7 @@ module.exports =
     initializeBbcodeToHtml()
     {
       this.bbcodeBalises = [
-        /\[g\]([\s\S].+?)\[\/g\]/g,
+        /\[g\]([\s\S]+?)\[\/g\]/g,
         /\[i\]([\s\S]+?)\[\/i\]/g,
         /\[s\]([\s\S]+?)\[\/s\]/g,
         /\[gauche\]([\s\S]+?)\[\/gauche\]/g,

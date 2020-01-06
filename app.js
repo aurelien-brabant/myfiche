@@ -3,7 +3,8 @@ var express = require("express"),
     mongoose = require("mongoose"),
     bodyParser = require("body-parser"),
     rp = require("request-promise"),
-    bbcode = require("./bbcode");
+    bbcode = require("./bbcode"),
+    myficheFetcher = require("./fetchMyfiche")
 
 /* connecting do database */
 mongoose.set('useUnifiedTopology', true);
@@ -22,6 +23,29 @@ bbParser = new bbcode();
 app.get("/", function(req, res){
 	res.render("home");
 });
+
+app.get("/fetcholdmyfiche", function(req, res){
+  mf = new myficheFetcher();
+
+  mf.fetchAll(function(parsedData){
+    parsedData.forEach(function(fiche){
+      if (fiche.locked == 0)
+      {
+
+        Fiche.findOneAndUpdate({title: fiche.fiche_titre}, {title: fiche.fiche_titre, description: fiche.fiche_descr, content: fiche.contenu, image: "https://myfiche.fr/img_fiche/" +fiche.img}, {upsert: true}, function(err, newFiche){
+          if (err)
+          {
+            console.log("Error : " +err);
+          }
+          else {
+          }
+        });
+      }
+    })
+    res.redirect("/fiches");
+  });
+
+})
 
 
 
