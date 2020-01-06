@@ -1,0 +1,30 @@
+<%- include("partials/header") %>
+
+
+
+<div class="container-fluid d-flex flex-column align-items-center p-0" id="ficheContent">
+  <div class="card text-center mb-5 col-12 col-lg-9">
+  <div class="card-body d-flex justify-content-left justify-content-lg-center">
+    <div id="ficheInfos" class="border-right col-8 col-md-6">
+      <h3><i class="fas fa-quote-left mr-3"></i><%= fiche.title %><i class="fas fa-quote-right ml-3"></i></h3>
+      <h5>Par <i class="fas fa-user mr-2"></i>Anonymous</h5>
+    </div>
+    <div id="rating" class="col-4 col-md-3">
+      <h5>Recommandé à 98%</h5>
+      <button type="button" name="button" class="btn btn-success"><i class="far fa-heart"></i></button>
+      <button type="button" name="button" class="btn btn-danger"><i class="fas fa-thumbs-down"></i></button>
+    </div>
+  </div>
+  </div>
+
+  <div class="card col-12 col-lg-9">
+    <a href="/fiches/editer/<%= fiche._id %>" class="btn btn-warning">Editer</a>
+  <div class="card-body d-flex flex-column px-5 py-4">
+    <div class="text-justify">
+    <%- fiche.content %>
+    </div>
+  </div>
+</div>
+</div>
+
+<%- include("partials/footer") %>

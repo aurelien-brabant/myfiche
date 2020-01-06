@@ -3,7 +3,7 @@
 <div class="container-fluid px-0 d-flex flex-column align-items-center" id="fichesContainer">
   <div class="jumbotron text-center pb-1">
     <span><h1><i class="fas fa-scroll mx-3 mx-lg-5"></i>Fiches<i class="fas fa-scroll mx-3 mx-lg-5"></i></h1></span>
-    <h2>Toutes les fiches sur "Myfiche V3"</h5>
+    <h2>Toutes les fiches sur "Myfiche V3"</h2>
     <div class="active-cyan-4 d-flex justify-content-center w-100 my-3">
       <input class="form-control w-25" type="text" placeholder="Rechercher" aria-label="Search" id="searchInput">
     </div>
@@ -14,7 +14,7 @@
   <% fiches.forEach(function(fiche){ %>
   <div class="col-12 col-sm-6 col-lg-4 mt-5 col-xl-3 d-flex justify-content-center">
     <div class="card col-11 px-0" style="width: 18rem;" id="ficheCard">
-      <img src="" class="card-img-top" alt="...">
+      <img src="<%= fiche.image %>" class="card-img-top" alt="...">
       <div class="card-body text-center px-3 d-flex flex-column justify-content-center">
         <div class="row justify-content-center" id="fichesBadges">
           <span class="badge badge-info mr-1 py-2 px-3 mb-3"><i class="fas fa-exclamation"></i></span><span class="badge badge-warning mr-1 p-2 px-3 mb-3"><i class="fas fa-star"></i> -230%</span><span class="badge badge-danger mr-2 py-2 px-3 mb-3"><i class="fas fa-flag"></i></span>
@@ -22,7 +22,7 @@
         <h5 class="card-title"><%= fiche.title %></h5>
         <p>Par <em> Anonymous</em></p>
         <p class="card-text"><%= fiche.description %></p>
-        <a href="#" class="btn btn-primary px-5">Voir</a>
+        <a href="/fiches/contenu/<%= fiche._id %>" class="btn btn-primary px-5">Voir</a>
       </div>
     </div>
   </div>

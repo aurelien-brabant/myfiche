@@ -244,7 +244,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  border:1px rgba(0, 0, 0, 0.1) solid;
+  border:1px rgba(0, 0, 0, 0.5) solid;
   padding: 5px;
   transition: all 0.2s;
 }
@@ -266,12 +266,11 @@ body {
 #ficheEditorContainer #format-item-list .format-item
 {
   justify-content:center;
-  border: 1px black solid;
   padding: 7px 10px;
   width: 7%;
   height: 30px;
   transition: all 0.2s;
-    border:1px rgba(0, 0, 0, 0.5) solid;
+  border:1px rgba(0, 0, 0, 0.5) solid;
 }
 
 #ficheEditorContainer #format-item-list #selectColor i
@@ -284,4 +283,89 @@ body {
 {
   padding-top: 2px;
   background-color: #357DC1 ;
+}
+
+/*=========================================================================================*/
+/*                                                                                         */
+/*                                      ~ BBCODE ~                                         */
+/*                                                                                         */
+/*                                                                                         */
+/*=========================================================================================*/
+
+.bbcode.gauche {
+  text-align: left;
+}
+.bbcode.centre {
+  text-align: center;
+}
+.bbcode.droite {
+  text-align: right;
+}
+.bbcode.justifie {
+  text-decoration: justify;
+}
+
+.bbcode.rouge {
+  color: red;
+}
+.bbcode.vert {
+  color: green;
+  display: inline;
+}
+.bbcode.jaune {
+  color: yellow;
+}
+.bbcode.bleu {
+  color: blue;
+  display: inline;
+}
+.bbcode.noir {
+  color: black;
+}
+
+.bbcode.code {
+  border: 3px white solid;
+  background-color: #252626;
+  color: white;
+  width: 100%;
+  text-align: justify;
+  align-self: center;
+  font-family: "Roboto Mono", monospace;
+  line-height: 2;
+}
+.code.label {
+  display: flex;
+  background-color: orange;
+  text-decoration: underline;
+  font-size: 1.1rem;
+  text-align: center;
+}
+.code.header {
+  width: 65%;
+  height: 30px;
+}
+
+.code.language {
+  background-color: green;
+  width: 35%;
+  font-size: 0.9rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.code.content {
+  padding-left: 20px;
+  padding-bottom: 10px;
+}
+.bbcode.img {
+  max-width: 750px;
+  max height: 750px;
+  align-self: center;
+  border-radius: 4px;
+  transition: opacity 0.4s;
+}
+
+.bbcode.img:hover {
+  opacity: 0.9;
 }

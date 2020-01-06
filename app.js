@@ -14,7 +14,7 @@ app.set("view engine", "ejs");
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended: true}));
 
-
+bbParser = new bbcode();
 
 
 /* ROUTES */
@@ -31,28 +31,59 @@ app.get("/fiches", function(req, res){
       console.log("Error attempting to find fiches in the database :" +err);
     }
     else {
-      bbParser = new bbcode();
-      console.log(bbParser.htmlToBbcode("<strong>foo</strong> <u>and</u> <em>lol</em> <strong>bar</strong>"));
-      console.log(bbParser.BbcodeToHtml("[i]Ceci est italique[/i] [b]Ceci est gras[/b] [s]Ceci soulignaient[/s]"));
       res.render("fiches", {fiches : fiches});
     }
   });
 });
 
+app.get ("/fiches/contenu/:UID", function(req, res) {
+  var ficheID = req.params.UID;
+  Fiche.find({"_id" : ficheID}, function(err, fiches){
+    if (err){
+      console.log("ID not found :" +err);
+      res.send("Désolé, cette fiche n'existe pas.")
+    }
+    else if (fiches.length === 1)
+    {
+      fiches[0].content = fiches[0].content.replace( /(<([^>]+)>)/ig, '');
+      fiches[0].content = bbParser.BbcodeToHtml(fiches[0].content);
+      fiches[0].content = fiches[0].content.replace(/\n/g, "<br>");
+      res.render("ficheContent", {fiche: fiches[0]});
+    }
+    else {
+      res.send("Désolé, cette fiche n'existe pas.")
+    }
+  });
+});
+
 app.get("/fiches/creer", function(req, res){
-  res.render("ficheEditor")
+  res.render("ficheEditor", {action: "/fiches/creer", type: "Création d'une fiche"})
+});
+
+app.get("/fiches/editer/:UID", function(req, res){
+  var ficheID = req.params.UID;
+  Fiche.find({"_id" : ficheID}, function(err, fiches){
+    if (err){
+      console.log("ID not found :" +err);
+    }
+    else if (fiches.length === 1)
+    {
+      res.render("ficheEditor", {action: "/fiches/editer/" + ficheID, type: "Edition d'une fiche", fiche: fiches[0]})
+    }
+  });
 });
 
 var ficheSchema = new mongoose.Schema({
     title: String,
     description: String,
-    content: String
+    content: String,
+    image: String
 })
 
 var Fiche = mongoose.model("Fiche", ficheSchema);
 
 app.post("/fiches/creer", function(req, res){
-  Fiche.create({title: req.body.ficheTitle, description: req.body.ficheDescription, content: req.body.ficheContent}, function(err, newFiche){
+  Fiche.create({title: req.body.ficheTitle, description: req.body.ficheDescription, content: req.body.ficheContent, image: req.body.ficheImage}, function(err, newFiche){
     if (err)
     {
       console.log("Error : " +err);
@@ -61,6 +92,21 @@ app.post("/fiches/creer", function(req, res){
       res.redirect("/fiches");
     }
   });
+});
+
+app.post("/fiches/editer/:UID", function(req, res){
+  var ficheID = req.params.UID;
+
+  Fiche.findOneAndUpdate({_id: ficheID}, { title: req.body.ficheTitle, description: req.body.ficheDescription, content: req.body.ficheContent, image: req.body.ficheImage}, function(err, doc){
+    if (err) {
+      res.send("Error :" +error);
+    }
+    else {
+      res.redirect("/fiches/contenu/" +ficheID);
+    }
+  });
+
+
 });
 
 app.listen("3000", function(){

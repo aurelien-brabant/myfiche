@@ -3,28 +3,40 @@
 <div class="container-fluid p-0" id="ficheEditorContainer">
   <div class="jumbotron text-center pb-1 d-flex flex-column align-items-center" id="ficheEditorHeader">
     <h1><i class="fas fa-pencil-ruler mx-3 mx-lg-5"></i>éditeur de fiche<i class="fas fa-pencil-ruler mx-3 mx-lg-5"></i></h1>
+    <h3><%= type %></h3>
     <h4 class="badge-success col-3 col-md-2 col-xl-1">V. 1.0</h4>
     <p class="mt-5"><i class="fas fa-exclamation-triangle mr-2 text-danger"></i>Avant de soumettre une fiche, assurez vous d'adhérer à la <a href="#">charte Myfiche</a></p>
   </div>
 
   <div class="container-fluid bg-white" id="ficheForm">
-    <form action="/fiches/creer" method="POST" onsubmit="verifSubmit(event)">
+    <form action="<%= action %>" method="POST" onsubmit="verifSubmit(event)">
       <div id="" class="text-center">
         <h2 class="p-3 border-bottom">Informations de base</h2>
         <p class="p-2"><u>Astuce</u> : vos titres doivent être percutants et bien choisis. La description est facultative mais peut constituer un bon moyen de donner envie aux utilisateurs de lire la fiche.</p>
       </div>
       <div class="container p-3" id="ficheBasicInfos">
         <div class="row justify-content-center">
-          <div class="form-group d-flex align-items-center col-10 col-md-8 col-xl-6">
+          <div class="form-group d-flex align-items-center col-10">
             <label for="ficheTitre" class="d-none d-md-flex"><i class="fas fa-asterisk mr-2"></i>Titre</label>
-            <input type="text" class="form-control" id="ficheTitre"name="ficheTitle" placeholder="Titre de la fiche">
+            <input type="text" class="form-control" id="ficheTitre" name="ficheTitle" placeholder="Titre de la fiche" value="<% if (type == 'Edition d\'une fiche') { %><%= fiche.title %><% }; %>">
             <i class="ml-2 p-2 fas rounded" data-toggle="popover" title="Titre" data-content="Le titre doit comporter entre 10 et 50 caractères." id="titleLengthIndicator"></i>
           </div>
         </div>
         <div class="row justify-content-center">
-          <div class="form-group d-flex align-items-center col-10 col-md-8 col-xl-6">
+          <div class="form-group d-flex align-items-center col-10">
             <label for="ficheDescription" class="d-none d-md-flex">Description</label>
-            <textarea type="text" class="form-control" id="ficheDescription" name="ficheDescription" placeholder="Courte description"></textarea>
+            <textarea type="text" class="form-control" id="ficheDescription" name="ficheDescription" placeholder="Courte description"><% if (type == 'Edition d\'une fiche') { %><%= fiche.description %><% }; %></textarea>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="form-group d-flex align-items-center col-10">
+            <label for="ficheImage" class="d-none d-md-flex">URL de l'image</label>
+            <div class="input-group">
+            <div class="input-group-prepend">
+              <div class="input-group-text"><i class="far fa-image"></i></div>
+            </div>
+            <input type="text" class="form-control" id="ficheImage" name="ficheImage" placeholder="URL de l'image" value="<% if (type == 'Edition d\'une fiche') { %><%= fiche.image %><% }; %>">
+            </div>
           </div>
         </div>
       </div>
@@ -70,6 +82,12 @@
                 </div>
               </div>
             </div>
+            <div class="format-item d-flex" onclick="addBalises('#ficheContent', '[T]', '[/T]')">
+              T
+            </div>
+            <div class="format-item d-flex" onclick="addBalises('#ficheContent', '[A]', '[/A]')">
+              A/
+            </div>
             <div class="format-item d-flex" onclick="addBalises('#ficheContent', '[lien]', '[/lien]')">
               <i class="fas fa-link"></i>
             </div>
@@ -79,14 +97,18 @@
             <div class="format-item d-flex" onclick="addBalises('#ficheContent', '[code]', '[/code]')">
               <i class="fas fa-code"></i>
             </div>
-            <div class="format-item d-flex align-items-center" style="width: 15%" onclick="">
-              <i class="fas fa-eye mr-2"></i><span class="d-none d-xl-inline">Prévisualiser</span>
-            </div>
+
 
           </div>
           <div class="d-flex w-100">
-          <textarea type="text" class="form-control" id="ficheContent" name="ficheContent" placeholder="Le contenu de votre fiche"></textarea>
-          <div class="d-flex flex-column h-100 text-center" id="UI-items-section">
+          <textarea type="text" class="form-control" id="ficheContent" name="ficheContent" placeholder="Le contenu de votre fiche"><% if (type == 'Edition d\'une fiche') { %><%= fiche.content %><% }; %></textarea>
+          <div class="d-flex flex-column text-center justify-content-center" id="UI-items-section">
+            <div class="UI-items">
+              <p><i class="fas fa-arrow-up"></i></p>
+            </div>
+            <div class="UI-items">
+              <p><i class="fas fa-arrow-down"></i></p>
+            </div>
             <div class="UI-items bg-success" id="UI-plus-content">
               <p><i class="fas fa-plus"></i></p>
             </div>
@@ -95,10 +117,6 @@
             </div>
             <div class="UI-items bg-info" id="UI-reset-content">
               <p><i class="fas fa-undo-alt"></i></p>
-            </div>
-
-            <div class="UI-blankitem h-25" id="UI-reset-content">
-              <!--No item -->
             </div>
 
             <div class="UI-items bg-success" id="UI-save-content" style="opacity: 0.5">
