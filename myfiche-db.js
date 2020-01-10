@@ -18,6 +18,32 @@ module.exports =
     } 
   },
 
+  findUser: async function(method, value, callback) {
+    try {
+      let result = await User.find({[method]: value});
+      callback(result);
+    }
+    catch(err) {
+      console.log("MyficheDB - Cannot find " +value + " using " +method + " method.");
+    }
+
+  },
+
+  changeUserPrivilege: async function(email, privilege, callback){
+    try {
+      let user = await User.findOne({email: email});
+      user.privilege = privilege;
+
+      let savedUser = await user.save();
+      callback(savedUser);
+
+    }
+    catch(err) {
+
+    }
+  },
+
+
   findAllFiches : function(callback) {
     Fiche.find({}, function(err, fiches){
       if (err) {

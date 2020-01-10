@@ -7,8 +7,16 @@ var UserSchema = new mongoose.Schema({
   email: String,
   username: String,
   password: String,
-  status : String,
-  privilege: Number,
+
+  activated: {
+    type: Boolean,
+    default: true
+  },
+
+  privilege:  {
+    type: Number,
+    default: 0
+  },
 
   created:
   {

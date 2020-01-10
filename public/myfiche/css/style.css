@@ -380,7 +380,7 @@ body {
 
 /*=========================================================================================*/
 /*                                                                                         */
-/*                                      ~ ACCOUNT Sidebar ~                                */
+/*                                      ~ User Navbar ~                                    */
 /*                                                                                         */
 /*                                                                                         */
 /*=========================================================================================*/
@@ -413,6 +413,26 @@ body {
   font-size: 2.6rem;
 }
 
+
+#userTags .userTag {
+  padding: 5px 30px;
+  margin: 2px;
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+
+.vertical-nav .nav-item.link {
+  transition: all 0.15s;
+}
+.vertical-nav .nav-item.link:hover {
+  padding-left: 10px;
+  background-color: rgba(0, 0, 0, 0.05);
+  color: white;
+}
+
+.vertical-nav .nav-item a {
+  color: black; 
+}
 
 
 

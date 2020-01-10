@@ -5,11 +5,13 @@ let express         = require("express"),
     passport        = require('passport'),
     LocalStrategy   = require('passport-local').Strategy,
     myficheDB       = require("./myfiche-db"),
-    User            = require('./models/user')
+    User            = require('./models/user'),
+    seedDB          = require('./seed')
 
 
 let authRoutes = require('./routes/auth.js'),
-    fichesRoutes = require('./routes/fiches.js');
+    fichesRoutes = require('./routes/fiches.js'),
+    pannelRoutes = require('./routes/pannel.js')
 
 
 /* connecting do database */
@@ -44,8 +46,12 @@ app.use(function(req, res, next){
 
 // ROUTES 
 
-app.use(authRoutes)
+app.use(authRoutes);
 app.use("/fiches", fichesRoutes);
+app.use("/pannel", pannelRoutes);
+
+seedDB();
+
 
 
 
