@@ -10,8 +10,13 @@ html {
 
 body {
   padding-top:100px;
+  height: 100%;
   font-family: 'Raleway';
   background: #357DC1;
+  z-index: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 /*=========================================================================================*/
@@ -34,6 +39,7 @@ body {
 #mainNavbar {
   background: #357DC1;
   font-family: 'Patua One';
+  z-index: 1;
 }
 
 #mainNavbar .nav-link {
@@ -369,3 +375,116 @@ body {
 .bbcode.img:hover {
   opacity: 0.9;
 }
+
+
+
+/*=========================================================================================*/
+/*                                                                                         */
+/*                                      ~ ACCOUNT Sidebar ~                                */
+/*                                                                                         */
+/*                                                                                         */
+/*=========================================================================================*/
+
+
+
+.vertical-nav {
+  min-width: 20rem;
+  width: 20rem;
+  height: 100vh;
+  position:fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s;
+}
+
+.page-content {
+  width: calc(100% - 17rem);
+  margin-left: 17rem;
+  transition: all 0.4s;
+}
+
+#registerForm input {
+  font-size: 1.2rem;
+}
+
+.registerFormIcon {
+  font-size: 2.6rem;
+}
+
+
+
+
+/* for toggle behavior */
+
+#sidebar.active {
+  margin-left: -20rem;
+}
+
+#content.active {
+  width: 100%;
+  margin: 0;
+}
+
+
+@media (max-width: 992px) {
+  #sidebar {
+    width: 100%;
+  }
+  #sidebar.active {
+    width: 0%;
+  }
+  #content {
+    width: 100%;
+    margin: 0;
+  }
+/*  #content.active {
+    margin-left: 17rem;
+    width: calc(100% - 17rem);
+  }*/
+}
+
+#registerFormContainer {
+  height: 100%;
+}
+
+#registerForm .card-header, #loginForm .card-header {
+  text-transform: uppercase;
+  letter-spacing: 2.2px;
+  font-size: 1.8rem;
+  font-family: "Patua One";
+}
+
+#registerForm .card-header {
+  background-color: #7d2a9c;
+}
+
+#loginForm .card-header {
+  background-color: #ff9900;
+}
+
+
+#registerForm button {
+  color: purple;
+  border: 1.5px #7d2a9c solid;
+  transition: all 0.3s;
+}
+
+#registerForm button:hover {
+  background-color: #7d2a9c;
+  color: white;
+}
+
+#loginForm button {
+  color: #ff9900;
+  border: 1.5px #ff9900 solid;
+  transition: all 0.3s;
+}
+
+#loginForm button:hover {
+  background-color: #ff9900;
+  color: white;
+}
+
+

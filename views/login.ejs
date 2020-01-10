@@ -1,0 +1,53 @@
+               
+<%- include("partials/header.ejs") %>
+<!-- Material form login -->
+<div class="container-fluid d-flex flex-column align-items-center justify-content-center" id="registerFormContainer">
+    <div class="card col-12 col-md-5 px-0" id="loginForm">
+      <h5 class="card-header white-text text-center py-4">
+        <strong>Connexion</strong>
+      </h5>
+
+    <!--Card content-->
+    <div class="card-body px-lg-5 pt-0 d-flex flex-column justify-content-center">
+
+        <!-- Form -->
+        <form class="text-center" style="color: #757575;" action="/login" method="POST">
+
+          <!-- Email -->
+
+          <div class="md-form">
+            <i class="far fa-envelope registerFormIcon mr-1"></i> OU <i class="far fa-address-card ml-1 registerFormIcon"></i>
+            <input type="text" name="username" id="materialLoginFormEmail" class="form-control" placeholder="Adresse e-mail ou nom d'utilisateur">
+        </div>         
+
+        <!-- Password -->
+        <div class="md-form">
+            <i class="fas fa-key registerFormIcon"></i>
+            <input type="password" name="password" id="materialLoginFormPassword" class="form-control" placeholder="Mot de passe">
+        </div>
+
+        <div class="d-flex justify-content-around">
+        <div>
+          <!-- Forgot password -->
+          <a href="">Mot de passe oublié ?</a>
+        </div>
+  </div>
+
+  <!-- Sign in button -->
+  <button class="btn btn-outline btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Je me connecte !</button>
+
+  <!-- Register -->
+  <p>Pas de compte ?
+    <a href="">S'inscrire</a>
+</p>
+
+
+</form>
+<!-- Form -->
+
+</div>
+
+</div>
+</div>
+<!-- Material form login -->
+<%- include("partials/footer.ejs") %>

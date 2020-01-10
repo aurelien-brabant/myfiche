@@ -1,4 +1,4 @@
-<%- include("partials/header") %>
+<%- include("../partials/header") %>
 
 <div class="container-fluid p-0" id="ficheEditorContainer">
   <div class="jumbotron text-center pb-1 d-flex flex-column align-items-center" id="ficheEditorHeader">
@@ -18,14 +18,14 @@
         <div class="row justify-content-center">
           <div class="form-group d-flex align-items-center col-10">
             <label for="ficheTitre" class="d-none d-md-flex"><i class="fas fa-asterisk mr-2"></i>Titre</label>
-            <input type="text" class="form-control" id="ficheTitre" name="ficheTitle" placeholder="Titre de la fiche" value="<% if (type == 'Edition d\'une fiche') { %><%= fiche.title %><% }; %>">
+            <input type="text" class="form-control" id="ficheTitre" name="fiche[title]" placeholder="Titre de la fiche" value="<% if (type == 'Edition d\'une fiche') { %><%= fiche.title %><% }; %>">
             <i class="ml-2 p-2 fas rounded" data-toggle="popover" title="Titre" data-content="Le titre doit comporter entre 10 et 50 caractères." id="titleLengthIndicator"></i>
           </div>
         </div>
         <div class="row justify-content-center">
           <div class="form-group d-flex align-items-center col-10">
             <label for="ficheDescription" class="d-none d-md-flex">Description</label>
-            <textarea type="text" class="form-control" id="ficheDescription" name="ficheDescription" placeholder="Courte description"><% if (type == 'Edition d\'une fiche') { %><%= fiche.description %><% }; %></textarea>
+            <textarea type="text" class="form-control" id="ficheDescription" name="fiche[description]" placeholder="Courte description"><% if (type == 'Edition d\'une fiche') { %><%= fiche.description %><% }; %></textarea>
           </div>
         </div>
         <div class="row justify-content-center">
@@ -35,7 +35,7 @@
             <div class="input-group-prepend">
               <div class="input-group-text"><i class="far fa-image"></i></div>
             </div>
-            <input type="text" class="form-control" id="ficheImage" name="ficheImage" placeholder="URL de l'image" value="<% if (type == 'Edition d\'une fiche') { %><%= fiche.image %><% }; %>">
+            <input type="text" class="form-control" id="ficheImage" name="fiche[image]" placeholder="URL de l'image" value="<% if (type == 'Edition d\'une fiche') { %><%= fiche.image %><% }; %>">
             </div>
           </div>
         </div>
@@ -101,7 +101,7 @@
 
           </div>
           <div class="d-flex w-100">
-          <textarea type="text" class="form-control" id="ficheContent" name="ficheContent" placeholder="Le contenu de votre fiche"><% if (type == 'Edition d\'une fiche') { %><%= fiche.content %><% }; %></textarea>
+          <textarea type="text" class="form-control" id="ficheContent" name="fiche[content]" placeholder="Le contenu de votre fiche"><% if (type == 'Edition d\'une fiche') { %><%= fiche.content %><% }; %></textarea>
           <div class="d-flex flex-column text-center justify-content-center" id="UI-items-section">
             <div class="UI-items">
               <p><i class="fas fa-arrow-up"></i></p>
@@ -190,7 +190,7 @@
 </div>
 
 
-<%- include("partials/footer") %>
+<%- include("../partials/footer") %>
 <script type="text/javascript" src="/js/ficheCreate.js"></script>
 <script type="text/javascript" src="/js/bbcode.js"></script>
 <script type="text/javascript">

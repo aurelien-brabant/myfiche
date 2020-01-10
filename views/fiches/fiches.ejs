@@ -1,4 +1,4 @@
-<%- include("partials/header") %>
+<%- include("../partials/header") %>
 
 <div class="container-fluid px-0 d-flex flex-column align-items-center" id="fichesContainer">
   <div class="jumbotron text-center pb-1">
@@ -23,7 +23,7 @@
         <h5 class="card-title"><%= fiche.title %></h5>
         <p>Par <em> Anonymous</em></p>
         <p class="card-text"><%= fiche.description %></p>
-        <a href="/fiches/contenu/<%= fiche._id %>" class="btn btn-primary px-5">Voir</a>
+        <a href="/fiches/<%= fiche._id %>" class="btn btn-primary px-5">Voir</a>
       </div>
     </div>
   </div>
@@ -36,4 +36,4 @@
 </script>
 
 
-<%- include("partials/footer") %>
+<%- include("../partials/footer") %>

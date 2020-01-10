@@ -1,4 +1,4 @@
-<%- include("partials/header") %>
+<%- include("../partials/header") %>
 
 
 
@@ -18,7 +18,7 @@
   </div>
 
   <div class="card col-12 col-lg-9">
-    <a href="/fiches/editer/<%= fiche._id %>" class="btn btn-warning">Editer</a>
+    <a href="/fiches/<%= fiche._id %>/edit" class="btn btn-warning">Editer</a>
   <div class="card-body d-flex flex-column px-5 py-4">
     <div class="text-justify">
     <%- fiche.content %>
@@ -27,4 +27,4 @@
 </div>
 </div>
 
-<%- include("partials/footer") %>
+<%- include("../partials/footer") %>

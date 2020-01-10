@@ -1,0 +1,67 @@
+               
+<%- include("partials/header.ejs") %>
+<!-- Material form login -->
+<div class="container-fluid d-flex flex-column align-items-center justify-content-center p-0" id="registerFormContainer">
+    <div class="card col-12 col-md-5 px-0" id="registerForm">
+      <h5 class="card-header white-text text-center py-4">
+        <strong>Inscription</strong>
+      </h5>
+
+    <!--Card content-->
+    <div class="card-body px-lg-5 pt-0 d-flex flex-column justify-content-center">
+
+        <!-- Form -->
+        <form class="text-center" style="color: #757575;" action="/register" method="POST">
+
+          <!-- Email -->
+
+          <div class="md-form">
+            <i class="far fa-envelope registerFormIcon"></i>
+            <input type="email" name="email" id="materialLoginFormEmail" class="form-control" placeholder="Adresse e-mail">
+            <small id="passwordHelpBlock" class="form-text text-muted">
+                Votre adresse e-mail ne sera jamais visible : elle ne sert qu'à vous identifier.
+            </small>
+        </div>         
+
+        <!-- Username -->
+
+          <div class="md-form">
+            <i class="fa fa-address-card registerFormIcon"></i>
+            <input type="text" name="username" id="materialLoginFormUsername" class="form-control" placeholder="Pseudo">
+            <small class="form-text text-muted">
+                C'est le nom qui sera affiché pour toutes vos activités sur le site. Vous pouvez en changer en un clique.
+            </small>
+        </div>
+
+        <!-- Password -->
+        <div class="md-form">
+            <i class="fas fa-key registerFormIcon"></i>
+            <input type="password" name="password" id="materialLoginFormPassword" class="form-control" placeholder="Mot de passe">          
+            <input type="password" name="password-validation" id="materialLoginFormPassword" class="form-control d-none" placeholder="Confirmer le mot de passe">
+        </div>
+
+        <div class="d-flex justify-content-around">
+        <div>
+          <!-- Forgot password -->
+          <a href="">Mot de passe oublié ?</a>
+        </div>
+  </div>
+
+  <!-- Sign in button -->
+  <button class="btn btn-outline btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Je m'inscris !</button>
+
+  <!-- Register -->
+  <p>Déjà un compte ?
+    <a href="">Se connecter</a>
+</p>
+
+
+</form>
+<!-- Form -->
+
+</div>
+
+</div>
+</div>
+<!-- Material form login -->
+<%- include("partials/footer.ejs") %>
