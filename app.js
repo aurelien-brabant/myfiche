@@ -50,6 +50,7 @@ app.use(authRoutes);
 app.use("/fiches", fichesRoutes);
 app.use("/pannel", pannelRoutes);
 
+
 seedDB();
 
 

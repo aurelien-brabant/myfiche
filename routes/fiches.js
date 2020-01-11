@@ -88,6 +88,24 @@ router.post("/:id", function(req, res){
   });
 });
 
+router.get("/:id/toggleHide", async function(req, res){
+
+  let fiche = await myficheDB.fiche.toggleHide(req.params.id);
+
+  if (req.query.from === "myFiches")
+  {
+    return res.redirect('/pannel/myFiches'+"?action=toggleHide"+"&p="+fiche.visibility.hidden+"&p2="+fiche.title+"#"+fiche._id);
+  }
+
+  res.redirect('/pannel/admin/fiches'+"?action=toggleHide"+"&p="+fiche.visibility.hidden+"&p2="+fiche.title+"#"+fiche._id);
+})
+
+router.get('/:id/delete', async function(req, res){
+  let fiche = await myficheDB.fiche.delete(req.params.id)
+
+  res.redirect('/pannel/admin/fiches'+"?action=delete");
+});
+
 
 /* ============================================ */
 

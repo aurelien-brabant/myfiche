@@ -6,9 +6,16 @@ var ficheSchema = new mongoose.Schema({
   description: String,
   content: String,
 
-  image: String,
+  image: {
+    type: String,
+    default: 'https://cdn.2020prosoftware.com/installations/common/img/image-not-found.png'
+  },
 
-  author: String,
+  author: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    default: null
+  },
 
 
   created: {
@@ -22,19 +29,35 @@ var ficheSchema = new mongoose.Schema({
   },
 
   rating: {
-    up: Number,
-    down: Number
+    up: {
+      type: Number,
+      default: 0 
+    },
+    down: {
+      type: Number,
+      default: 0 
+    },
   },
 
-  /*
-    "hidden" and "locked" are doing the same thing, but not for the same reason. Locked is performed by an administrator
-    while hidden is user's choice relevant.
-  */
+  analytics: {
+    views: {
+      type: Number,
+      default: 0
+    }
+  },
 
   visibility: {
-    hidden: Boolean, /* can be considered as draft state */
-    locked: Boolean,
+    hidden: {
+      type: Boolean,
+      default: false
+    }, 
+    locked: {
+      type: Boolean,
+      default: false
+    }
   },
+
+
 
 })
 
