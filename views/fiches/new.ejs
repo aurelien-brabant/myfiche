@@ -1,0 +1,33 @@
+<%- include('../pannel/partials/header.ejs') %>
+
+            <div class="content d-flex flex-column justify-content-center h-100" style="background-image:url('/myfiche/img/home/creer.png')">
+                <div class="container-fluid">
+                    <div class="row h-100">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header ">
+                                </div>
+                                <div class="card-body text-center pb-5">
+                                    <h2>Créez votre nouvelle fiche.</h2>
+                                    <h5>Dites nous quel nom vous souhaitez lui donner, nous allons vous préparer l'éditeur.</h5>
+                                    <h5>Ne vous inquiétez pas, le titre n'est pas définitif.</h5>
+                                    <form class="py-2" action="/fiches" method="POST">
+                                        <div class="form-group">
+                                            <label>Titre</label>
+                                            <input type="text" class="form-control text-center" placeholder="Nom" value="Ma nouvelle fiche" name="ficheTitle">
+                                        </div>
+                                        <button type="submit" class="btn btn-success">Créer ma fiche !</button>
+                                    </form>
+                                    <small>En cliquant sur créer, votre fiche sera ajoutée à votre liste de fiches. Elle sera dans un premier temps invisible aux yeux des autres utilisateurs, jusqu'a ce que vous décidiez du contraire.</small>
+                                </div>
+    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+ <%- include('../pannel/partials/footer.ejs') %>
+

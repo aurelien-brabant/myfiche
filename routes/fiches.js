@@ -1,9 +1,13 @@
 let express	 = require('express'),
  	router 	 = express.Router({mergeParams: true}),
  	myficheDB = require('../myfiche-db'),
- 	Fiche = require('../models/fiche')
+ 	Fiche = require('../models/fiche'),
+  authMW = require('./authMiddlewares')
 
 
+router.get('/new', authMW.isLoggedIn, function(req, res){
+  res.render('fiches/new')
+});
 
 /* ============================================ */
 /*			       INDEX | SHOW                 */
@@ -19,7 +23,7 @@ router.get('/', function(req, res){
 // SHOW
 router.get ('/:id', function(req, res) {
   var ficheID = req.params.id;
-  Fiche.findById(ficheID, function(err, fiche){
+  Fiche.findById(ficheID).populate('author').exec(function(err, fiche){
     if (err){
       console.log('ID not found :' +err);
       res.send("Désolé, cette fiche n'existe pas.")
@@ -36,22 +40,26 @@ router.get ('/:id', function(req, res) {
 /*			       NEW | CREATE                 */
 /* ============================================ */
 
-// NEW
-router.get('/new', function(req, res){
-  res.render("fiches/ficheEditor", {action: "/fiches", type: "Création d'une fiche"})
-});
 
 
 // CREATE
-router.post('/', async function(req, res){
+router.post('/', authMW.isLoggedIn, async function(req, res){
 
-  const fiche = await myficheDB.createNewFiche({
-    title: req.body.fiche.title,
-    description: req.body.fiche.description,
-    content: req.body.fiche.content
+  const fiche = await myficheDB.fiche.createNew({
+
+    publishedContent: {
+      title: req.body.ficheTitle,
+      content: 'Ceci est le contenu par défaut de votre fiche. Il est temps pour vous de faire table rase et de montrer au monde vos talents de rédacteur :\')',
+    },
+
+    author: req.user._id,
+    visibility: {
+      hidden: true
+    }
+
   });
 
-  res.redirect('/fiches/' +fiche._id);
+  res.redirect('/pannel/editor?edit=' +fiche._id);
 
 });
 
@@ -75,17 +83,92 @@ router.get("/:id/edit", function(req, res){
 });
 
 //UPDATE
-router.post("/:id", function(req, res){
-  var ficheID = req.params.id;
+router.post("/:id", async function(req, res){
 
-  Fiche.findOneAndUpdate({_id: ficheID}, { title: req.body.ficheTitle, description: req.body.ficheDescription, content: req.body.ficheContent, image: req.body.ficheImage}, function(err, doc){
-    if (err) {
-      res.send("Error : " + error);
+  let ficheID = req.params.id;
+
+  let ficheData = req.body.fiche;
+  // Way of updating - currentSave, publish or saveAsDraft
+  let method = req.query.method;
+
+  try
+  {
+    let fiche = await Fiche.findById(ficheID);
+
+    if (method === 'currentSave')
+    {
+      fiche.currentSave = ficheData;
+      fiche.currentSave.last = Date.now();
     }
-    else {
-      res.redirect("/fiches/"+ficheID);
+
+    else if (method === 'publish')
+    {
+      fiche.publishedContent = ficheData;
     }
-  });
+
+    let savedFiche = fiche.save(); 
+
+    res.redirect('/fiches/' +ficheID)
+  }
+
+  catch(err)
+  {
+    console.log(err);
+  }
+
+
+
+
+
+
+  // Fiche.findById(ficheID, function(err, fiche){
+  //   if (err)
+  //   {
+  //     console.log(err);
+  //   }
+  //   else
+  //   {
+  //     fiche.currentSave = req.body.fiche;
+  //     fiche.save(function(err, savedFiche){
+  //       console.log(savedFiche);
+  //       res.redirect("/fiches/"+ficheID);
+  //     })
+  //   }
+
+  // });
+  
+
+  // SAVEASDRAFT
+
+  // else if (req.query.action === "saveAsDraft")
+  // {
+  //   Fiche.findById(ficheID, function(err, fiche){
+  //     if (err) {
+  //       console.log(err);
+  //     }
+  //     req.body.fiche.draft.number = fiche.drafts.length + 1;
+  //     fiche.drafts.push(req.body.fiche.draft);
+  //     fiche.save(function(err, savedFiche){
+  //       console.log(savedFiche);
+  //     })
+  //   })
+
+  //   return res.redirect("/fiches/"+ficheID);
+  // }
+
+  // else if (req.query.method === 'publish')
+  // {
+  //   Fiche.findOneAndUpdate({_id: ficheID}, req.body.fiche, function(err, doc){
+  //     if (err) {
+  //       res.send("Error : " + error);
+  //     }
+  //     else {
+  //       res.redirect("/fiches/"+ficheID);
+  //     }
+  //   });
+  // }
+
+
 });
 
 router.get("/:id/toggleHide", async function(req, res){

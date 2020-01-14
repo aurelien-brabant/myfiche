@@ -9,7 +9,7 @@ html {
 }
 
 body {
-  padding-top:100px;
+  padding-top:90px;
   height: 100%;
   font-family: 'Raleway';
   background: #357DC1;
@@ -169,127 +169,47 @@ body {
   width: 100%;
 }
 
-#fichesContainer .card {
+#ficheContentBody {
+  height: 100%;
+  background-image: url('/myfiche/img/home/fiches.png');
+  background-size: cover;
 }
 
-/*=========================================================================================*/
-/*                                                                                         */
-/*                                      ~ FICHE EDITOR ~                                   */
-/*              Note : to avoid any confusion, each style selector is applied for          */
-/*  #ficheEditorContainer which is a section that contains all the fiches specific stuff   */
-/*=========================================================================================*/
-
-
-#ficheEditorContainer #ficheEditorHeader h1, #ficheEditorContainer #ficheEditorHeader h4 {
-  text-align: center;
-  text-transform: uppercase;
-  font-family: "Patua One", Arial;
-  letter-spacing: 1.1px;
-}
-
-#ficheEditorContainer #ficheEditorHeader h4 {
-  border-radius: 3px;
+#plan {
+  background-color: rgba(0, 0, 0, 0.02);
 }
 
 
-
-#ficheEditorContainer #ficheForm {
-  width: 80%;
-}
-
-#ficheEditorContainer #ficheBasicInfos {
-}
-
-#ficheEditorContainer #ficheBasicInfos .form-group {
-
-}
-
-
-
-
-#ficheEditorContainer .form-group label {
-  display:flex;
-  justify-content: left;
-  margin-bottom: 0;
-  width: 200px;
-}
-
-#ficheEditorContainer #ficheBasicInfos .form-group #ficheDescription {
-  max-height: 200px;
-  min-height:50px;
-}
-
-#ficheEditorContainer #ficheContent {
-  height: 300px;
-  min-height: 300px;
-  max-height: 750px;
+.plan-item {
   margin-bottom: 10px;
-  resize:none;
-  border:1px rgba(0, 0, 0, 0.1) solid;
-  border-radius: 0px;
-}
-
-#ficheEditorContainer #ficheContent:focus {
-  box-shadow: none;
-}
-
-@media (max-width:768px){
-  #ficheEditorContainer #ficheEditorHeader h1 {
-    font-size: 1.5rem;
-  }
-  #ficheEditorContainer #ficheEditorHeader h4 {
-    font-size: 1.2rem;
-  }
-  #ficheEditorContainer #ficheForm {
-    width: 100%;
-  }
-}
-
-#ficheEditorContainer .UI-items {
-  width: 100%;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  border:1px rgba(0, 0, 0, 0.5) solid;
-  padding: 5px;
-  transition: all 0.2s;
+  flex-direction: column;
+  background-color: rgba(0, 0, 0, 0.021);
 }
 
-#ficheEditorContainer .UI-items p {
-  margin-bottom: 0;
+.plan-item a {
+  width: 100%;
+  color: black;
+  transition: all 0.3s;
+}
+
+.plan-item a:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+
+}
+
+.plan-item .plan-title {
+  font-size: 1.2rem;
+  font-family: 'Patua One';
+  text-transform: uppercase;
+}
+
+.plan-item .plan-subtitle {
+  font-size: 1rem;
+  padding-left: 20px;
 }
 
 
-#ficheEditorContainer .UI-items:hover {
-  opacity: 0.9;
-}
-
-#ficheEditorContainer #UI-items-section {
-  width: 10%;
-  max-width: 30px;
-}
-
-#ficheEditorContainer #format-item-list .format-item
-{
-  justify-content:center;
-  padding: 7px 10px;
-  width: 7%;
-  height: 30px;
-  transition: all 0.2s;
-  border:1px rgba(0, 0, 0, 0.5) solid;
-}
-
-#ficheEditorContainer #format-item-list #selectColor i
-{
-  margin-right: 5px;
-  font-size: 1.8rem;
-}
-
-#ficheEditorContainer #format-item-list .format-item:hover
-{
-  padding-top: 2px;
-  background-color: #357DC1 ;
-}
 
 /*=========================================================================================*/
 /*                                                                                         */

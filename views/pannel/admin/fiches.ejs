@@ -19,16 +19,17 @@
                     </div>
                     <div class="card-body text-center pb-5 d-flex flex-column flex-lg-row">
                         <div class="col-12 col-lg-4">
-                            <img src="<%= fiche.image %>" class="img-fluid" style="max-height: 300px">
+                            <img src="<%= fiche.publishedContent.image %>" class="img-fluid" style="max-height: 300px">
                         </div>
                         <div class="col-12 col-lg-5 text-left border">
                             <div class="d-flex flex-column py-2 justify-content-center align-items-center">
                                 <div class="col-12">
                                     <h3>Informations</h3>
-                                    <p>Titre : <%= fiche.title %></p>
+                                    <small>ID : <%= fiche._id %></small>
+                                    <p>Titre : <%= fiche.publishedContent.title %></p>
                                     <p>Auteur : <%=fiche.author.username%></p>
-                                    <p>Description : <%= fiche.description %></p>
-                                    <p>Contenu (aperçu) : <%= fiche.content.substring(0, 150) %>... <a href="">Voir plus</a></p>
+                                    <p>Description : <%= fiche.publishedContent.description %></p>
+                                    <p>Contenu (aperçu) : <%= fiche.publishedContent.content.substring(0, 150) %>... <a href="">Voir plus</a></p>
                                 </div>                                
                                 <div class="col-12 d-flex justify-content-center">
                                     <a class="btn btn-success mx-2">55 <i class="nc-icon nc-stre-up mx-1"></i></a>                      

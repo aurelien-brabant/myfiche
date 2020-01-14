@@ -2,14 +2,66 @@ var mongoose = require("mongoose");
 
 var ficheSchema = new mongoose.Schema({
 
-  title: String,
-  description: String,
-  content: String,
+  currentSave: {
 
-  image: {
-    type: String,
-    default: 'https://cdn.2020prosoftware.com/installations/common/img/image-not-found.png'
+    title: {
+      type: String,
+      default: ''
+    },   
+
+    description: {
+      type: String,
+      default: ''
+    },
+
+    content: {
+      type: String,
+      default: ''
+    },
+
+    image: {
+      type: String,
+      default: 'https://www.freeiconspng.com/uploads/no-image-icon-11.PNG'
+    },
+
+    last: {
+      type: Date,
+      default: Date.now()
+    },
+
   },
+
+  publishedContent: {
+    title: {
+      type: String,
+      default: ''
+    },   
+
+    description: {
+      type: String,
+      default: ''
+    },
+
+    content: {
+      type: String,
+      default: ''
+    },
+
+    image: {
+      type: String,
+      default: 'https://www.freeiconspng.com/uploads/no-image-icon-11.PNG'
+    }
+  },
+
+  drafts: [
+    {
+      title: String,
+      description: String,
+      content: String,
+      image: String,
+      number: Number
+    }
+  ],
 
   author: {
     type: mongoose.Schema.Types.ObjectId,

@@ -8,6 +8,8 @@ var mongoose = require("mongoose"),
 module.exports =
 {
 
+
+  //Everything about fiches
   fiche: {
 
     createNew: async function(ficheData)
@@ -15,13 +17,38 @@ module.exports =
 
       try {
         let fiche = await Fiche.create(ficheData);
-        return fiche;    
+
+        //Making first currentSave same as the original content
+
+        fiche.currentSave = {
+          title: fiche.publishedContent.title,
+          description: fiche.publishedContent.description,
+          content: fiche.publishedContent.content,
+          image: fiche.publishedContent.image
+        }
+
+        let savedFiche = await fiche.save();
+        return savedFiche;    
       } 
       catch(err) {
-        return err;
+        return null;
       } 
 
     },
+
+    find: async function(method, value, callback) {
+      try {
+        let result = await Fiche.find({[method]: value});
+        callback(result);
+        return result;
+      }
+      catch(err) {
+        console.log("MyficheDB - Cannot find " +value + " using " +method + " method.");
+      }
+
+    },
+
+
 
     toggleHide: async function(ficheID) 
     {
@@ -36,6 +63,7 @@ module.exports =
         return err;
       }
     },
+
 
     delete: async function(ficheID){
       try 

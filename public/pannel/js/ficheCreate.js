@@ -8,28 +8,36 @@ var modalTitle = document.querySelector("#modalTitle");
 var titleLengthIndicator = document.querySelector("#titleLengthIndicator");
 var contentCharCount = document.querySelector("#contentCharCount");
 
-title.addEventListener("keyup", function(){
-  if (title.value.length < 150 && title.value.length > 10)
+
+$('input').keydown(function(event){
+
+  if (event.which == 13) 
   {
-    titleLengthIndicator.classList.remove("fa-times", "bg-danger");
-    titleLengthIndicator.classList.add("fa-check", "bg-success");
-  }
-  else {
-    titleLengthIndicator.classList.add("fa-times", "bg-danger");
-    titleLengthIndicator.classList.remove("fa-check", "bg-success");
+    event.preventDefault();
   }
 })
 
 
-function verifSubmit(ev)
+
+
+function verifSubmit(method)
 {
+
+  if (method === 'no')
+  {
+    return editFiche('currentSave');
+  }
+
   var errors = [];
-  var agreeToChart = document.querySelector("#agreeChart").checked;
+
+  var agreeToChart = $('#agreeChart').prop('checked');
+
 
   if (title.value.length > 150 || title.value.length < 10)
   {
     errors.push("Le titre doit comporter <em>entre 10 et 100</em> caractères. <br>( Actuellement : " +title.value.length+" )");
   }
+
 
   if (content.value.length < 300 || content.value.length > 25000) {
     errors.push("Le contenu de la fiche doit comporter <em>entre 300 et 25000</em> caractères. <br>( Actuellement : " +content.value.length+" )")
@@ -40,9 +48,11 @@ function verifSubmit(ev)
     errors.push("Vous devez adhérer à la <a href=\"\">charte Myfiche</a> (cocher la case)");
   }
 
+
+
   if (errors.length != 0)
   {
-    ev.preventDefault();
+    
     var builtString = "";
     errors.forEach(function(err){
       builtString += err + "<br><br>";
@@ -57,7 +67,7 @@ function verifSubmit(ev)
   }
 
   else {
-
+    editFiche('publish');
   }
 
 }

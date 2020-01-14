@@ -1,7 +1,8 @@
 let express = require('express'),
 	router 	= express.Router({mergeParams: true}),
 	myficheDB = require('../myfiche-db'),
-	authMW = require('./authMiddlewares')
+	authMW = require('./authMiddlewares'),
+	Fiche = require('../models/fiche');
 
 
 router.get("/", authMW.isLoggedIn, function(req, res){
@@ -16,6 +17,22 @@ router.get('/myFiches', authMW.isLoggedIn, function(req, res){
 	myficheDB.findAllFiches(function(fiches){
 		res.render('pannel/myFiches', {fiches:fiches, action: passedAction, parameter1: parameter1, parameter2: parameter2});
 	});
+
+});
+
+router.get('/editor', authMW.isLoggedIn, function(req, res){
+	var edit = req.query.edit;
+	var _new = req.query.new;
+
+	if (edit) {
+		Fiche.findById(edit, function(err, fiche){
+			return res.render('pannel/editor', {action: '/fiches/'+fiche._id, fiche: fiche});
+		})	
+	}
+
+	if (_new) {
+		return res.render('pannel/editor', {action: '/fiches', fiche: undefined});
+	}
 
 });
 

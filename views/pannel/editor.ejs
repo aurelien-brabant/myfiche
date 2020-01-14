@@ -1,0 +1,429 @@
+<%- include("partials/header") %>
+
+
+
+<div class="container-fluid p-0" id="ficheEditorContainer">
+
+  <!-- HEADER -->
+
+  <div class="text-center py-1 d-flex flex-column align-items-center mb-0" id="ficheEditorHeader" style="background-image:url('/myfiche/img/home/creer.png');">
+
+    <h1 class="bg-white p-1 border rounded">
+      <i class="nc-icon nc-ruler-pencil mx-3" style="font-size: 3rem"></i>
+      éditeur de fiche
+      <i class="nc-icon nc-ruler-pencil mx-3" style="font-size: 3rem"></i>
+    </h1>
+
+    <%
+      if (fiche) {
+    %>
+    <h3 class="bg-white p-1 border rounded">
+      Edition de "<%= fiche.currentSave.title %>"
+    </h3>
+    <% } %>
+
+    <span class="badge-success col-3 col-md-2 col-xl-1">Version 1.0</span>
+
+    <p class="mt-3 bg-white p-1 border rounded">
+      <i class="fas fa-exclamation-triangle mr-2 text-danger"></i>
+      Avant de soumettre une fiche, assurez vous d'adhérer à la <a href="#">charte Myfiche</a>
+    </p>
+
+  </div>
+
+  <!-- END of HEADER -->
+
+  <!-- Form container -->
+  <div class="container-fluid" id="ficheForm">
+
+    <form action="" method="POST" onsubmit="verifSubmit(event)">
+
+      <div id="" class="text-center">
+
+        <h2 class="p-3 ">
+        Informations de base
+        </h2>
+
+      </div>
+
+      <!-- Basic Infos -->
+      <div class="container p-3" id="ficheBasicInfos">
+
+        <!-- Title -->
+
+        <div class="row justify-content-center">
+
+          <div class="form-group d-flex align-items-center col-10">
+
+            <label for="ficheTitre" class="d-none d-md-flex">
+              <i class="fas fa-asterisk mr-2"></i>
+              Titre
+            </label>
+
+            <div class="d-flex flex-column w-100">
+
+              <input type="text" class="form-control" id="ficheTitre" name="fiche[title]" placeholder="Titre de la fiche" value="<% if (fiche) {%><%=fiche.currentSave.title%><%}%>">
+              <small>Prévoyez un titre succint qui explique clairement de quoi traite la fiche. (10 à 100 caractères)</small>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Description -->
+
+        <div class="row justify-content-center">
+
+          <div class="form-group d-flex align-items-center col-10">
+
+            <label for="ficheDescription" class="d-none d-md-flex">
+            Description
+            </label>
+
+            <div class="d-flex flex-column w-100">
+
+              <textarea type="text" class="form-control" id="ficheDescription" name="fiche[description]" placeholder="Courte description"><% if (fiche) {%><%=fiche.currentSave.description%><%}%></textarea>
+              <small>Une phrase simple pour accrocher vos lecteurs.</small>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Image -->
+
+        <div class="row justify-content-center">
+
+          <div class="form-group d-flex align-items-center col-10">
+
+            <label for="ficheImage" class="d-none d-md-flex">
+            Lien de la couverture
+            </label>
+
+            <div class="d-flex flex-column w-100">
+
+              <input type="text" class="form-control" id="ficheImage" name="fiche[image]" placeholder="ex : https://ibb.co/DWzTSyk" value="<% if (fiche) {%><%=fiche.currentSave.image%><%}%>">
+              <small>L'image de couverture de votre fiche doit être hébergée en ligne. De nombreux services <u>gratuits</u> existent, tels que <a href="https://fr.imgbb.com/">imgbb</a> ou <a href="https://www.zupimages.net/">Zupimages</a>. Vous pouvez créer des couvertures facilement avec <a href="https://canva.com">Canva</a>.</small>
+
+            </div>
+
+            <img src="<%= fiche.currentSave.image %>" height="70" width="100" class="ml-2 border rounded">
+
+          </div>
+
+        </div>
+
+        <!-- END of Basic Infos -->
+
+      </div>
+
+      <!-- CONTENT -->
+
+
+      <div id="" class="text-center pb-3">
+
+        <h2 class="p-3 border-bottom">
+          <i class="fas fa-asterisk"></i> 
+          Contenu
+        </h2>
+
+      </div>
+
+
+      <!-- Content Wrapper including editor tools -->
+
+      <div class="row justify-content-center">
+
+        <!--  -->
+
+        <div class="form-group d-flex flex-column col-12 col-md-11">
+
+          <!-- Format item -->
+
+          <div class="d-flex justify-content-start w-100" id="format-item-list">
+
+            <div class="format-item d-flex" onclick="addBalises('#ficheContent', '[g]', '[/g]')">
+              <i class="fas fa-bold"></i>
+            </div>
+
+            <div class="format-item d-flex" onclick="addBalises('#ficheContent', '[i]', '[/i]')">
+              <i class="fas fa-italic"></i>
+            </div>
+
+            <div class="format-item d-flex" onclick="addBalises('#ficheContent', '[s]', '[/s]')">
+              <i class="fas fa-underline"></i>
+            </div>
+
+            <div class="format-item d-flex" onclick="addBalises('#ficheContent', '[gauche]', '[/gauche]')">
+              <i class="fas fa-align-left"></i>
+            </div>
+
+            <div class="format-item d-flex" onclick="addBalises('#ficheContent', '[centre]', '[/centre]')">
+              <i class="fas fa-align-center"></i>
+            </div>
+
+            <div class="format-item d-flex" onclick="addBalises('#ficheContent', '[droite]', '[/droite]')">
+              <i class="fas fa-align-right"></i>
+            </div>
+
+            <div class="format-item d-flex" onclick="addBalises('#ficheContent', '[justifie]', '[/justifie]')">
+              <i class="fas fa-align-justify"></i>
+            </div>
+
+            <div class="dropup" onclick="">
+
+              <div class="format-item d-flex w-100 " id="selectColorDropdowm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-palette"></i>
+              </div>
+
+              <!-- Color palette -->
+
+              <div class="dropdown-menu" aria-labelledby="selectColorDropdown">
+
+                <div class="d-flex justify-content-center" id="selectColor">
+
+                  <i class="fas fa-tint text-danger" onclick="addBalises('#ficheContent', '[rouge]', '[/rouge]')"></i>
+
+                  <i class="fas fa-tint text-success" onclick="addBalises('#ficheContent', '[vert]', '[/vert]')"></i>
+
+                  <i class="fas fa-tint text-warning" onclick="addBalises('#ficheContent', '[jaune]', '[/jaune]')"></i>
+
+                  <i class="fas fa-tint text-info" onclick="addBalises('#ficheContent', '[bleu]', '[/bleu]')"></i>
+
+                  <i class="fas fa-tint" onclick="addBalises('#ficheContent', '[noir]', '[/noir]')"></i>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="format-item d-flex" onclick="addBalises('#ficheContent', '[T]', '[/T]')">
+              T
+            </div>
+
+            <div class="format-item d-flex" onclick="addBalises('#ficheContent', '[A]', '[/A]')">
+              A/
+            </div>
+
+            <div class="format-item d-flex" onclick="addBalises('#ficheContent', '[lien]', '[/lien]')">
+              <i class="fas fa-link"></i>
+            </div>
+
+            <div class="format-item d-flex" onclick="addBalises('#ficheContent', '[img]', '[/img]')">
+              <i class="fas fa-image"></i>
+            </div>
+
+            <div class="format-item d-flex" onclick="addBalises('#ficheContent', '[code]', '[/code]')">
+              <i class="fas fa-code"></i>
+            </div>
+
+          </div>
+
+          <div class="d-flex w-100">
+
+            <textarea type="text" class="form-control" id="ficheContent" name="fiche[content]" placeholder="Le contenu de votre fiche"><% if (fiche) {%><%=fiche.currentSave.content%><%}%></textarea>
+
+            <!-- UI tools -->
+
+            <div class="d-flex flex-column text-center justify-content-center" id="UI-items-section">
+
+              <div class="UI-items">
+                <p>
+                  <i class="fas fa-arrow-up"></i><
+                </p>
+              </div>
+
+              <div class="UI-items">
+                <p>
+                  <i class="fas fa-arrow-down"></i>
+                </p>
+              </div>
+
+              <div class="UI-items bg-success" id="UI-plus-content">
+                <p>
+                  <i class="fas fa-plus"></i>
+                </p>
+              </div>
+
+              <div class="UI-items bg-danger" id="UI-minus-content">
+                <p>
+                  <i class="fas fa-minus"></i>
+                </p>
+              </div>
+
+              <div class="UI-items bg-info" id="UI-reset-content">
+                <p>
+                  <i class="fas fa-undo-alt"></i>
+                </p>
+              </div>
+
+              <div class="UI-items bg-success" id="UI-save-content" onclick="verifSubmit('no')">
+                <p>
+                  <i class="fas fa-save"></i>
+                </p>
+              </div>
+
+              <div class="UI-items bg-danger" id="UI-delete-content" style="opacity: 0.5">
+                <p>
+                  <i class="fas fa-trash"></i>
+                </p>
+              </div>
+
+            <!-- Delete confirmation modal -->
+            <div class="modal" tabindex="-1" role="dialog" id="confirmDelete">
+
+              <div class="modal-dialog" role="document">
+
+                <div class="modal-content">
+
+                  <div class="modal-header bg-danger">
+                    <h5 class="modal-title text-center text-white" id="confirmDelete">
+                    Confirmer la suppression
+                    </h5>
+                  </div>
+
+                  <div class="modal-body">
+                    <span id="confirmDeleteText">
+                    Vous vous apprêtez à effacer tout le contenu de votre fiche. C'est une opération irréversible. Êtes vous sûr(e) de vouloir procéder ?
+                    </span>
+                  </div>
+
+                  <div class="modal-footer">
+
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" id="confirmDeleteButton" onclick="deleteContent()">
+                    Oui, supprimer
+                    </button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal" id="cancelDeleteButton">
+                    Retour
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+
+
+            <!-- End of DELETE modal -->
+
+            </div>
+
+
+          <!-- End of UI tools -->
+          </div>
+
+
+        <!-- End of content textarea -->
+        </div>
+
+
+      </div>
+
+    </div>
+
+    <!-- END of content wrapper -->
+
+      <!-- Informations about wording -->
+
+      <div id="contentInfos" class="d-flex flex-column justify-content-center align-items-center mb-2">
+        <p> Caractères : <span id="contentCharCount"> 0</span> / 25000
+          <i class="fas fa-info-circle" data-toggle="popover" data-placement="top" data-trigger="hover" data-html="true" title="Contenu de la fiche" data-content="Le contenu d'une fiche doit faire entre 300 et 25000 caractères. <br> Une fiche idéale se situe dans cet intervalle : ni trop court, ni trop long."></i>
+        </p>
+      </div>
+
+      <!-- Options and submission -->
+
+      <div class="d-flex justify-content-center py-3">
+
+        <div class="d-flex flex-column justify-content-center pb-5">
+
+          <div class="form-check">
+            <label class="form-check-label mb-4">
+              <input class="form-check-input" type="checkbox" value="" checked>
+              <span class="form-check-sign"></span>
+              Fiche visible dès publication
+            </label>
+          </div>
+
+
+          <div class="form-check disabled">
+            <label class="form-check-label mb-4">
+              <input class="form-check-input" type="checkbox" value="" disabled checked>
+              <span class="form-check-sign"></span>
+              Demander automatiquement une vérification
+            </label>
+          </div>        
+
+          <div class="form-check">
+            <label class="form-check-label mb-4">
+              <input class="form-check-input" type="checkbox" value="" id="agreeChart">
+              <span class="form-check-sign"></span>
+              J'adhère à la <a href="#">charte myfiche</a> et confirme par là que cette fiche y est conforme
+            </label>
+          </div>
+
+          <!-- Form submission -->
+
+          <% if (fiche) { %>
+              <a onclick="verifSubmit()" class="btn btn-lg btn-warning mx-3 w-100">
+              Editer et rendre public
+              </a>
+          <% } else { %>
+
+          <button type="submit" class="btn btn-lg btn-success mx-3 w-100">Créer</button>
+
+          <% } %>
+
+          <button type="submit" class="btn btn-lg btn-secondary mx-3 w-100 mt-2">
+          Sauvegarder en tant que brouillon
+          </button>
+          <small class="px-4">En sauvegardant cette fiche en tant que brouillon, vous créez une version de cette fiche uniquement visible par vous, et que vous pouvez publier à tout moment en consultant votre liste de brouillons. Il est préférable de ne créer de brouillons que lorsque cela est nécessaire : chaque fiche possède une limite de 10 brouillons.</small>
+
+
+        </div>
+
+      </div>
+
+      <!-- End of options and submission -->
+
+    </form>
+
+    <!-- And of Form container -->
+  </div>
+
+
+          
+
+            <!-- Submit modal - will display errors if there are -->
+            <div class="modal fade" tabindex="-1" role="dialog" id="verifModal">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title text-center text-white" id="modalTitle">Erreur(s) lors de l'envoi de la fiche</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <span id="modalErrors">Template</span>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="submitButton">Fermer</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+
+<script type="text/javascript" src="../../pannel/js/editorAutoSave.js"></script>
+
+<%- include("partials/footer") %>
+<script type="text/javascript">
+  $(function () {
+  $('[data-toggle="popover"]').popover()
+})
+</script>
+

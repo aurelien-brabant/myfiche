@@ -1,12 +1,27 @@
 <%- include('partials/header.ejs') %>
 
 
-<div class="content">
-    <div class="container-fluid">
-        <div class="text-center my-3">
-            <h1 class="">Mes fiches</h1>
-            <a href="" class="btn btn-lg btn-success">Créer une fiche</a>
+<div class="content" style="background-image:url('/myfiche/img/home/fiches.png'); background-color: rgba(0, 100, 255, 0.7);">
+
+    <!-- General container -->
+    <div class="container-fluid d-flex flex-column align-items-center">
+
+        <!-- HEADER - Link to create a fiche -->
+
+        <div class="text-center my-3 bg-white w-75 p-3 border rounded">
+
+            <h1 class="">
+                <i class="nc-icon nc-paper-2 mx-1"></i>
+                Mes fiches
+                <i class="nc-icon nc-paper-2 mx-1"></i>
+            </h1>
+                <a href="/fiches/new" class="btn btn-lg btn-success">
+                Créer une fiche
+                </a>
+
         </div>
+
+        <!-- Fiche List -->
 
         <% fiches.forEach(function(fiche) {
 
@@ -15,41 +30,97 @@
          %>
 
         <div class="row">
+
+            <!-- Card taking all the width of the row -->
+
             <div class="col-md-12">
+
+                <!-- Fiche card -->
+
                 <div class="card" id="<%= fiche._id %>">
-                    <div class="card-header ">
-                    </div>
+
                     <div class="card-body text-center pb-5 d-flex flex-column flex-lg-row">
+
+                        <!-- Image -->
+
                         <div class="col-12 col-lg-4">
-                            <img src="<%= fiche.image %>" class="img-fluid" style="max-height: 300px">
+                            <img src="<%= fiche.publishedContent.image %>" class="img-fluid" style="max-height: 300px">
                         </div>
+
+                        <!-- Textual Content and stats -->
+
                         <div class="col-12 col-lg-5 text-left border">
+
                             <div class="d-flex flex-column py-2 justify-content-center align-items-center">
+
+                                <!-- Textual Content -->
+
                                 <div class="col-12">
-                                    <h3>Informations</h3>
-                                    <p>Titre : <%= fiche.title %></p>
-                                    <p>Description : <%= fiche.description %></p>
-                                    <p>Contenu (aperçu) : <%= fiche.content.substring(0, 150) %>... <a href="">Voir plus</a></p>
-                                </div>                                
+
+                                    <h3>
+                                    Informations
+                                    </h3>
+
+                                    <p>
+                                    Titre : <%= fiche.publishedContent.title %>
+                                    </p>
+
+                                    <p>
+                                    Description : <%= fiche.publishedContent.description %>
+                                    </p>
+
+                                    <p>Contenu (aperçu) : <%= fiche.publishedContent.content.substring(0, 150) %>... <a href="">Voir plus</a>
+                                    </p>
+
+                                </div>    
+
+                                <!-- Stats -->
+
                                 <div class="col-12 d-flex justify-content-center">
-                                    <a class="btn btn-success mx-2">55 <i class="nc-icon nc-stre-up mx-1"></i></a>                      
-                                    <a class="btn btn-danger mx-2">3 <i class="nc-icon nc-stre-down mx-1"></i></a>
 
-                                    <a class="btn btn-warning mx-2">95%<i class="nc-icon nc-bulb-63 mx-1"></i></a>    
+                                    <a class="btn btn-success mx-2">
+                                        <%= fiche.rating.up %> <i class="nc-icon nc-stre-up mx-1"></i>
+                                    </a>    
 
-                                    <a class="btn btn-info mx-2">1034<i class="nc-icon nc-tap-01 mx-1"></i></a>
+                                    <a class="btn btn-danger mx-2">
+                                        <%= fiche.rating.down %> <i class="nc-icon nc-stre-down mx-1"></i>
+                                    </a>
+
+                                    <a class="btn btn-warning mx-2">
+                                        <%= Math.round((fiche.rating.up / (fiche.rating.up + fiche.rating.down)) * 100) %>%<i class="nc-icon nc-bulb-63 mx-1"></i>
+                                    </a>     
+
+                                    <a class="btn btn-info mx-2">
+                                        1034<i class="nc-icon nc-tap-01 mx-1"></i>
+                                    </a>
+
                                 </div>
+
+                                <!-- See published version (if it exists) -->
                                 <div class="col-12">
-                                    <a class="btn btn-secondary mx-2 my-2 col-12">Voir la fiche <i class="nc-icon nc-stre-right mx-1"></i></a>
+
+                                    <a href=""class="btn btn-secondary mx-2 my-2 col-12">
+                                        Voir la fiche publique<i class="nc-icon nc-stre-right mx-1"></i>
+                                    </a>
+
                                 </div>
 
                             </div>
-                        </div>
-                        <div class="col-12 col-lg-3 d-flex flex-column">
-                            <h4>Options</h4>
 
+                        </div>
+
+                        <!-- End of textual and stats content -->
+
+                        <!-- Options -->
+
+                        <div class="col-12 col-lg-3 d-flex flex-column">
+
+                            <h4>
+                            Options
+                            </h4>
 
                             <div class="d-flex align-items-center justify-content-center my-2">
+
                                 <span class="mr-2">Visible :</span>
 
                                 <% 
@@ -69,103 +140,97 @@
                                 %>
 
 
-                                <a href="/fiches/<%=fiche._id%>/toggleHide?from=myFiches" class="btn <%=btnClasses%> mx-1"><i class="<%= iconClasses %> mx-1"></i></a>
+                                <a href="/fiches/<%=fiche._id%>/toggleHide?from=myFiches" class="btn <%=btnClasses%> mx-1">
+                                    <i class="<%= iconClasses %> mx-1"></i>
+                                </a>
+
                             </div> 
 
-                            <a href="" class="btn btn-warning my-1">Editer</a>
+                            <button data-toggle="modal" data-target="#editMod_<%=fiche._id%>" class="btn btn-warning my-1">
+                                Editer
+                            </button>
+
+                            <!-- Edit type modal -->
+                            <div class="modal fade" tabindex="-1" role="dialog" id="editMod_<%=fiche._id%>" data-backdrop="false">
+
+                              <div class="modal-dialog" role="document">
+
+                                <div class="modal-content">
+
+                                  <div class="modal-header">
+
+                                    <h5 class="modal-title">Choisissez votre type d'édition</h5>
+
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+
+                                  </div>
+
+                                  <!-- Modal content -->
+
+                                  <div class="modal-body">
+
+                                    <!-- Edit option 1 -->
+                                    <div class="border my-2 rounded bg-light">
+                                        <a href="/pannel/editor?edit=<%=fiche._id%>" class="text-dark">
+                                        <h4>Editer à partir de la dernière sauvegarde intelligente</h4>
+                                        <small>L'éditeur garde une trace de vos derniers changements même si vous n'avez rien publié.</small>
+                                        <h6 class="py-2">Dernière sauvegarde le <%=
+                                        fiche.currentSave.last.toLocaleDateString('fr-CA', { year: 'numeric', month: 'numeric', day: 'numeric', hour:'numeric', minute:'numeric'})%></h6>
+                                        </a>
+                                    </div>
+
+                                    <!-- Edit option2 - disabled -->
+
+                                    <div class="border my-2 rounded bg-light d-flex flex-column align-items-center" style="opacity:0.5">
+
+                                        <h4>Charger un brouillon spécifique</h4>
+                                        <span class="badge badge-danger w-50 h-25">Indisponible</span>
+                                        <small class="p-2">Naviguez parmi votre liste de brouillons, puis sélectionnez celui qui vous intéresse. Vous pourrez l'éditer et même le publier. </small>
+                                        <a href="/pannel/editor?edit=<%=fiche._id%>"></a>
+
+                                    </div>
+
+                                  </div>
+
+                                  <!-- End of modal content -->
+
+                                  <div class="modal-footer">
+
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Je ne souhaite pas éditer</button>
+
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <!-- End of Edit Modal -->
+
+                        <!-- End of options -->
                         </div>
+
+                    <!-- End of card body -->
                     </div>
+
+                <!-- End of card -->
                 </div>
+
             </div>
+
+        <!-- End of row -->
         </div>
 
         <% 
         }
         }); %>
 
-
+    <!-- End of general container -->
     </div>
+
+    <!-- End of content container -->
 </div>
 
-    <!--   -->
-    <!-- <div class="fixed-plugin">
-    <div class="dropdown show-dropdown">
-        <a href="#" data-toggle="dropdown">
-            <i class="fa fa-cog fa-2x"> </i>
-        </a>
-
-        <ul class="dropdown-menu">
-			<li class="header-title"> Sidebar Style</li>
-            <li class="adjustments-line">
-                <a href="javascript:void(0)" class="switch-trigger">
-                    <p>Background Image</p>
-                    <label class="switch">
-                        <input type="checkbox" data-toggle="switch" checked="" data-on-color="primary" data-off-color="primary"><span class="toggle"></span>
-                    </label>
-                    <div class="clearfix"></div>
-                </a>
-            </li>
-            <li class="adjustments-line">
-                <a href="javascript:void(0)" class="switch-trigger background-color">
-                    <p>Filters</p>
-                    <div class="pull-right">
-                        <span class="badge filter badge-black" data-color="black"></span>
-                        <span class="badge filter badge-azure" data-color="azure"></span>
-                        <span class="badge filter badge-green" data-color="green"></span>
-                        <span class="badge filter badge-orange" data-color="orange"></span>
-                        <span class="badge filter badge-red" data-color="red"></span>
-                        <span class="badge filter badge-purple active" data-color="purple"></span>
-                    </div>
-                    <div class="clearfix"></div>
-                </a>
-            </li>
-            <li class="header-title">Sidebar Images</li>
-
-            <li class="active">
-                <a class="img-holder switch-trigger" href="javascript:void(0)">
-                    <img src="../assets/img/sidebar-1.jpg" alt="" />
-                </a>
-            </li>
-            <li>
-                <a class="img-holder switch-trigger" href="javascript:void(0)">
-                    <img src="../assets/img/sidebar-3.jpg" alt="" />
-                </a>
-            </li>
-            <li>
-                <a class="img-holder switch-trigger" href="javascript:void(0)">
-                    <img src="..//assets/img/sidebar-4.jpg" alt="" />
-                </a>
-            </li>
-            <li>
-                <a class="img-holder switch-trigger" href="javascript:void(0)">
-                    <img src="../assets/img/sidebar-5.jpg" alt="" />
-                </a>
-            </li>
-
-            <li class="button-container">
-                <div class="">
-                    <a href="http://www.creative-tim.com/product/light-bootstrap-dashboard" target="_blank" class="btn btn-info btn-block btn-fill">Download, it's free!</a>
-                </div>
-            </li>
-
-            <li class="header-title pro-title text-center">Want more components?</li>
-
-            <li class="button-container">
-                <div class="">
-                    <a href="http://www.creative-tim.com/product/light-bootstrap-dashboard-pro" target="_blank" class="btn btn-warning btn-block btn-fill">Get The PRO Version!</a>
-                </div>
-            </li>
-
-            <li class="header-title" id="sharrreTitle">Thank you for sharing!</li>
-
-            <li class="button-container">
-				<button id="twitter" class="btn btn-social btn-outline btn-twitter btn-round sharrre"><i class="fa fa-twitter"></i> · 256</button>
-                <button id="facebook" class="btn btn-social btn-outline btn-facebook btn-round sharrre"><i class="fa fa-facebook-square"></i> · 426</button>
-            </li>
-        </ul>
-    </div>
-</div>
- -->
 
  <%- include('partials/footer.ejs') %>
 
