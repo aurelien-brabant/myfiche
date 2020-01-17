@@ -160,6 +160,72 @@ body {
 
 /*=========================================================================================*/
 /*                                                                                         */
+/*                                      ~ CATEGORIES ~                                     */
+/* Note : to avoid any confusion, each style selector is applied for #categoriesContainer  */
+/*            which is a section that contains all the fiches specific stuff               */
+/*=========================================================================================*/
+
+#categoriesBgImg {
+  background-image: url('/myfiche/img/home/main.png');
+  height:100%;
+}
+
+
+
+.category h4 {
+  font-family: 'Patua One';
+  letter-spacing: 1.7px;
+}
+
+.category {
+  background-color: white;
+  transition: all 0.3s;
+  display: flex;
+}
+
+.category:hover {
+  background-color:rgba(0,85,255,0.97);
+  color: white;
+}
+
+.category .categoryDropdownIcon {
+  background-color:white;
+  color: black;
+  font-size: 1.6rem;
+  transition: all 0.2s;
+}
+
+.category .categoryDropdownIcon.animated-to-down:hover {
+  padding-top: 15px;
+  color:blue;
+}
+
+.category .categoryDropdownIcon.animated-to-up:hover {
+  padding-bottom: 15px;
+  color:blue;
+}
+
+.best-rated {
+  display: none;
+}
+
+.best-rated-item {
+  transition: all 0.2s;
+}
+
+.best-rated-item:hover {
+  text-decoration: underline;
+  font-size: 1.05rem;
+}
+
+
+
+
+
+
+
+/*=========================================================================================*/
+/*                                                                                         */
 /*                                      ~ FICHES ~                                         */
 /*    Note : to avoid any confusion, each style selector is applied for #fichesContainer   */
 /*            which is a section that contains all the fiches specific stuff               */
@@ -171,8 +237,6 @@ body {
 
 #ficheContentBody {
   height: 100%;
-  background-image: url('/myfiche/img/home/fiches.png');
-  background-size: cover;
 }
 
 #plan {
@@ -207,6 +271,17 @@ body {
 .plan-item .plan-subtitle {
   font-size: 1rem;
   padding-left: 20px;
+}
+
+.comment-avatar {
+  background-image:url('/myfiche/img/home/main.png'); 
+  background-size: cover; 
+  height: 150px; 
+  border-radius: 50%;
+}
+
+#commentContent {
+  min-height: 100px;
 }
 
 

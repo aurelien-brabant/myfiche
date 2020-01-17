@@ -2,11 +2,19 @@ let express	 = require('express'),
  	router 	 = express.Router({mergeParams: true}),
  	myficheDB = require('../myfiche-db'),
  	Fiche = require('../models/fiche'),
-  authMW = require('./authMiddlewares')
+  authMW = require('./authMiddlewares'),
+  Category = require('../models/category')
 
 
-router.get('/new', authMW.isLoggedIn, function(req, res){
-  res.render('fiches/new')
+router.get('/new', authMW.isLoggedIn, async function(req, res){
+  try {
+    let categories = await Category.find({});
+    res.render('fiches/new', {categories: categories})
+  }
+  catch(err){
+    console.log(err);
+  }
+
 });
 
 /* ============================================ */
@@ -21,19 +29,25 @@ router.get('/', function(req, res){
 });
 
 // SHOW
-router.get ('/:id', function(req, res) {
+router.get ('/:id', async function(req, res) {
   var ficheID = req.params.id;
-  Fiche.findById(ficheID).populate('author').exec(function(err, fiche){
-    if (err){
-      console.log('ID not found :' +err);
-      res.send("Désolé, cette fiche n'existe pas.")
-    }
-    else
-    {
-      res.render('fiches/ficheContent', {fiche: fiche});
-    }
 
-  });
+  try {
+    let fiche = await Fiche.findById(ficheID).populate([
+      {path: 'author'},
+      {path: 'comments',
+      populate: {
+        path:'author'
+      }
+      }])
+    console.log(fiche)
+    res.render('fiches/ficheContent', {fiche: fiche})
+  }
+  catch(err) {
+    console.log(err)
+  }
+
+
 });
 
 /* ============================================ */
@@ -45,21 +59,42 @@ router.get ('/:id', function(req, res) {
 // CREATE
 router.post('/', authMW.isLoggedIn, async function(req, res){
 
-  const fiche = await myficheDB.fiche.createNew({
+  try
+  {
 
-    publishedContent: {
-      title: req.body.ficheTitle,
-      content: 'Ceci est le contenu par défaut de votre fiche. Il est temps pour vous de faire table rase et de montrer au monde vos talents de rédacteur :\')',
-    },
+    const fiche = await Fiche.create({
 
-    author: req.user._id,
-    visibility: {
-      hidden: true
-    }
+      publishedContent: {
+        title: req.body.ficheTitle,
+        content: 'Ceci est le contenu par défaut de votre fiche. Il est temps pour vous de faire table rase et de montrer au monde vos talents de rédacteur :\')',
+      },
 
-  });
+      currentSave: {
+        title: req.body.ficheTitle
+      },
 
-  res.redirect('/pannel/editor?edit=' +fiche._id);
+      author: req.user._id,
+      visibility: {
+        hidden: true
+      },
+
+      category: req.body.category
+
+    });
+
+    let category = await Category.findById(req.body.category);
+    category.fiches.push(fiche);
+
+    await category.save();
+
+
+    res.redirect('/pannel/editor?edit=' +fiche._id);
+
+  } 
+
+  catch(err) {
+    res.redirect('/');
+  }
 
 });
 

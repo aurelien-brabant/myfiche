@@ -6,12 +6,15 @@ let express         = require("express"),
     LocalStrategy   = require('passport-local').Strategy,
     myficheDB       = require("./myfiche-db"),
     User            = require('./models/user'),
-    seedDB          = require('./seed')
+    seedDB          = require('./seed'),
+    myfiche         = require('./myfiche')
 
 
 let authRoutes = require('./routes/auth.js'),
     fichesRoutes = require('./routes/fiches.js'),
-    pannelRoutes = require('./routes/pannel.js')
+    pannelRoutes = require('./routes/pannel.js'),
+    categoriesRoutes = require('./routes/categories.js'),
+    ficheCommentsRoutes = require('./routes/ficheComments.js')
 
 
 /* connecting do database */
@@ -49,9 +52,21 @@ app.use(function(req, res, next){
 app.use(authRoutes);
 app.use("/fiches", fichesRoutes);
 app.use("/pannel", pannelRoutes);
+app.use('/categories', categoriesRoutes)
+app.use('/fiches/:id/comments', ficheCommentsRoutes)
 
+async function initalize() {
+  try {
+      await seedDB();
+      await myfiche.fetchContentFromV3();
+  }
+  catch(err) {
+    console.log(err);
+  }
 
-seedDB();
+}
+
+initalize();
 
 
 

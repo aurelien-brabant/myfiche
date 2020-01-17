@@ -146,6 +146,18 @@
 
                             </div> 
 
+                            <div class="d-flex align-items-center justify-content-center my-2">
+                                <span>Catégorie :</span>
+
+
+                                <select class="custom-select ml-2">
+                                    <option selected><%=fiche.category.title %></option>
+                                    <% for(category of categories) { if (category.title != fiche.category.title) { %>
+                                        <option><%=category.title%></option>
+                                    <% }}; %>
+                                </select>
+                            </div>
+
                             <button data-toggle="modal" data-target="#editMod_<%=fiche._id%>" class="btn btn-warning my-1">
                                 Editer
                             </button>

@@ -1,11 +1,53 @@
 var myficheDB = require('./myfiche-db'),
     passport = require('passport'),
-    User = require('./models/user')
+    User = require('./models/user'),
+    Category = require('./models/category'),
+    FicheComment = require('./models/ficheComment')
 
 
+let categorySeeds = [
 
+	{
+		title: 'Général',
+		description: 'Les fiches n\'appartenant à aucune catégorie particulière',
+		fiches: []
+	},
+	{
+		title: 'Français',
+		fiches: []
+	},
+	{
+		title: 'S.E.S',
+		fiches: []
+	},
+	{
+		title: 'Mathématiques',
+		fiches: []
+	},
+	{
+		title: 'Histoire',
+		fiches: []
+	},
+	{
+		title: 'Géographie',
+		fiches: []
+	},
+	{
+		title: 'Sciences',
+		fiches: []
+	},
+	{
+		title: 'Philosophie',
+		fiches: []
+	},
+	{
+		title: 'Sciences Politiques',
+		fiches: []
+	},
 
-let seeds = [
+]
+
+let ficheSeeds = [
 
 {
 	publishedContent: {
@@ -71,8 +113,25 @@ let seeds = [
 }
 ]
 
+let ficheCommentsSeeds = [
+	{
+		title: 'Cette fiche est super !',
+		content: 'Le contenu est propre, et on sent que l\'auteur sait de quoi il parle.'
+	},
+	{
+		title: 'Je m\'attendais a davantage de détails',
+		content: 'La fiche est sympathique, mais je m\'attendais a plus de détails surtout en ce qui concerne la dernière partie.',
+	},
+	{
+		title: 'C nule',
+		content: 'Je fé mieux eZ alors dislaike'
+	}
+]
+
 async function seedDB(){
 	await myficheDB.deleteAllFiches();
+
+	await Category.remove();
 
 	await User.remove();
 
@@ -80,18 +139,52 @@ async function seedDB(){
 
 	await User.register(new User({email: "brabantaurelien@icloud.com", username: "Aurelle", privilege: 0}), "rere");
 
-	seeds.forEach(async function(seed, i){
-		var fiche = await myficheDB.fiche.createNew(seed);
-		if (i >= 3) {
-			author = await myficheDB.findUser("email", "brabantaurelien@icloud.com", function(){});
-		}
-		else 
+	for(categorySeed of categorySeeds) {
+		await Category.create(categorySeed);
+	}
+
+	await ficheSeeds.forEach(async function(seed, i){
+		try
 		{
-			author = await myficheDB.findUser("email", "root@myfiche.fr", function(){});
+			var fiche = await myficheDB.fiche.createNew(seed);
+
+			if (i >= 3) {
+				author = await myficheDB.findUser("email", "brabantaurelien@icloud.com", function(){});
+			}
+			else 
+			{
+				author = await myficheDB.findUser("email", "root@myfiche.fr", function(){});
+			}
+			fiche.author = author[0]._id;
+
+
+			await ficheCommentsSeeds.forEach(async function(commentSeed)
+			{
+				let comment = await FicheComment.create(commentSeed);
+				comment.author = author[0]._id;
+				let savedComment = await comment.save();
+				await fiche.comments.push(savedComment._id);
+			});
+
+
+			let catG = await Category.findOne({title: "Général"});
+			fiche.category = catG._id;
+			catG.fiches.push(fiche._id);
+			await catG.save();
+			savedFiche = await fiche.save();
 		}
-		fiche.author = author[0]._id;
-		savedFiche = await fiche.save();
+		catch(err) {
+			console.log(err);
+		}
 	})
+
+	// await categorySeeds.forEach(async function(seed){
+	// 	let category = await myficheDB.category.createNew(seed);
+	// })
+
+
+
+
 
 
 

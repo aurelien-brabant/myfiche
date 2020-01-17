@@ -2,21 +2,37 @@ let express = require('express'),
 	router 	= express.Router({mergeParams: true}),
 	myficheDB = require('../myfiche-db'),
 	authMW = require('./authMiddlewares'),
-	Fiche = require('../models/fiche');
+	Fiche = require('../models/fiche'),
+	Category = require('../models/category')
 
 
 router.get("/", authMW.isLoggedIn, function(req, res){
 	res.render('pannel/index');
 })
 
-router.get('/myFiches', authMW.isLoggedIn, function(req, res){
+router.get('/myFiches', authMW.isLoggedIn, async function(req, res){
 	var passedAction = req.query.action;
 	var parameter1 = req.query.p;
 	var parameter2 = req.query.p2;
 
-	myficheDB.findAllFiches(function(fiches){
-		res.render('pannel/myFiches', {fiches:fiches, action: passedAction, parameter1: parameter1, parameter2: parameter2});
-	});
+	Fiche.find({}).populate('author').populate('category').exec(function(err, fiches){
+		if (err) {
+			return console.log(err);
+		}
+
+		Category.find({}, function(err, categories){
+			if (err) {
+				return console.log(err);
+			}
+
+			res.render('pannel/myFiches', {fiches:fiches, categories: categories, action: passedAction, parameter1: parameter1, parameter2: parameter2});
+
+		})
+
+
+	})
+
+		
 
 });
 

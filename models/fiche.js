@@ -53,6 +53,13 @@ var ficheSchema = new mongoose.Schema({
     }
   },
 
+  comments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'ficheComment'
+    }
+  ],
+
   drafts: [
     {
       title: String,
@@ -67,6 +74,12 @@ var ficheSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     default: null
+  },
+
+  category: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Category",
+    default: undefined
   },
 
 

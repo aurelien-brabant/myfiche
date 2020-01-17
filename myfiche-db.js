@@ -2,14 +2,117 @@
 
 var mongoose = require("mongoose"),
     Fiche    = require("./models/fiche"),
-    User     = require("./models/user")
+    User     = require("./models/user"),
+    Category = require('./models/category')
     ;
 
 module.exports =
 {
 
 
-  //Everything about fiches
+
+/* ============================================ */
+/*                   CATEGORY                   */
+/* ============================================ */
+
+  category: {
+
+    createNew: async function(categoryData)
+    {
+      try {
+        let category = await Category.create(categoryData);
+        console.log('[Category] ' + category.title + ' has been created.');
+        return category;
+      }
+      catch(err) {
+        console.log(err);
+      }
+    },
+
+    find: async function(method, value) 
+    {
+      try {
+        let foundCategory = await Category.find({[method]: value});
+        return foundCategory;
+      }
+      catch(err) {
+        console.log(err);
+      }
+    },
+
+    // Edit a category
+
+    edit: async function(category, updateData) {
+      try {
+        // If category is an array of many categories
+
+        if (Array.isArray(category))
+        {
+          for (category of category)
+          {
+            let categoryTitle = category.title
+            await Category.update({_id: category._id}, updateData);
+            console.log("[Category] " + categoryTitle + " has been updated.")
+          }
+        }
+
+        // Else if this is a single category
+
+        else if (category) 
+        {
+          let categoryTitle = category.title;
+          await Category.update({_id: category._id}, updateData);
+          console.log('[Category] ' + categoryTitle + 'has been updated.');
+        }
+      }
+      catch(err) {
+        console.log(err);
+      }
+    },
+
+    // Delete a category
+
+    delete: async function(category) {
+      try {
+
+        // If category is an array of many categories
+
+        if (Array.isArray(category))
+        {
+          for (category of category)
+          {
+            let categoryTitle = category.title
+            await Category.deleteOne({_id: category._id});
+            console.log("[Category] " + categoryTitle + " has been deleted.")
+          }
+        }
+
+        // Else if this is a single category
+
+        else if (category) 
+        {
+          let categoryTitle = category.title;
+          await Category.deleteOne({_id: category._id});
+          console.log('[Category] ' + categoryTitle + 'has been deleted.');
+        }
+
+        return true;
+
+      }
+      catch(err) {
+        console.log(err);
+        return false;
+      }   
+    }
+
+  },
+
+
+
+/* ============================================ */
+/*                   FICHES                     */
+/* ============================================ */
+
   fiche: {
 
     createNew: async function(ficheData)
@@ -45,10 +148,7 @@ module.exports =
       catch(err) {
         console.log("MyficheDB - Cannot find " +value + " using " +method + " method.");
       }
-
     },
-
-
 
     toggleHide: async function(ficheID) 
     {
@@ -65,7 +165,7 @@ module.exports =
     },
 
 
-    delete: async function(ficheID){
+    delete: async function(ficheID){ 
       try 
       {
         let fiche = await Fiche.findByIdAndRemove(ficheID);
