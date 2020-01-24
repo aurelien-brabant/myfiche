@@ -7,8 +7,7 @@ let express = require('express'),
 
 
 router.post('/', async function(req, res){
-
-
+	
 	// In case where front-end validation fails to do its job
 	if (req.body.comment.title.length < 10 || req.body.comment.title.length > 80 ||  req.body.comment.content.length < 30 || req.body.comment.content.length > 300 || !req.body.commentAgreeChart)
 	{

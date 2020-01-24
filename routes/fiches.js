@@ -1,9 +1,10 @@
 let express	 = require('express'),
  	router 	 = express.Router({mergeParams: true}),
- 	myficheDB = require('../myfiche-db'),
+ 	myficheDB = require('../myfiche_modules/myfiche-db'),
  	Fiche = require('../models/fiche'),
-  authMW = require('./authMiddlewares'),
-  Category = require('../models/category')
+  	authMW = require('./authMiddlewares'),
+  	Category = require('../models/category'),
+	bbcode = require('../myfiche_modules/bbcode.js');
 
 
 router.get('/new', authMW.isLoggedIn, async function(req, res){
@@ -22,16 +23,30 @@ router.get('/new', authMW.isLoggedIn, async function(req, res){
 /* ============================================ */
 
 // INDEX 
-router.get('/', function(req, res){
-  myficheDB.findAllFiches(function(fiches){
-    res.render('fiches/fiches', {fiches: fiches})
-  })
+router.get('/', async function(req, res){
+  let categoryID = req.params.catId;
+
+  try {
+    let category = await Category.findById(categoryID).populate({
+      path:'fiches',
+      populate: {
+        path: 'author'
+      }
+    });
+	
+    res.render('categories/fiches/fiches', {fiches: category.fiches, category: category})
+  }
+
+  catch(err) {
+
+  }
 });
 
 // SHOW
 router.get ('/:id', async function(req, res) {
   var ficheID = req.params.id;
-
+  let bbParser = new bbcode();
+  bbParser.initializeBbcodeToHtml();
   try {
     let fiche = await Fiche.findById(ficheID).populate([
       {path: 'author'},
@@ -40,8 +55,9 @@ router.get ('/:id', async function(req, res) {
         path:'author'
       }
       }])
-    console.log(fiche)
-    res.render('fiches/ficheContent', {fiche: fiche})
+	fiche.publishedContent.content = bbParser.BbcodeToHtml(fiche.publishedContent.content);
+	let savedFiche = await fiche.save();
+    res.render('categories/fiches/show', {fiche: savedFiche})
   }
   catch(err) {
     console.log(err)

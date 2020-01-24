@@ -1,0 +1,310 @@
+<%- include("../../partials/header") %>
+
+<div id="ficheContentBody">
+
+  <div class="container-fluid d-flex flex-column align-items-center p-0" id="ficheContent">
+
+    <div class="container-fluid" style="background-image: url('<%=fiche.publishedContent.image%>'); background-position: center;">
+      <!-- Card - Fiche -->
+
+      <div class="card text-center my-5">
+
+        <!-- Card body - Fiche -->
+
+        <div class="card-body d-flex flex-column align-items-center">
+
+          <!-- Fiche Informations -->
+
+          <div id="ficheInfos" class="col-12">
+
+            <h3>
+              <i class="fas fa-quote-left mr-3"></i>
+              <%= fiche.publishedContent.title %>
+              <i class="fas fa-quote-right ml-3"></i>
+            </h3>
+
+            <h5>Par 
+              <i class="fas fa-user mr-2"></i>
+              <%= fiche.author.username %>
+            </h5>
+
+          </div>
+
+          <!-- Rating -->
+
+          <div class="d-flex justify-content-center mt-3">
+
+            <a href="" class="btn btn-success">
+              <i class="fas fa-heart mr-2"></i>56
+            </a>
+
+            <a href="" class="btn btn-danger">
+              <i class="fas fa-heart-broken mr-2"></i>5
+            </a>
+
+            <a class="btn btn-warning">
+              <i class="far fa-smile mr-2"></i>90%
+            </a>
+
+          </div>
+
+          <!-- End of rating -->
+
+          <div class="col-2">
+            <i class="far fa-comments mr-2"></i><%=fiche.comments.length%>
+          </div>
+
+          <div class="col-8 border-bottom py-2 mb-4">
+            <p>
+              Voter pour une fiche permet de la référencer et de donner un aperçu de sa qualité aux autres utilisateurs. Chaque vote vous attribue des <a href="#">points de réputation</a>.
+            </p>
+          </div>
+
+          <!-- Interaction buttons -->
+
+          <div class="d-flex">
+
+            <% if (user && (fiche.author.username === user.username || user.privilege === 10)) {%>
+
+            <a href="/pannel/editor?edit=<%=fiche._id%>" class="btn btn-warning btn-sm">
+              <i class="fas fa-pencil-alt mr-2"></i>Editer
+            </a>
+
+            <% if (user.privilege === 10) { %>
+
+            <a href="/pannel/admin/fiches#<%=fiche._id%>" class="btn btn-danger btn-sm">
+              <i class="fas fa-times mr-2"></i>Supprimer
+            </a>
+
+            <% } %>
+
+            <% } else { %>
+            <a href="#" class="btn btn-danger btn-sm">
+              <i class="fas fa-flag mr-2"></i>Signaler
+            </a>
+            <% } %>
+
+
+            <!-- End of interaction buttons -->
+
+          </div>
+
+          <!-- Card body - Fiche infos -->
+
+        </div>
+
+        <!-- End of card - Fiche infos -->
+
+      </div>
+
+    </div>
+
+    <!-- Fiche content card -->
+
+    <div class="card col-12 col-lg-11">
+
+      <div class="card-body d-flex px-1 px-md-5 py-4">
+
+        <!-- Fiche textual content -->
+
+        <div class="text-justify col-12 col-md-10">
+          <%- fiche.publishedContent.content %>
+        </div>
+
+        <!-- Fiche Plan -->
+        <div class=" ml-4 p-0 flex-column align-items-center justify-content-center d-none d-md-flex col-md-2" id="plan">
+
+          <h4 class="pb-2">
+            Plan
+          </h4>
+
+          <% for(var i = 0 ; i < 3 ; i++) {%>
+
+          <div class="plan-item rounded p-2 w-100">
+
+            <a href="#" class="plan-title">Titre <%= i %>
+            </a>
+            <a href="#" class="plan-subtitle">Sous-Titre 1
+            </a>
+            <a href="#" class="plan-subtitle">Sous-Titre2
+            </a>
+
+          </div>  
+
+          <% } %>
+
+          <!-- End of Fiche Plan -->
+
+        </div>
+      </div>
+
+      <hr>
+      <small class="px-5">
+        Myfiche.fr est une site à vocation communautaire créé dans l'objectif de partager des connaissances de manière synthéthique. De par son aspect communautaire, la plateforme peut accueillir du très bon comme du moins bon : cependant, aucun manquement à la <a href="">charte myfiche</a> ne peut être toléré. Si vous en constatez, nous vous invitons à cliquer sur le bouton signaler ou à <a href="#">nous contacter</a> directement.
+      </small>
+
+      <!-- End of fiche content card -->
+
+    </div>
+
+    <!-- Comments section -->
+
+    <div class="bg-white mt-4 p-3 col-11 col-lg-10 d-flex flex-column">
+
+      <h3 class="text-center">
+        <i class="far fa-comments"></i><%=fiche.comments.length%> Commentaires sur "<%= fiche.publishedContent.title %>"
+      </h3>
+
+      <% if (user) { %>
+      <button class="btn btn-info text-center" data-toggle="modal" data-target="#addcomment">
+        <i class="fas fa-comment-dots mr-1"></i>Ajouter un commentaire
+      </button>
+
+      <% } else { %>
+      <a class="btn btn-red text-center" href="/login">
+        <i class="fas fa-times mr-1"></i>Vous devez être connecté pour poster un commentaire
+      </a>
+      <% } %>
+
+
+
+      <!-- Add comment modal -->
+      <div class="modal fade" tabindex="-1" role="dialog" id="addcomment" data-backdrop="false">
+
+        <div class="modal-dialog" role="document">
+
+          <div class="modal-content">
+
+            <div class="modal-header">
+
+              <h5 class="modal-title">Nouveau commentaire sur : "<%= fiche.publishedContent.title %>"</h5>
+
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+
+            </div>
+
+            <!-- Modal content -->
+
+            <div class="modal-body">
+
+              <form action="/fiches/<%=fiche._id%>/comments" method="POST" id="addCommentForm">
+
+                <div class="form-group">
+
+                  <label for="commentTitle">Donnez un titre à votre commentaire
+                  </label>
+
+                  <input type="text" class="form-control" id="commentTitle" placeholder="Titre" name="comment[title]">
+
+                  <small class="d-flex" id="commentTitleAdvice">
+                    10-50 caractères.
+                  </small>
+
+                </div>
+
+                <div class="form-group">
+
+                  <label for="commentContent">Que voulez-vous dire ?
+                  </label>
+
+                  <textarea  class="form-control" id="commentContent" placeholder="Contenu" name="comment[content]"></textarea>
+                  <small class="d-none d-md-flex">
+                    30-300 caractères.
+                  </small>
+
+                </div>
+
+                <div class="form-check">
+
+                  <input type="checkbox" class="form-check-input" id="commentAgreeChart" name="commentAgreeChart">
+                  <label class="form-check-label" for="commentAgreeChart">J'adhère à la <a href="">charte myfiche</a>
+                  </label>
+
+                </div>
+
+                <button type="submit" class="btn btn-primary" id="commentSubmit">
+                  Poster
+                </button>
+
+              </form>
+
+            </div>
+
+            <!-- End of modal content -->
+
+            <div class="modal-footer">
+
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                Ne pas commenter
+              </button>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- Comment model - repeated for each comment -->
+
+      <% for(comment of fiche.comments) { %>
+
+      <div class="d-flex flex-column flex-lg-row border-bottom mt-3" id="<%=comment._id%>">
+
+        <div class="d-none d-lg-flex col-2 bg-primary comment-avatar">
+        </div>
+
+        <div class="col-12 col-lg-2 align-items-center  d-flex flex-column mt-3">
+
+          <span>
+            <%= comment.author.username %>
+          </span>
+
+          <span>
+            Le : <%= comment.date.toLocaleDateString('fr-CA', { year: 'numeric', month: 'numeric', day: 'numeric', hour:'numeric', minute:'numeric'}) %>
+          </span>
+
+          <a href="" class="btn btn-success btn-sm w-25 d-flex justify-content-center">
+            150<i class="fas fa-chevron-up ml-2"></i>
+          </a>
+
+          <a href="" class="btn btn-danger btn-sm w-25 d-flex justify-content-center">
+            23<i class="fas fa-chevron-down ml-2"></i>
+          </a>
+
+        </div>
+
+        <div class="d-flex flex-column border-left my-3 p-3 col-12 col-lg-8">
+          <h5 class="">
+            <%=comment.title%>
+          </h5>
+
+          <div class="text-justify">
+            <%= comment.content %>
+          </div>
+
+          <div class="d-flex mt-1">
+            <% if (user && (comment.author.email === user.email || user.privilege === 10)) { %>
+            <a href="/fiches/<%=fiche._id%>/comments/<%=comment._id%>?userId=<%=user._id%>" class="btn btn-danger btn-sm">Supprimer
+            </a>
+            <% } %>
+
+          </div>
+        </div>
+      </div>
+
+      <% } %>
+
+    </div>
+  </div>
+</div>
+
+<%- include("../../partials/scripts") %>
+<script type="text/javascript">
+  initializeFicheComments();
+</script>
+<%- include("../../partials/footer") %>
+
+

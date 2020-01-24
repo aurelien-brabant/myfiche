@@ -1,6 +1,6 @@
 let express	 = require('express'),
  	router 	 = express.Router({mergeParams: true}),
- 	myficheDB = require('../myfiche-db'),
+ 	myficheDB = require('../myfiche_modules/myfiche-db'),
  	Fiche = require('../models/fiche'),
   	authMW = require('./authMiddlewares'),
   	Category = require('../models/category')
@@ -19,26 +19,26 @@ let express	 = require('express'),
 
  });
 
- router.get('/:id/fiches', async function(req, res){
+ // router.get('/:id/fiches', async function(req, res){
 
- 	let categoryID = req.params.id;
- 	console.log(categoryID);
+ // 	let categoryID = req.params.id;
+ // 	console.log(categoryID);
 
- 	try {
- 		let category = await Category.findById(categoryID).populate({
- 			path:'fiches',
- 			populate: {
- 				path: 'author'
- 			}
- 		});
- 		console.log(category.fiches);
- 		res.render('fiches/fiches', {fiches: category.fiches, category: category})
- 	}
+ // 	try {
+ // 		let category = await Category.findById(categoryID).populate({
+ // 			path:'fiches',
+ // 			populate: {
+ // 				path: 'author'
+ // 			}
+ // 		});
+ // 		console.log(category.fiches);
+ // 		res.render('fiches/fiches', {fiches: category.fiches, category: category})
+ // 	}
 
- 	catch(err) {
+ // 	catch(err) {
 
- 	}
+ // 	}
 
- });
+ // });
 
  module.exports = router;

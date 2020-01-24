@@ -1,6 +1,6 @@
 let express = require('express'),
 	router 	= express.Router({mergeParams: true}),
-	myficheDB = require('../myfiche-db'),
+	myficheDB = require('../myfiche_modules/myfiche-db'),
 	authMW = require('./authMiddlewares'),
 	Fiche = require('../models/fiche'),
 	Category = require('../models/category')
@@ -34,6 +34,10 @@ router.get('/myFiches', authMW.isLoggedIn, async function(req, res){
 
 		
 
+});
+
+router.get('/newfiche', function(req, res){
+	res.render("categories/fiches/new");
 });
 
 router.get('/editor', authMW.isLoggedIn, function(req, res){

@@ -4,10 +4,10 @@ let express         = require("express"),
     mongoose        = require("mongoose"),
     passport        = require('passport'),
     LocalStrategy   = require('passport-local').Strategy,
-    myficheDB       = require("./myfiche-db"),
+    myficheDB       = require('./myfiche_modules/myfiche-db'),
     User            = require('./models/user'),
-    seedDB          = require('./seed'),
-    myfiche         = require('./myfiche')
+    seedDB          = require('./myfiche_modules/seed'),
+    myfiche         = require('./myfiche_modules/myfiche')
 
 
 let authRoutes = require('./routes/auth.js'),
@@ -50,10 +50,10 @@ app.use(function(req, res, next){
 // ROUTES 
 
 app.use(authRoutes);
-app.use("/fiches", fichesRoutes);
+app.use("/categories/:catId/fiches", fichesRoutes);
 app.use("/pannel", pannelRoutes);
 app.use('/categories', categoriesRoutes)
-app.use('/fiches/:id/comments', ficheCommentsRoutes)
+app.use('/categories/:catId/fiches/:ficheId/comments', ficheCommentsRoutes)
 
 async function initalize() {
   try {
