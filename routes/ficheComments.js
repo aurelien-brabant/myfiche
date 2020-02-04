@@ -11,17 +11,18 @@ router.post('/', async function(req, res){
 	// In case where front-end validation fails to do its job
 	if (req.body.comment.title.length < 10 || req.body.comment.title.length > 80 ||  req.body.comment.content.length < 30 || req.body.comment.content.length > 300 || !req.body.commentAgreeChart)
 	{
-		return res.redirect('/fiches/' +req.params.id);
+		return res.redirect("/categories/"+req.params.catId+"/fiches/"+req.params.ficheId);
 	}
 
 	try {
 		let newComment = await FicheComment.create(req.body.comment);
-		let fiche = await Fiche.findById(req.params.id);
+		newComment.date = Date.now();
+		let fiche = await Fiche.findById(req.params.ficheId);
 		newComment.author = req.user._id;
 		let savedComment = await newComment.save();
 		fiche.comments.push(newComment);
 		await fiche.save();
-		res.redirect('/fiches/' +req.params.id + '#' + savedComment._id);
+		res.redirect("/categories/"+req.params.catId+"/fiches/" +req.params.ficheId + "#" + savedComment._id);
 	}
 	catch(err){
 		console.log(err);
@@ -41,7 +42,7 @@ router.get('/:commentId', async function(req, res){
 		
 		// Checks if currently logged user is the same which has created the fiche (or is an admin)
 
-		if (targetedComment && (commandSender.email === targetedComment.author.email || commandSender.privilege === 10))
+		if (targetedComment && (String(commandSender._id) === String(targetedComment.author._id) || commandSender.privilege === 10))
 		{
 			await FicheComment.findOneAndDelete({_id: targetedComment._id});
 		}		
@@ -51,7 +52,7 @@ router.get('/:commentId', async function(req, res){
 		
 	}
 
-	return res.redirect('/fiches/'+req.params.id);
+	return res.redirect("/categories/" +req.params.catId+ "/fiches/" +req.params.ficheId);
 })
 
 

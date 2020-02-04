@@ -63,6 +63,14 @@ module.exports =
 				]
 		}
 
+		nl2br (str, is_xhtml) {
+   			 if (typeof str === 'undefined' || str === null) {
+        	return '';
+    		}
+    	var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';
+    	return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
+		}
+
 		htmlToBbcode(content)
 		{
 				this.initializeHtmlToBbcode();
@@ -77,15 +85,15 @@ module.exports =
 
 		BbcodeToHtml(content)
 		{
-				parsedContent.replace('<[^>]*>')
 				this.initializeBbcodeToHtml();
 				var parsedContent = content;
+				parsedContent.replace('<[^>]*>');
 				for (var i = 0; i < this.htmlBalises.length; i++)
 				{
 						parsedContent = parsedContent.replace(this.bbcodeBalises[i], this.htmlBalises[i]);
 				}
 
-				return parsedContent;
+				return this.nl2br(parsedContent);
 		}
 
 

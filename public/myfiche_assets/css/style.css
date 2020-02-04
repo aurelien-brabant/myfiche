@@ -167,7 +167,7 @@ body {
 
 #categoriesBgImg {
   background-image: url('/myfiche_assets/img/home/main.png');
-  height:100%;
+  background-repeat: repeat; 
 }
 
 .category h4 {
@@ -621,6 +621,15 @@ body {
 {
   padding-top: 2px;
   background-color: #357DC1 ;
+}
+
+
+#notFoundContainer 
+{
+	height: 100%;
+	background-image: url("/myfiche_assets/img/home/main.png");
+	background-position: center;
+}
 
 
 

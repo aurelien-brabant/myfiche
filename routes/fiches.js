@@ -1,20 +1,20 @@
 let express	 = require('express'),
- 	router 	 = express.Router({mergeParams: true}),
- 	myficheDB = require('../myfiche_modules/myfiche-db'),
- 	Fiche = require('../models/fiche'),
-  	authMW = require('./authMiddlewares'),
-  	Category = require('../models/category'),
+	router 	 = express.Router({mergeParams: true}),
+	myficheDB = require('../myfiche_modules/myfiche-db'),
+	Fiche = require('../models/fiche'),
+	authMW = require('./authMiddlewares'),
+	Category = require('../models/category'),
 	bbcode = require('../myfiche_modules/bbcode.js');
 
 
 router.get('/new', authMW.isLoggedIn, async function(req, res){
-  try {
-    let categories = await Category.find({});
-    res.render('fiches/new', {categories: categories})
-  }
-  catch(err){
-    console.log(err);
-  }
+	try {
+		let categories = await Category.find({});
+		res.render('fiches/new', {categories: categories})
+	}
+	catch(err){
+		console.log(err);
+	}
 
 });
 
@@ -24,44 +24,52 @@ router.get('/new', authMW.isLoggedIn, async function(req, res){
 
 // INDEX 
 router.get('/', async function(req, res){
-  let categoryID = req.params.catId;
+	let categoryID = req.params.catId;
 
-  try {
-    let category = await Category.findById(categoryID).populate({
-      path:'fiches',
-      populate: {
-        path: 'author'
-      }
-    });
-	
-    res.render('categories/fiches/fiches', {fiches: category.fiches, category: category})
-  }
+	try {
+		let category = await Category.findById(categoryID).populate({
+			path:'fiches',
+			populate: {
+				path: 'author'
+			}
+		});
 
-  catch(err) {
+		if (!category)
+			return (res.render("404"));
 
-  }
+		res.render('categories/fiches/fiches', {fiches: category.fiches, category: category})
+	}
+
+	catch(err) {
+		res.render("404");
+	}
 });
 
 // SHOW
 router.get ('/:id', async function(req, res) {
-  var ficheID = req.params.id;
-  let bbParser = new bbcode();
-  bbParser.initializeBbcodeToHtml();
-  try {
-    let fiche = await Fiche.findById(ficheID).populate([
-      {path: 'author'},
-      {path: 'comments',
-      populate: {
-        path:'author'
-      }
-      }])
-	fiche.publishedContent.content = bbParser.BbcodeToHtml(fiche.publishedContent.content);
-	let savedFiche = await fiche.save();
-    res.render('categories/fiches/show', {fiche: savedFiche})
-  }
-  catch(err) {
-    console.log(err)
-  }
+	var ficheID = req.params.id;
+	let bbParser = new bbcode();
+	bbParser.initializeBbcodeToHtml();
+	try {
+		let fiche = await Fiche.findById(ficheID).populate([
+			{path: 'author'},
+			{path: 'comments',
+				options: {
+					sort: {"date": -1}
+				},
+				populate: {
+					path:'author'
+				}
+			}])
+		if ( !fiche || (fiche.visibility.hidden &&  !( req.user && (String(req.user._id) === String(fiche.author._id) 
+			|| req.user.privilege === 10) )))
+			return ( res.render("404")  )
+		let parsedContent  = bbParser.BbcodeToHtml(fiche.publishedContent.content);
+		res.render('categories/fiches/show', {fiche: fiche, parsedContent: parsedContent})
+	}
+	catch(err) {
+		res.render("404");
+	}
 
 
 });
@@ -75,170 +83,177 @@ router.get ('/:id', async function(req, res) {
 // CREATE
 router.post('/', authMW.isLoggedIn, async function(req, res){
 
-  try
-  {
+	try
+	{
+		let category = await Category.findById(req.params.catId);
+		let fiche = await Fiche.create({
 
-    const fiche = await Fiche.create({
+			publishedContent: {
+				title: req.body.ficheTitle,
+				content: 'Ceci est le contenu par défaut de votre fiche. Il est temps pour vous de faire table rase et de montrer au monde vos talents de rédacteur :\')',
+			},
 
-      publishedContent: {
-        title: req.body.ficheTitle,
-        content: 'Ceci est le contenu par défaut de votre fiche. Il est temps pour vous de faire table rase et de montrer au monde vos talents de rédacteur :\')',
-      },
+			currentSave: {
+				title: req.body.ficheTitle,
+				content: 'Ceci est le contenu par défaut de votre fiche. Il est temps pour vous de faire table rase et de montrer au monde vos talents de rédacteur :\')',
+			},
 
-      currentSave: {
-        title: req.body.ficheTitle
-      },
+			author: req.user._id,
+			visibility: {
+				hidden: true
+			},
 
-      author: req.user._id,
-      visibility: {
-        hidden: true
-      },
+			category: category._id
+		});
 
-      category: req.body.category
+		category.fiches.push(fiche);
+		await category.save();
 
-    });
+		return res.redirect("/categories/"+req.params.catId+"/fiches/"+fiche._id+"/edit");
 
-    let category = await Category.findById(req.body.category);
-    category.fiches.push(fiche);
+	} 
 
-    await category.save();
-
-
-    res.redirect('/pannel/editor?edit=' +fiche._id);
-
-  } 
-
-  catch(err) {
-    res.redirect('/');
-  }
+	catch(err) {
+		console.log(err);
+		res.redirect('/');
+	}
 
 });
 
 /* ============================================ */
-/*			     EDIT | UPDATE                  */
+/*			     EDIT | UPDATE                      */
 /* ============================================ */
 
 
 // EDIT
-router.get("/:id/edit", function(req, res){
-  var ficheID = req.params.id;
-  Fiche.find({"_id" : ficheID}, function(err, fiches){
-    if (err){
-      console.log("ID not found :" +err);
-    }
-    else if (fiches.length === 1)
-    {
-      res.render("fiches/ficheEditor", {action: "/fiches/"+ficheID, type: "Edition d'une fiche", fiche: fiches[0]})
-    }
-  });
+router.get("/:ficheId/edit", authMW.isLoggedIn, async function(req, res){
+
+	let categoryId = req.params.catId;
+	let ficheId = req.params.ficheId;
+	var fiche;
+	try 
+	{
+		categories = await Category.find({});
+
+		fiche = await Fiche.findById(ficheId).populate([
+		{
+			path: "category"
+		},
+		{
+			path: "author"
+		}
+		]);
+
+		/* Checks if user owns the fiche or if it's super user  */
+		if (String(req.user._id) === String(fiche.author._id) || req.user.privilege === 10)
+			return res.render("categories/fiches/edit", {fiche: fiche, categories: categories});
+	}
+	catch(err)
+	{
+		console.log(err);
+	}
+
+	res.redirect('/');
 });
 
-//UPDATE
-router.post("/:id", async function(req, res){
+/* 
+	* UPDATE - fiche can be updated in two ways : currentSave or publish. 
+	* Current save is like a smart draft : it's a way to live-register changes that are made without 
+	* making them visible of everyone. It's used by the autosave feature  available in the fiche editor. It's handled by jQuery AJAX.
+	* publish is used to make visible all the changes registered by the currentSave method. It's triggered when user click on the button
+	* "publish changes".
+*/
+router.post("/:ficheId", authMW.isLoggedIn, async function(req, res){
 
-  let ficheID = req.params.id;
+	let ficheId	 = req.params.ficheId,
+	categoryId	 = req.params.catId,
+	ficheData	 = req.body.fiche,
+	method		 = req.query.method
+	try
+	{
+		let fiche = await Fiche.findById(ficheId).populate("author");;
 
-  let ficheData = req.body.fiche;
-  // Way of updating - currentSave, publish or saveAsDraft
-  let method = req.query.method;
+		if (!(String(req.user._id) === String(fiche.author._id) || req.user.privilege === 10))
+			return res.redirect("/");
 
-  try
-  {
-    let fiche = await Fiche.findById(ficheID);
+		if (method === "currentSave")
+		{
+			fiche.currentSave = ficheData;
+			fiche.currentSave.last = Date.now();
+		}
 
-    if (method === 'currentSave')
-    {
-      fiche.currentSave = ficheData;
-      fiche.currentSave.last = Date.now();
-    }
+		else if (method === "publish")
+		{
+			if ((ficheData.content.length >= 300 && ficheData.content.length <= 25000)
+				&& (ficheData.title.length >= 10 && ficheData.title.length <= 100) )
+			{
+			fiche.publishedContent = ficheData;
+			fiche.currentSave = ficheData;		
+			}
+		}
+		else if (method === "changeCategory")
+		{
+			fiche.category = req.body.selectCategory
+			let oldCategory = await Category.findById(categoryId).populate("fiches");
+			let newCategory = await Category.findById(req.body.selectCategory);
+			var i = 0;
+			for (catfiche of oldCategory.fiches)
+			{
+				if (String(catfiche._id) === String(fiche._id))
+					oldCategory.fiches.splice(i, 1);
+				i += 1;
+			}
+	
+			await newCategory.fiches.push(fiche._id);
+			await newCategory.save();
+			await oldCategory.save();
+		}
+		else if (method === "turnVisible")
+		{
+			/* Fiche can be turned visible only if minimal requirements are satisfied (minimum length for title and content) */
+			if ((fiche.publishedContent.title.length >= 10 && fiche.publishedContent.title.length <= 100)
+				&& (fiche.publishedContent.content.length >= 300 && fiche.publishedContent.content.length <= 25000))
+				fiche.visibility.hidden = false
+		}
+		else if (method === "turnInvisible")
+		{
+			fiche.visibility.hidden = true
+		}
 
-    else if (method === 'publish')
-    {
-      fiche.publishedContent = ficheData;
-    }
+		let savedFiche = await fiche.save(); 
+	}
 
-    let savedFiche = fiche.save(); 
-
-    res.redirect('/fiches/' +ficheID)
-  }
-
-  catch(err)
-  {
-    console.log(err);
-  }
-
-
-
-
-
-
-  // Fiche.findById(ficheID, function(err, fiche){
-  //   if (err)
-  //   {
-  //     console.log(err);
-  //   }
-  //   else
-  //   {
-  //     fiche.currentSave = req.body.fiche;
-  //     fiche.save(function(err, savedFiche){
-  //       console.log(savedFiche);
-  //       res.redirect("/fiches/"+ficheID);
-  //     })
-  //   }
-
-  // });
-  
-
-  // SAVEASDRAFT
-
-  // else if (req.query.action === "saveAsDraft")
-  // {
-  //   Fiche.findById(ficheID, function(err, fiche){
-  //     if (err) {
-  //       console.log(err);
-  //     }
-  //     req.body.fiche.draft.number = fiche.drafts.length + 1;
-  //     fiche.drafts.push(req.body.fiche.draft);
-  //     fiche.save(function(err, savedFiche){
-  //       console.log(savedFiche);
-  //     })
-  //   })
-
-  //   return res.redirect("/fiches/"+ficheID);
-  // }
-
-  // else if (req.query.method === 'publish')
-  // {
-  //   Fiche.findOneAndUpdate({_id: ficheID}, req.body.fiche, function(err, doc){
-  //     if (err) {
-  //       res.send("Error : " + error);
-  //     }
-  //     else {
-  //       res.redirect("/fiches/"+ficheID);
-  //     }
-  //   });
-  // }
-
+	catch(err) 
+	{
+		console.log(err); 
+	}
+		
+	res.redirect("/categories/" +categoryId+ "/fiches/" +ficheId);
 
 });
 
-router.get("/:id/toggleHide", async function(req, res){
 
-  let fiche = await myficheDB.fiche.toggleHide(req.params.id);
+router.post('/:ficheId/delete', authMW.isLoggedIn, async function(req, res){
+	try
+	{
+		let fiche = await Fiche.findById(req.params.ficheId).populate("author");
+		if ( String(req.user._id) === String(fiche.author._id) || req.user.privilege === 10)
+		{
+			await Fiche.findOneAndDelete({_id:fiche._id});
+			console.log("reached")
+			return ( res.redirect('/pannel/myfiches') )
+		}
+	}
+	catch(err)
+	{
+		console.log(err);
+	}
+	res.redirect('/');
+});
 
-  if (req.query.from === "myFiches")
-  {
-    return res.redirect('/pannel/myFiches'+"?action=toggleHide"+"&p="+fiche.visibility.hidden+"&p2="+fiche.title+"#"+fiche._id);
-  }
-
-  res.redirect('/pannel/admin/fiches'+"?action=toggleHide"+"&p="+fiche.visibility.hidden+"&p2="+fiche.title+"#"+fiche._id);
+router.get("*", function(req, res){
+	return res.render("404");
 })
-
-router.get('/:id/delete', async function(req, res){
-  let fiche = await myficheDB.fiche.delete(req.params.id)
-
-  res.redirect('/pannel/admin/fiches'+"?action=delete");
-});
 
 
 /* ============================================ */

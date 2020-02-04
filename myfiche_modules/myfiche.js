@@ -47,7 +47,13 @@ let myfiche =
 					content: ficheData.contenu,
 					image: 'https://myfiche.fr/img_fiche/' + ficheData.img
 				},
-				currentSave: this.publishedContent,
+				currentSave: 
+				{
+					title: ficheData.fiche_titre,
+					description: ficheData.fiche_descr,
+					content: ficheData.contenu,
+					image: 'https://myfiche.fr/img_fiche/' + ficheData.img
+				}
 			}
 
 			try {

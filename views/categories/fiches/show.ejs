@@ -50,9 +50,9 @@
 
           <!-- End of rating -->
 
-          <div class="col-2">
+          <a href="#comments" class="d-block col-2 text-dark">
             <i class="far fa-comments mr-2"></i><%=fiche.comments.length%>
-          </div>
+          </a>
 
           <div class="col-8 border-bottom py-2 mb-4">
             <p>
@@ -66,7 +66,7 @@
 
             <% if (user && (fiche.author.username === user.username || user.privilege === 10)) {%>
 
-            <a href="/pannel/editor?edit=<%=fiche._id%>" class="btn btn-warning btn-sm">
+				<a href="/categories/<%=fiche.category._id%>/fiches/<%=fiche._id%>/edit" class="btn btn-warning btn-sm">
               <i class="fas fa-pencil-alt mr-2"></i>Editer
             </a>
 
@@ -107,36 +107,10 @@
 
         <!-- Fiche textual content -->
 
-        <div class="text-justify col-12 col-md-10">
-          <%- fiche.publishedContent.content %>
+        <div class="text-justify col-12">
+          <%- parsedContent %>
         </div>
-
-        <!-- Fiche Plan -->
-        <div class=" ml-4 p-0 flex-column align-items-center justify-content-center d-none d-md-flex col-md-2" id="plan">
-
-          <h4 class="pb-2">
-            Plan
-          </h4>
-
-          <% for(var i = 0 ; i < 3 ; i++) {%>
-
-          <div class="plan-item rounded p-2 w-100">
-
-            <a href="#" class="plan-title">Titre <%= i %>
-            </a>
-            <a href="#" class="plan-subtitle">Sous-Titre 1
-            </a>
-            <a href="#" class="plan-subtitle">Sous-Titre2
-            </a>
-
-          </div>  
-
-          <% } %>
-
-          <!-- End of Fiche Plan -->
-
-        </div>
-      </div>
+	  </div> 
 
       <hr>
       <small class="px-5">
@@ -149,7 +123,7 @@
 
     <!-- Comments section -->
 
-    <div class="bg-white mt-4 p-3 col-11 col-lg-10 d-flex flex-column">
+    <div class="bg-white mt-4 p-3 col-11 col-lg-10 d-flex flex-column" id="comments">
 
       <h3 class="text-center">
         <i class="far fa-comments"></i><%=fiche.comments.length%> Commentaires sur "<%= fiche.publishedContent.title %>"
@@ -189,7 +163,7 @@
 
             <div class="modal-body">
 
-              <form action="/fiches/<%=fiche._id%>/comments" method="POST" id="addCommentForm">
+				<form action="/categories/<%=fiche.category._id%>/fiches/<%=fiche._id%>/comments" method="POST" id="addCommentForm">
 
                 <div class="form-group">
 
@@ -251,7 +225,7 @@
 
       <% for(comment of fiche.comments) { %>
 
-      <div class="d-flex flex-column flex-lg-row border-bottom mt-3" id="<%=comment._id%>">
+      <div class="d-flex flex-column flex-lg-row border-bottom mt-3"  id="<%=comment._id%>">
 
         <div class="d-none d-lg-flex col-2 bg-primary comment-avatar">
         </div>
@@ -281,13 +255,13 @@
             <%=comment.title%>
           </h5>
 
-          <div class="text-justify">
-            <%= comment.content %>
+          <div class="text-justify" style="word-wrap: break-word">
+			  <p><%= comment.content %></p>
           </div>
 
           <div class="d-flex mt-1">
-            <% if (user && (comment.author.email === user.email || user.privilege === 10)) { %>
-            <a href="/fiches/<%=fiche._id%>/comments/<%=comment._id%>?userId=<%=user._id%>" class="btn btn-danger btn-sm">Supprimer
+            <% if (user && (String(comment.author._id) === String(user._id) || user.privilege === 10)) { %>
+				<a href="/categories/<%=fiche.category._id%>/fiches/<%=fiche._id%>/comments/<%=comment._id%>?userId=<%=user._id%>" class="btn btn-danger btn-sm">Supprimer
             </a>
             <% } %>
 
@@ -302,9 +276,7 @@
 </div>
 
 <%- include("../../partials/scripts") %>
-<script type="text/javascript">
-  initializeFicheComments();
-</script>
+<script src="/myfiche_assets/js/plugins/formCheckLength.js"></script>
 <%- include("../../partials/footer") %>
 
 

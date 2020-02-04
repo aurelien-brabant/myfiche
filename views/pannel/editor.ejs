@@ -109,7 +109,7 @@
 
             </div>
 
-            <img src="<%= fiche.currentSave.image %>" height="70" width="100" class="ml-2 border rounded">
+            <img src="<%= fiche.currentSave.image %>" height="70" width="100" class="ml-2 border rounded" id="ficheImagePreview">
 
           </div>
 
@@ -216,10 +216,6 @@
               <i class="fas fa-image"></i>
             </div>
 
-            <div class="format-item d-flex" onclick="addBalises('#ficheContent', '[code]', '[/code]')">
-              <i class="fas fa-code"></i>
-            </div>
-
           </div>
 
           <div class="d-flex w-100">
@@ -230,82 +226,12 @@
 
             <div class="d-flex flex-column text-center justify-content-center" id="UI-items-section">
 
-              <div class="UI-items">
-                <p>
-                  <i class="fas fa-arrow-up"></i><
-                </p>
-              </div>
-
-              <div class="UI-items">
-                <p>
-                  <i class="fas fa-arrow-down"></i>
-                </p>
-              </div>
-
-              <div class="UI-items bg-success" id="UI-plus-content">
-                <p>
-                  <i class="fas fa-plus"></i>
-                </p>
-              </div>
-
-              <div class="UI-items bg-danger" id="UI-minus-content">
-                <p>
-                  <i class="fas fa-minus"></i>
-                </p>
-              </div>
-
-              <div class="UI-items bg-info" id="UI-reset-content">
-                <p>
-                  <i class="fas fa-undo-alt"></i>
-                </p>
-              </div>
-
               <div class="UI-items bg-success" id="UI-save-content" onclick="verifSubmit('no')">
                 <p>
                   <i class="fas fa-save"></i>
                 </p>
               </div>
 
-              <div class="UI-items bg-danger" id="UI-delete-content" style="opacity: 0.5">
-                <p>
-                  <i class="fas fa-trash"></i>
-                </p>
-              </div>
-
-            <!-- Delete confirmation modal -->
-            <div class="modal" tabindex="-1" role="dialog" id="confirmDelete">
-
-              <div class="modal-dialog" role="document">
-
-                <div class="modal-content">
-
-                  <div class="modal-header bg-danger">
-                    <h5 class="modal-title text-center text-white" id="confirmDelete">
-                    Confirmer la suppression
-                    </h5>
-                  </div>
-
-                  <div class="modal-body">
-                    <span id="confirmDeleteText">
-                    Vous vous apprêtez à effacer tout le contenu de votre fiche. C'est une opération irréversible. Êtes vous sûr(e) de vouloir procéder ?
-                    </span>
-                  </div>
-
-                  <div class="modal-footer">
-
-                    <button type="button" class="btn btn-danger" data-dismiss="modal" id="confirmDeleteButton" onclick="deleteContent()">
-                    Oui, supprimer
-                    </button>
-                    <button type="button" class="btn btn-success" data-dismiss="modal" id="cancelDeleteButton">
-                    Retour
-                    </button>
-
-                  </div>
-                </div>
-              </div>
-
-
-            <!-- End of DELETE modal -->
 
             </div>
 
@@ -327,7 +253,7 @@
       <!-- Informations about wording -->
 
       <div id="contentInfos" class="d-flex flex-column justify-content-center align-items-center mb-2">
-        <p> Caractères : <span id="contentCharCount"> 0</span> / 25000
+        <p> Caractères : <span id="contentCharCount"><%= fiche.currentSave.content.length%></span> / 25000
           <i class="fas fa-info-circle" data-toggle="popover" data-placement="top" data-trigger="hover" data-html="true" title="Contenu de la fiche" data-content="Le contenu d'une fiche doit faire entre 300 et 25000 caractères. <br> Une fiche idéale se situe dans cet intervalle : ni trop court, ni trop long."></i>
         </p>
       </div>
@@ -418,12 +344,15 @@
 
 
 
-<script type="text/javascript" src="../../pannel/js/editorAutoSave.js"></script>
+<%- include("partials/scripts") %>
 
-<%- include("partials/footer") %>
+<script type="text/javascript" src="/myfiche_assets/js/plugins/bbcode.js"></script>>
+<script type="text/javascript" src="/myfiche_assets/js/plugins/editor.js"></script>
 <script type="text/javascript">
   $(function () {
   $('[data-toggle="popover"]').popover()
 })
 </script>
+
+<%- include("partials/footer") %>
 

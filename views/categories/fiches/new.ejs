@@ -11,7 +11,9 @@
                                     <h2>Créez votre nouvelle fiche.</h2>
                                     <h5>Dites nous quel nom vous souhaitez lui donner, nous allons vous préparer l'éditeur.</h5>
                                     <h5>Ne vous inquiétez pas, le titre n'est pas définitif. Et la catégorie non plus.</h5>
-                                    <form class="py-2" action="/fiches" method="POST">
+
+                                    <!-- catId which is in action will be changed dynamically with JS-->
+									<form class="py-2" action="/categories/<%=categories[0]._id%>/fiches/" method="POST" id="submitNewForm">
 
                                         <div class="form-group">
                                             <label>Titre</label>
@@ -20,12 +22,13 @@
 
                                         <div class="form-group d-flex flex-column align-items-center">
                                             <label>Catégorie</label>
-                                            <select class="custom-select w-50" name="category">
+
+                                            <select class="custom-select w-50" name="category" id="categorySelect">
                                             <% for (category of categories){ %>
                                                 <option value="<%=category._id%>"><%=category.title%></option>
-                                            <% } %>
-                                                
+                                            <% } %>    
                                             </select>
+
                                             <small>Si tu ne trouve pas de catégorie appropriée, laisse la catégorie "Général" (et n'hésite pas à nous contacter pour qu'on puisse la créer !)</small>
                                         </div>
 
@@ -41,6 +44,9 @@
             </div>
 
 
+
+ <%- include('../../pannel/partials/scripts.ejs') %>
+ <script type="text/javascript" src="/myfiche_assets/js/plugins/newfiche.js"></script>
 
  <%- include('../../pannel/partials/footer.ejs') %>
 

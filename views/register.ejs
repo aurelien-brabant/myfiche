@@ -11,13 +11,13 @@
     <div class="card-body px-lg-5 pt-0 d-flex flex-column justify-content-center">
 
         <!-- Form -->
-        <form class="text-center" style="color: #757575;" action="/register" method="POST">
+        <form class="text-center" style="color: #757575;" action="/register" method="POST" id="registerForm">
 
           <!-- Email -->
 
           <div class="md-form">
             <i class="far fa-envelope registerFormIcon"></i>
-            <input type="email" name="email" id="materialLoginFormEmail" class="form-control" placeholder="Adresse e-mail">
+            <input type="email" name="email" id="email" class="form-control" placeholder="Adresse e-mail" required>
             <small id="passwordHelpBlock" class="form-text text-muted">
                 Votre adresse e-mail ne sera jamais visible : elle ne sert qu'à vous identifier.
             </small>
@@ -27,32 +27,31 @@
 
           <div class="md-form">
             <i class="fa fa-address-card registerFormIcon"></i>
-            <input type="text" name="username" id="materialLoginFormUsername" class="form-control" placeholder="Pseudo">
+            <input type="text" name="username" id="materialLoginFormUsername" class="form-control" placeholder="Pseudo" required> 
             <small class="form-text text-muted">
-                C'est le nom qui sera affiché pour toutes vos activités sur le site. Vous pouvez en changer en un clique.
+                C'est le nom qui sera affiché pour toutes vos activités sur le site. 
             </small>
         </div>
 
         <!-- Password -->
         <div class="md-form">
-            <i class="fas fa-key registerFormIcon"></i>
-            <input type="password" name="password" id="materialLoginFormPassword" class="form-control" placeholder="Mot de passe">          
-            <input type="password" name="password-validation" id="materialLoginFormPassword" class="form-control d-none" placeholder="Confirmer le mot de passe">
+			<i class="fas fa-key registerFormIcon"></i>
+			<input type="password" name="password" id="password" class="form-control" placeholder="Mot de passe">
+			<i class="fas fa-eye" id="showPassword"></i>
+			<div class="alert alert-danger" id="passwordAlert">Mot de passe trop court</div>
+            <input type="password" name="password-validation" id="passwordValidation" class="form-control" placeholder="Confirmer le mot de passe">
+			<div class="alert alert-danger" id="passwordMatchAlert">Les mots de passe ne correspondent pas.</div>
         </div>
 
         <div class="d-flex justify-content-around">
-        <div>
-          <!-- Forgot password -->
-          <a href="">Mot de passe oublié ?</a>
-        </div>
   </div>
 
   <!-- Sign in button -->
-  <button class="btn btn-outline btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Je m'inscris !</button>
+  <button class="btn btn-outline btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" id="submitRegister">Je m'inscris !</button>
 
   <!-- Register -->
   <p>Déjà un compte ?
-    <a href="">Se connecter</a>
+    <a href="/login">Se connecter</a>
 </p>
 
 
@@ -64,4 +63,6 @@
 </div>
 </div>
 <!-- Material form login -->
+<%- include("partials/scripts.ejs") %>
+<script src="/myfiche_assets/js/plugins/register.js"></script>
 <%- include("partials/footer.ejs") %>

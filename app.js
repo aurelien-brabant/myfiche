@@ -46,7 +46,6 @@ app.use(function(req, res, next){
   next();
 })
 
-
 // ROUTES 
 
 app.use(authRoutes);
@@ -54,6 +53,9 @@ app.use("/categories/:catId/fiches", fichesRoutes);
 app.use("/pannel", pannelRoutes);
 app.use('/categories', categoriesRoutes)
 app.use('/categories/:catId/fiches/:ficheId/comments', ficheCommentsRoutes)
+app.get("*", function(req, res){
+	return (res.render("404"))
+})
 
 async function initalize() {
   try {

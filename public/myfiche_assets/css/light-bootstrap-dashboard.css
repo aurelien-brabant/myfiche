@@ -1660,6 +1660,8 @@ fieldset[disabled] .form-control {
     border-color: #9A9A9A;
 }
 
+/*
+
 .alert {
     border: 0;
     border-radius: 0;
@@ -1697,7 +1699,9 @@ fieldset[disabled] .form-control {
 
 .alert i.nc-simple-remove {
     font-size: 12px !important;
-    font: bold normal normal 14px/1 'nucleo-icons';
+    font-family: "Font Awesome 5 Free"; 
+	font-weight:400;
+	content: "\f007";
 }
 
 .alert button.close {
@@ -1756,6 +1760,7 @@ fieldset[disabled] .form-control {
 .alert-danger {
     background-color: #fc727a;
 }
+*/
 
 .table .radio,
 .table .checkbox {
@@ -1846,7 +1851,7 @@ fieldset[disabled] .form-control {
     font-family: 'Font Awesome 5 Free';
     content: "\f00c";
     display: inline-block;
-    color: lightblue;
+    color: rgba(0, 0, 0, 0.1);
     position: absolute;
     width: 19px;
     height: 19px;
@@ -1867,7 +1872,7 @@ fieldset[disabled] .form-control {
     content: "\f00c";
     text-align: center;
     opacity: 0;
-    color:blue;
+    color:green;
     border: 0;
     background-color: inherit;
 }

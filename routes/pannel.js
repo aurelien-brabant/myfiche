@@ -36,8 +36,19 @@ router.get('/myFiches', authMW.isLoggedIn, async function(req, res){
 
 });
 
-router.get('/newfiche', function(req, res){
-	res.render("categories/fiches/new");
+router.get('/newfiche', async function(req, res){
+	
+	try 
+	{
+		let categories = await Category.find({});
+		res.render("categories/fiches/new", {categories: categories});
+	}
+
+	catch(err)
+	{
+		console.log(err);
+	}
+
 });
 
 router.get('/editor', authMW.isLoggedIn, function(req, res){
