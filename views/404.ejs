@@ -1,0 +1,23 @@
+<%- include ("partials/header.ejs") %>
+
+<div class="container-fluid d-flex justify-content-center" id="notFoundContainer">
+
+	<div class="d-flex align-items-center justify-content-center">
+		<div class="bg-light d-flex flex-column align-items-center col-12 col-md-6 p-3 rounded" id="notFoundBlock">
+			<h1><i class="fas fa-frown-open"></i></h1>
+			<h2>Cette page n'existe pas !</h2>
+			<p class="text-justify">
+				La page que vous recherchez n'existe pas ou plus. Assurez vous que l'url que vous avez spécifié est correcte et réessayez. Si vous estimez qu'il s'agit d'une erreur, vous pouvez <a href="">nous contacter.</a>		</p>
+			<a href="/" class="btn btn-primary">Retourner a l'accueil</a>
+		</div>
+	</div>
+
+</div>
+
+
+<%- include ("partials/scripts.ejs") %>			
+	<script>
+		$("#notFoundBlock").hide();
+		$("#notFoundBlock").fadeIn(600);
+	</script>
+<%- include ("partials/footer.ejs") %>
