@@ -26,7 +26,8 @@ module.exports =
 						/\[lien\](.+?)\[\/lien\]/g,
 						/\[img\](.+?)\[\/img\]/g,
 						/\[t\]([\s\S]+?)\[\/t\]/g,
-						/\[A\]([\s\S]+?)\[\/A\]/g
+						/\[A\]([\s\S]+?)\[\/A\]/g,
+						/\[video\]([\s\S]+?)\[\/video\]/g
 				]
 
 				this.htmlBalises = [
@@ -44,7 +45,8 @@ module.exports =
 						'<a href="$1" class="bbcode lien">lien</a>',
 						'<a href="$1"><img src="$1" class="bbcode img col-8"></a>',
 						'<h2 class="border-bottom">$1</h2>',
-						'<h5 class="border-bottom">$1</h5>'
+						'<h5 class="border-bottom">$1</h5>',
+						'<div class="embed-responsive embed-responsive-16by9 col-6"><iframe class="embed-responsive-item" src=$1 allowfullscreen></iframe></div>'
 				]
 		}
 

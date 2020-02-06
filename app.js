@@ -57,6 +57,7 @@ app.get("*", function(req, res){
 	return (res.render("404"))
 })
 
+/*
 async function initalize() {
   try {
       await seedDB();
@@ -69,7 +70,7 @@ async function initalize() {
 }
 
 initalize();
-
+*/
 
 
 

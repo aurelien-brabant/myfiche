@@ -135,7 +135,7 @@ async function seedDB(){
 
 	await User.remove();
 
-	await User.register(new User({email: "root@myfiche.fr", username: "myfiche-root", privilege: 10}), "mfRoot");
+	await User.register(new User({email: "root@myfiche.fr", username: "myfiche-root", privilege: 10}), "rootAd0118/");
 
 	await User.register(new User({email: "brabantaurelien@icloud.com", username: "Aurelle", privilege: 0}), "rere");
 

@@ -11,29 +11,10 @@ router.get("/", authMW.isLoggedIn, function(req, res){
 })
 
 router.get('/myFiches', authMW.isLoggedIn, async function(req, res){
-	var passedAction = req.query.action;
-	var parameter1 = req.query.p;
-	var parameter2 = req.query.p2;
 
-	Fiche.find({}).populate('author').populate('category').exec(function(err, fiches){
-		if (err) {
-			return console.log(err);
-		}
+	let fiches = await Fiche.find({}).sort({"publishedContent.title": 1}).populate('author').populate('category');
 
-		Category.find({}, function(err, categories){
-			if (err) {
-				return console.log(err);
-			}
-
-			res.render('pannel/myFiches', {fiches:fiches, categories: categories, action: passedAction, parameter1: parameter1, parameter2: parameter2});
-
-		})
-
-
-	})
-
-		
-
+	res.render("pannel/myFiches", {fiches: fiches})
 });
 
 router.get('/newfiche', async function(req, res){

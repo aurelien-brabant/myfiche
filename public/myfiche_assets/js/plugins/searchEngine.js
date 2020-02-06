@@ -26,7 +26,7 @@ function initSearchEngine()
 {
 
 	$(".searchEngineInputField").keyup(function(){
-		let searchValue = $(this).val();
+		let searchValue = $(this).val().toLowerCase();
 
 		$(".searchEngineTargetBlock").each(function(){
 				

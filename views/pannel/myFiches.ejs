@@ -8,17 +8,20 @@
 
 		<!-- HEADER - Link to create a fiche -->
 
-		<div class="text-center my-3 bg-white w-75 p-3 border rounded">
+		<div class="d-flex flex-column align-items-center my-3 bg-white w-75 p-3 border rounded">
 
 			<h1 class="">
 				<i class="fas fa-pencil-alt mx-1"></i>
 				Mes fiches
 				<i class="fas fa-pencil-alt mx-1"></i>
 			</h1>
-			<a href="/pannel/newfiche" class="btn btn-lg btn-primary btn-fill">
+			<a href="/pannel/newfiche" class="col-10 col-md-3 btn btn-lg btn-primary btn-fill">
 				Créer une fiche <i class="fas fa-palette ml-1"></i>
 			</a>
-
+		
+			<div class="d-flex col-12 justify-content-center active-purple-3 active-purple-4 mb-4 ">
+  				<input class="form-control p-2 m-2 col-10 col-md-7 text-center searchEngineInputField" type="text" placeholder="Rechercher une fiche" aria-label="Search">
+			</div>	
 		</div>
 
 		<!-- Fiche List -->
@@ -32,7 +35,7 @@
 
 					<!-- Card taking all the width of the row -->
 
-					<div class="col-12">
+					<div class="col-12 searchEngineTargetBlock">
 
 						<!-- Fiche card -->
 
@@ -61,7 +64,11 @@
 											</h3>
 
 											<p>
-												Titre : <%= fiche.publishedContent.title %>
+												UID : <%=fiche._id%>
+											</p>
+
+											<p>
+												Titre : <span class="searchEngineTargetField"><%= fiche.publishedContent.title %></span>
 											</p>
 
 											<p>
@@ -253,7 +260,7 @@
 
 
 <%- include('partials/scripts.ejs') %>
-
+<script src="/myfiche_assets/js/plugins/searchEngine.js"></script>
 <%- include('partials/footer.ejs') %>
 
 
