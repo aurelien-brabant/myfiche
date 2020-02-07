@@ -3,259 +3,262 @@
 
 <div class="content" style="background-image:url('/myfiche_assets/img/home/fiches.png');">
 
-	<!-- General container -->
-	<div class="container-fluid d-flex flex-column align-items-center">
+<!-- General container -->
+<div class="container-fluid d-flex flex-column align-items-center">
 
-		<!-- HEADER - Link to create a fiche -->
+<!-- HEADER - Link to create a fiche -->
 
-		<div class="d-flex flex-column align-items-center my-3 bg-white w-75 p-3 border rounded">
+<div class="d-flex flex-column align-items-center my-3 bg-white w-75 p-3 border rounded">
 
-			<h1 class="">
-				<i class="fas fa-pencil-alt mx-1"></i>
-				Mes fiches
-				<i class="fas fa-pencil-alt mx-1"></i>
-			</h1>
-			<a href="/pannel/newfiche" class="col-10 col-md-3 btn btn-lg btn-primary btn-fill">
-				Créer une fiche <i class="fas fa-palette ml-1"></i>
-			</a>
-		
-			<div class="d-flex col-12 justify-content-center active-purple-3 active-purple-4 mb-4 ">
-  				<input class="form-control p-2 m-2 col-10 col-md-7 text-center searchEngineInputField" type="text" placeholder="Rechercher une fiche" aria-label="Search">
-			</div>	
-		</div>
+<h1 class="">
+	<i class="fas fa-pencil-alt mx-1"></i>
+Mes fiches (<%=fiches.length%>)
+	<i class="fas fa-pencil-alt mx-1"></i>
+	</h1>
+	<a href="/pannel/newfiche" class="col-10 col-md-3 btn btn-lg btn-primary btn-fill">
+	Créer une fiche <i class="fas fa-palette ml-1"></i>
+	</a>
 
-		<!-- Fiche List -->
+	<div class="d-flex col-12 justify-content-center active-purple-3 active-purple-4 mb-4 ">
+	<input class="form-control p-2 m-2 col-10 col-md-7 text-center searchEngineInputField" type="text" placeholder="Rechercher une fiche" aria-label="Search">
+	</div>	
+	</div>
 
-		<% fiches.forEach(function(fiche) {
+	<!-- Fiche List -->
+
+	<% fiches.forEach(function(fiche) {
 
 			if (fiche.author.username === user.username)
 			{
-		%>
+			%>
 
 
-					<!-- Card taking all the width of the row -->
+			<!-- Card taking all the width of the row -->
 
-					<div class="col-12 searchEngineTargetBlock">
+			<div class="col-12 searchEngineTargetBlock">
 
-						<!-- Fiche card -->
+			<!-- Fiche card -->
 
-						<div class="card" id="<%= fiche._id %>">
+			<div class="card" id="<%= fiche._id %>">
 
-							<div class="card-body text-center pb-5 d-flex flex-column flex-xl-row">
+			<div class="card-body text-center pb-5 d-flex flex-column flex-xl-row">
 
-								<!-- Image -->
+			<!-- Image -->
 
-								<div class="col-12 col-xl-4 bg-light d-flex align-items-center justify-content-center">
-									<img src="<%= fiche.publishedContent.image %>" style="max-height: 300px" class="img-fluid">
-								</div>
+			<div class="col-12 col-xl-4 bg-light d-flex align-items-center justify-content-center">
+			<img src="<%= fiche.publishedContent.image %>" style="max-height: 300px" class="img-fluid">
+			</div>
 
-								<!-- Textual Content and stats -->
+			<!-- Textual Content and stats -->
 
-								<div class="col-12 col-xl-5 text-left border">
+			<div class="col-12 col-xl-5 text-left border">
 
-									<div class="d-flex flex-column py-2 justify-content-center align-items-centeri">
+			<div class="d-flex flex-column py-2 justify-content-center align-items-centeri">
 
-										<!-- Textual Content -->
+			<!-- Textual Content -->
 
-										<div class="col-12">
+			<div class="col-12">
 
-											<h3 class="bg-light text-center">
-												Informations
-											</h3>
+			<h3 class="bg-light text-center">
+			Informations
+			</h3>
 
-											<p>
-												UID : <%=fiche._id%>
-											</p>
+			<p>
+			UID : <%=fiche._id%>
+			</p>
+			<p>
+			Catégorie : <%= fiche.category.title %>
+			</p>	
 
-											<p>
-												Titre : <span class="searchEngineTargetField"><%= fiche.publishedContent.title %></span>
-											</p>
+			<p>
+			Titre : <span class="searchEngineTargetField"><%= fiche.publishedContent.title %></span>
+			</p>
 
-											<p>
-												Description : <%= fiche.publishedContent.description %>
-											</p>
+			<p>
+			Description : <%= fiche.publishedContent.description %>
+			</p>
 
-											<p>Contenu (aperçu) : <%= fiche.publishedContent.content.substring(0, 150) %>... <a href="/categories/<%=fiche.category._id%>/fiches/<%=fiche._id %>">Voir plus</a>
-											</p>
+			<p>Contenu (aperçu) : <%= fiche.publishedContent.content.substring(0, 150) %>... <a href="/categories/<%=fiche.category._id%>/fiches/<%=fiche._id %>">Voir plus</a>
+						  </p>
 
-										</div>    
+						      </div>    
 
-										<!-- Stats -->
+							      <!-- Stats -->
 
-										<div class="col-12 d-flex justify-content-center">
+							      <div class="col-12 d-flex justify-content-center">
 
-											<a class="btn btn-success btn-fill mx-2">
-												<%= fiche.rating.up %> <i class="fas fa-heart mx-1"></i>
-											</a>    
+							      <a class="btn btn-success btn-fill mx-2">
+							      <%= fiche.rating.up %> <i class="fas fa-heart mx-1"></i>
+							      </a>    
 
-											<a class="btn btn-danger btn-fill mx-2">
-												<%= fiche.rating.down %> <i class="fas fa-heart-broken mx-1"></i>
-											</a>
+							      <a class="btn btn-danger btn-fill mx-2">
+							      <%= fiche.rating.down %> <i class="fas fa-heart-broken mx-1"></i>
+							      </a>
 
-											<a class="btn btn-warning btn-fill  mx-2">
-												<%= Math.round((fiche.rating.up / (fiche.rating.up + fiche.rating.down)) * 100) %>%<i class="fas fa-users mx-1"></i>
-											</a>     
+							      <a class="btn btn-warning btn-fill  mx-2">
+							      <%= Math.round((fiche.rating.up / (fiche.rating.up + fiche.rating.down)) * 100) %>%<i class="fas fa-users mx-1"></i>
+							      </a>     
 
-											<a class="btn btn-info btn-fill mx-2">
-												1034<i class="fas fa-eye mx-1"></i>
-											</a>
+							      <a class="btn btn-info btn-fill mx-2">
+							      1034<i class="fas fa-eye mx-1"></i>
+							      </a>
 
-										</div>
+							      </div>
 
-										<!-- See published version (if it exists) -->
-										<div class="col-12">
+							      <!-- See published version (if it exists) -->
+							      <div class="col-12">
 
-											<a href="/categories/<%=fiche.category._id%>/fiches/<%=fiche._id %>"class="btn btn-secondary mx-2 my-2 col-12">
-												Voir la fiche publique<i class="fas fa-arrow-right mx-1"></i>
-											</a>
+							      <a href="/categories/<%=fiche.category._id%>/fiches/<%=fiche._id %>"class="btn btn-secondary mx-2 my-2 col-12">
+							      Voir la fiche publique<i class="fas fa-arrow-right mx-1"></i>
+							      </a>
 
-										</div>
+							      </div>
 
-									</div>
+							      </div>
 
-								</div>
+							      </div>
 
-								<!-- End of textual and stats content -->
+							      <!-- End of textual and stats content -->
 
-								<!-- Options -->
+							      <!-- Options -->
 
-								<div class="col-12 col-lg-3 d-flex flex-column">
+							      <div class="col-12 col-lg-3 d-flex flex-column">
 
-									<h4 class="bg-light text-center">
-										Options
-									</h4>
-									
-									<button data-toggle="modal" data-target="#editMod_<%=fiche._id%>" class="btn btn-warning btn-fill my-1">
-										<i class="fas fa-pencil-alt mr-1 text-dark"></i> Editer
-									</button>
-									<button data-toggle="modal" data-target="#deleteMod_<%=fiche._id%>" class="btn btn-danger btn-fill my-1">
-										<i class="fas fa-times mr-1 text-dark"></i> Supprimer
-									</button>
-									<small>
-									Ouvre l'editeur a partir duquel vous pouvez modifier toutes les donnes de la fiche
-									</small>
+							      <h4 class="bg-light text-center">
+							      Options
+							      </h4>
 
-									<!-- Edit type modal -->
-									<div class="modal fade" tabindex="-1" role="dialog" id="editMod_<%=fiche._id%>" data-backdrop="false">
+							      <button data-toggle="modal" data-target="#editMod_<%=fiche._id%>" class="btn btn-warning btn-fill my-1">
+							      <i class="fas fa-pencil-alt mr-1 text-dark"></i> Editer
+							      </button>
+							      <button data-toggle="modal" data-target="#deleteMod_<%=fiche._id%>" class="btn btn-danger btn-fill my-1">
+							      <i class="fas fa-times mr-1 text-dark"></i> Supprimer
+							      </button>
+							      <small>
+							      Ouvre l'editeur a partir duquel vous pouvez modifier toutes les donnes de la fiche
+							      </small>
 
-										<div class="modal-dialog" role="document">
+							      <!-- Edit type modal -->
+							      <div class="modal fade" tabindex="-1" role="dialog" id="editMod_<%=fiche._id%>" data-backdrop="false">
 
-											<div class="modal-content">
+							      <div class="modal-dialog" role="document">
 
-												<div class="modal-header">
+							      <div class="modal-content">
 
-													<h5 class="modal-title">Choisissez votre type d'édition</h5>
+							      <div class="modal-header">
 
-													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-														<span aria-hidden="true">&times;</span>
-													</button>
+							      <h5 class="modal-title">Choisissez votre type d'édition</h5>
 
-												</div>
+							      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							      <span aria-hidden="true">&times;</span>
+							      </button>
 
-												<!-- Modal content -->
+							      </div>
 
-												<div class="modal-body">
+							      <!-- Modal content -->
 
-													<!-- Edit option 1 -->
-													<div class="border my-2 rounded bg-light">
-														<a href="/categories/<%=fiche.category._id%>/fiches/<%=fiche._id%>/edit?cId=<%=fiche.category._id%>&fId=<%=fiche._id%>" class="text-dark">
-															<h4>Editer à partir de la dernière sauvegarde intelligente</h4>
-															<small>L'éditeur garde une trace de vos derniers changements même si vous n'avez rien publié.</small>
-															<h6 class="py-2">Dernière sauvegarde le <%=
-															fiche.currentSave.last.toLocaleDateString('fr-CA', { year: 'numeric', month: 'numeric', day: 'numeric', hour:'numeric', minute:'numeric'})%></h6>
-														</a>
-													</div>
+							      <div class="modal-body">
 
-													<!-- Edit option2 - disabled -->
+							      <!-- Edit option 1 -->
+							      <div class="border my-2 rounded bg-light">
+							      <a href="/categories/<%=fiche.category._id%>/fiches/<%=fiche._id%>/edit?cId=<%=fiche.category._id%>&fId=<%=fiche._id%>" class="text-dark">
+							      <h4>Editer à partir de la dernière sauvegarde intelligente</h4>
+							      <small>L'éditeur garde une trace de vos derniers changements même si vous n'avez rien publié.</small>
+							      <h6 class="py-2">Dernière sauvegarde le <%=
+							      fiche.currentSave.last.toLocaleDateString('fr-CA', { year: 'numeric', month: 'numeric', day: 'numeric', hour:'numeric', minute:'numeric'})%></h6>
+							      </a>
+							      </div>
 
-													<div class="border my-2 rounded bg-light d-flex flex-column align-items-center" style="opacity:0.5">
+							      <!-- Edit option2 - disabled -->
 
-														<h4>Charger un brouillon spécifique</h4>
-														<span class="badge badge-danger w-50 h-25">Indisponible</span>
-														<small class="p-2">Naviguez parmi votre liste de brouillons, puis sélectionnez celui qui vous intéresse. Vous pourrez l'éditer et même le publier. </small>
-														<a href="/pannel/editor?edit=<%=fiche._id%>"></a>
+							      <div class="border my-2 rounded bg-light d-flex flex-column align-items-center" style="opacity:0.5">
 
-													</div>
+							      <h4>Charger un brouillon spécifique</h4>
+							      <span class="badge badge-danger w-50 h-25">Indisponible</span>
+							      <small class="p-2">Naviguez parmi votre liste de brouillons, puis sélectionnez celui qui vous intéresse. Vous pourrez l'éditer et même le publier. </small>
+							      <a href="/pannel/editor?edit=<%=fiche._id%>"></a>
 
-												</div>
+							      </div>
 
-												<!-- End of modal content -->
+							      </div>
 
-												<div class="modal-footer">
+							      <!-- End of modal content -->
 
-													<button type="button" class="btn btn-secondary" data-dismiss="modal">Je ne souhaite pas éditer</button>
+							      <div class="modal-footer">
 
-												</div>
-											</div>
-										</div>
-									</div>
+							      <button type="button" class="btn btn-secondary" data-dismiss="modal">Je ne souhaite pas éditer</button>
 
-									<!-- End of Edit Modal -->
+							      </div>
+							      </div>
+							      </div>
+							      </div>
 
-									<!-- Delete type modal -->
-									<div class="modal fade" tabindex="-1" role="dialog" id="deleteMod_<%=fiche._id%>" data-backdrop="false">
+							      <!-- End of Edit Modal -->
 
-										<div class="modal-dialog" role="document">
+							      <!-- Delete type modal -->
+							      <div class="modal fade" tabindex="-1" role="dialog" id="deleteMod_<%=fiche._id%>" data-backdrop="false">
 
-											<div class="modal-content">
+							      <div class="modal-dialog" role="document">
 
-												<div class="modal-header bg-danger">
+							      <div class="modal-content">
 
-													<h5 class="modal-title">Confirmer la suppression</h5>
+							      <div class="modal-header bg-danger">
 
-													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-														<span aria-hidden="true">&times;</span>
-													</button>
+							      <h5 class="modal-title">Confirmer la suppression</h5>
 
-												</div>
+							      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							      <span aria-hidden="true">&times;</span>
+							      </button>
 
-												<!-- Modal content -->
+							      </div>
 
-												<div class="modal-body">
+							      <!-- Modal content -->
 
-													<p>Vous allez supprimer la fiche "<%=fiche.publishedContent.title%>". 
-													Êtes vous sûr ? (cette action est irréversible)
-													</p>
-													<form action="/categories/<%=fiche.category._id%>/fiches/<%=fiche._id%>/delete" method="POST">	
+							      <div class="modal-body">
 
-														<button class="btn btn-success">Confirmer</button>
-													</form>	
+							      <p>Vous allez supprimer la fiche "<%=fiche.publishedContent.title%>". 
+							      Êtes vous sûr ? (cette action est irréversible)
+							      </p>
+							      <form action="/categories/<%=fiche.category._id%>/fiches/<%=fiche._id%>/delete" method="POST">	
 
-												</div>
+							      <button class="btn btn-success">Confirmer</button>
+							      </form>	
 
-												<!-- End of modal content -->
+							      </div>
 
-												<div class="modal-footer">
+							      <!-- End of modal content -->
 
-													<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+							      <div class="modal-footer">
 
-												</div>
-											</div>
-										</div>
-									</div>
+							      <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
 
-									<!-- End of Delete Modal -->
-									<!-- End of options -->
-								</div>
+							      </div>
+							      </div>
+							      </div>
+							      </div>
 
-								<!-- End of card body -->
-							</div>
+							      <!-- End of Delete Modal -->
+							      <!-- End of options -->
+							      </div>
 
-							<!-- End of card -->
-						</div>
+							      <!-- End of card body -->
+							      </div>
 
-					</div>
+							      <!-- End of card -->
+							      </div>
 
-					<!-- End of row -->
+							      </div>
 
-				<% 
+							      <!-- End of row -->
+
+							      <% 
 			}
-		}); %>
+	}); %>
 
-		<!-- End of general container -->
-	</div>
+<!-- End of general container -->
+</div>
 
-	<!-- End of content container -->
+<!-- End of content container -->
 </div>
 
 
