@@ -241,7 +241,7 @@
 
 						</div>
 
-						<div class="format-item d-flex" onclick="addBalises('#ficheContent', '[T]', '[/T]')">
+						<div class="format-item d-flex" onclick="addBalises('#ficheContent', '[t]', '[/t]')">
 														T
 						</div>
 
@@ -256,6 +256,9 @@
 						<div class="format-item d-flex" onclick="addBalises('#ficheContent', '[img]', '[/img]')">
 							<i class="fas fa-image"></i>
 						</div>
+						<div class="format-item d-flex" onclick="addBalises('#ficheContent', '[video]', '[/video]')">
+							<i class="fas fa-video"></i>
+						</div>
 
 					</div>
 
@@ -267,12 +270,7 @@
 
 						<div class="d-flex flex-column text-center justify-content-center" id="UI-items-section">
 
-							<div class="UI-items bg-success" id="UI-save-content">
-								<p>
-								<i class="fas fa-save"></i>
-								</p>
-							</div>
-
+							
 
 						</div>
 
@@ -309,19 +307,31 @@
 				<label class="form-check-label mb-4">
 					<input class="form-check-input" type="checkbox" value="" id="agreeChart">
 					<span class="form-check-sign"></span>
-						  J'adhère à la <a href="#">charte myfiche</a>
+						  J'adhère à la <a href="/infos/charte" target="_blank">charte myfiche</a>
 				</label>
 			</div>
 
 			<!-- Form submission -->
 
 			<div class="d-flex flex-column align-items-center">
+					
+				<div class="d-flex flex-column align-items-center my-2">
+					<a class="btn btn-lg btn-secondary btn-fill mx-3 col-10 col-md-8 my-2" id="UI-save-content">
+						 Sauvegarder en brouillon
+					</a>
+					<small>
+						Les changements ne seront visibles uniquement par vous dans l'editeur.
+					</small>
+				</div>
 
-				<a class="btn btn-lg btn-warning mx-3 col-10 col-md-8" id="editPublish">
-																	   Sauvegarder les changements
-				</a>
 
-				<small class="col-10 col-md-8">En <strong>sauvegardant les changements</strong>, le nouveau contenu de votre fiche sera publié et tout le monde sera en mesure de le consulter.</small>
+				<div class="d-flex flex-column align-items-center">
+					<a class="btn btn-lg btn-success btn-fill mx-3 col-10 col-md-8" id="editPublish">		
+						Sauvegarder les changements
+					</a>
+
+					<small class="col-10 col-md-8">En <strong>sauvegardant les changements</strong>, le nouveau contenu de votre fiche sera publié et tout le monde sera en mesure de le consulter.</small>	
+				</div>
 			</div>
 
 

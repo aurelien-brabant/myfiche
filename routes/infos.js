@@ -29,8 +29,6 @@ router.get("/faq/identifiants", function(req, res)
 	res.render("infos/faq/identifiants");
 })
 
-
-
 module.exports = router;
 
 

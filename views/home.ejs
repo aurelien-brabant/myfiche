@@ -16,8 +16,7 @@
           <span class="col-5"></span>
         </div>
         <h3 class="">Cliquez. Révisez. Assurez.</h3>
-        <p class="lead mx-5"> Des centaines de fiches de révision réalisées par des élèves pour des élèves. Une mine de contenu et un superbe outil de création. Vous n'avez plus d'excuse pour ne pas briller.</p>
-        <button class="btn btn-success btn-info btn-lg">Découvrir</button>
+        <p class="lead mx-5"> Des dizaines de fiches de révision réalisées par des élèves pour des élèves. Une mine de contenu et un superbe outil de création. Vous n'avez plus d'excuse pour ne pas briller.</p>
       </div>
 
       <!-- IMAGE / ICON -->
@@ -34,17 +33,9 @@
       <!-- TEXT -->
       <div class="col-12 col-lg-7 text-center order-4 order-lg-4 p-5 p-lg-0">
         <i class="fas fa-scroll d-none d-lg-block py-4"></i>
-        <h3 class="">Des centaines de fiches disponibles</h3>
+        <h3 class="">Des dizaines de fiches disponibles</h3>
         <p class="lead mx-5"> Quelle que soit la discipline, Myfiche.fr met a disposition une grande quantité de contenu réalisé par des étudiants : vos cours ne vous parlerons plus jamais chinois.</p>
-        <div class="row justify-content-center mb-4">
-          <div class="input-group col-6 d-none d-md-flex">
-            <input type="text" class="form-control form-control-lg form-sm ml-5" id="searchBar" placeholder="">
-            <div class="input-group-append mr-5">
-              <div class="input-group-text bg-info" id="searchIcon"><i class="fas fa-search"></i></div>
-            </div>
-        </div>
-      </div>
-      <button class="btn bg-white btn-lg  d-md-none">Voir</button>
+        <a href="/categories" class="btn bg-white btn-lg">Voir</a>
       </div>
 
       <!-- IMAGE / ICON -->
@@ -63,7 +54,7 @@
         <i class="fas fa-question-circle d-none d-lg-block py-4"></i>
         <h3 class="">Des quiz pour s'entraîner</h3>
         <p class="lead mx-5"> C'est l'heure de montrer ce que vous avez dans le ventre.</p>
-        <button class="btn btn-success btn-success btn-lg">Je me teste !</button>
+        <button class="btn btn-success disabled btn-lg">Bientot</button>
 
       </div>
 
@@ -84,8 +75,8 @@
       <div class="col-12 col-lg-7 text-center order-4 order-lg-4 p-5 p-lg-0">
         <i class="fas fa-palette d-none d-lg-block py-4"></i>
         <h3 class="">Un outil de création</h3>
-        <p class="lead mx-5"> Créez vos propres fiches et vos propres quiz. Montrez ce que vous savez faire.</p>
-        <button class="btn btn-success btn-lg btn-danger">Créer</button>
+        <p class="lead mx-5"> Créez vos propres fiches. Montrez ce que vous savez faire.</p>
+        <a href="/pannel/myFiches" class="btn btn-success btn-lg btn-danger">Créer</a>
       </div>
 
       <!-- IMAGE / ICON -->
@@ -96,4 +87,6 @@
   </div>
 </section>
 
+
+<%- include("partials/scripts.ejs") %>
 <%- include("partials/footer.ejs") %>
