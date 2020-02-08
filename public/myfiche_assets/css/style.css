@@ -632,6 +632,60 @@ body {
 }
 
 
+/* infos views */
 
+#infosContainer 
+{
+	min-height: 100vh;
+	background-color: white;
+	background-image: url("/myfiche_assets/img/home/main.png");
+	background-position: center;
+}
 
+#contentContainer 
+{
+	min-height: 100vh;
+}
 
+#infosContainer .article 
+{
+	color: white;
+	padding: 3%;
+	background-color: rgba(43, 103, 180, 0.85);
+	font-size: 1.3rem;
+}
+
+#navbar a {
+	color:black;
+	transition: 0.2s;
+	border-radius: 15px;
+}
+
+#navbar a:hover 
+{
+	background-color:rgb(43, 104, 180);
+	color:white;
+}
+
+.article h3 
+{
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.article a 
+{
+	background-color: white;
+	padding: 5px;
+}
+
+.article li 
+{
+	margin-bottom: 10px;
+}
+
+#infosContainer #navbar .nav-link 
+{
+	text-align:center;
+	width:100%;
+}

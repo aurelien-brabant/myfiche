@@ -1,0 +1,46 @@
+<%- include("../partials/header") %>
+
+<div class="container-fluid p-0 m-0 h-100" id="infosContainer">
+
+	<div class="d-flex" id="contentContainer">
+		<!-- Vertical menu -->
+		<%- include("navbar.ejs") %>
+
+		<div class="article">
+
+			<h1 class="border-bottom"> Notes sur la nouvelle version  </h1>
+			<br>
+
+			Si vous êtes un utilisateur habitué, vous avez probablement noté que myfiche.fr vient de faire l'objet d'une refonte complète. Cette refonte technique et graphique apporte ainsi son lot de nouvelles fonctionnalités, dont les principales sont résumées ci-dessous :
+			<br>
+			<br>
+			<ul>
+				<li>
+					Chaque utilisateur possédant un compte peut dorénavant créer ses proches fiches à l'aide d'une interface entièrement prévue à cet effet. Pour plus d'informations, référez vous à la section <a href="/infos/redigerFiche">comment rédiger une fiche</a>.
+				</li>
+				<li>
+					Ajout d'une section commentaires associée à chaque fiche créée.
+				</li>
+				<li>
+					Ajout d'un système de vote positif et négatif pour noter les fiches.
+				</li>
+				<li>
+					Implementation de la recherche dynamique dans le menu des categories et des fiches. 
+				</li>
+			</ul>
+
+		</div>
+
+	</div>
+
+
+
+</div>
+
+
+
+
+
+<%- include("../partials/scripts") %>
+<%- include("../partials/footer") %>
+

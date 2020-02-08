@@ -14,8 +14,8 @@ let authRoutes = require('./routes/auth.js'),
     fichesRoutes = require('./routes/fiches.js'),
     pannelRoutes = require('./routes/pannel.js'),
     categoriesRoutes = require('./routes/categories.js'),
-    ficheCommentsRoutes = require('./routes/ficheComments.js')
-
+    ficheCommentsRoutes = require('./routes/ficheComments.js'),
+	infosRoutes = require("./routes/infos.js");
 
 /* connecting do database */
 mongoose.set('useUnifiedTopology', true);
@@ -53,6 +53,7 @@ app.use("/categories/:catId/fiches", fichesRoutes);
 app.use("/pannel", pannelRoutes);
 app.use('/categories', categoriesRoutes)
 app.use('/categories/:catId/fiches/:ficheId/comments', ficheCommentsRoutes)
+app.use('/infos', infosRoutes)
 app.get("*", function(req, res){
 	return (res.render("404"))
 })

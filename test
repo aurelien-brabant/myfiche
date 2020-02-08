@@ -1,5 +1,0 @@
-
-/dev/mmcblk0p1: LABEL="system-boot" UUID="E497-1FDF" TYPE="vfat" PARTUUID="f65c7036-01"
-/dev/mmcblk0p2: LABEL="writable" UUID="bfa0733b-bdb9-4846-914a-45160bac3ed0" TYPE="ext4" PARTUUID="f65c7036-02"
-/dev/sda1: LABEL="myfiche1" UUID="5E3A-81AF" TYPE="exfat" PARTUUID="c8d7c8d7-01"
-/dev/mmcblk0: PTUUID="f65c7036" PTTYPE="dos"
