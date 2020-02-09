@@ -4,7 +4,21 @@ let express = require('express'),
     User = require('../models/user')
 
 
-router.get('/', function(req, res){
+router.get('/', async function(req, res){
+
+	let login = req.query.login;
+	if (login)
+	{
+		try
+		{
+			req.user.lastConnexion = Date.now();
+			await req.user.save();
+		}
+		catch (err)
+		{
+			console.log(err)
+		}
+	}
 	res.render("home");
 });
 
@@ -26,10 +40,10 @@ router.post('/register', function(req, res){
 });
 
 router.post('/login', passport.authenticate('local', {
-	successRedirect: '/',
+	successRedirect: '/?login=success',
 	failureRedirect: '/login',
 }), function(req, res){
-
+	console.log(req.user);
 });
 
 router.get('/login', function(req, res){

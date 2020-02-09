@@ -6286,6 +6286,12 @@ a.waves-light {
     margin-left: -.375rem
 }
 
+/* Custom btns */
+.btn-gray {
+	color: white;
+	background-color: #a89a96
+}
+
 .btn-primary {
     color: #fff;
     background-color: #4285f4 !important

@@ -15,7 +15,10 @@ let authRoutes = require('./routes/auth.js'),
     pannelRoutes = require('./routes/pannel.js'),
     categoriesRoutes = require('./routes/categories.js'),
     ficheCommentsRoutes = require('./routes/ficheComments.js'),
-	infosRoutes = require("./routes/infos.js");
+	infosRoutes = require("./routes/infos.js"),
+	ficheRateRoutes = require("./routes/ficheRate.js"),
+	usersRoutes = require("./routes/users.js") 
+
 
 /* connecting do database */
 mongoose.set('useUnifiedTopology', true);
@@ -54,9 +57,17 @@ app.use("/pannel", pannelRoutes);
 app.use('/categories', categoriesRoutes)
 app.use('/categories/:catId/fiches/:ficheId/comments', ficheCommentsRoutes)
 app.use('/infos', infosRoutes)
+app.use("/categories/:catId/fiches/:ficheId/rate", ficheRateRoutes)
+app.use("/users", usersRoutes)
 app.get("*", function(req, res){
 	return (res.render("404"))
 })
+
+/*
+User.register(new User({email: "myfiche@root.fr", username: "myfiche-root", privilege: 10}), "root", function(err, user){
+	console.log("root user registered.")
+})
+*/
 
 /*
 async function initalize() {

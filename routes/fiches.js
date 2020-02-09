@@ -4,6 +4,7 @@ let express	 = require('express'),
 	Fiche = require('../models/fiche'),
 	authMW = require('./authMiddlewares'),
 	Category = require('../models/category'),
+	User = require('../models/user'),
 	bbcode = require('../myfiche_modules/bbcode.js');
 
 
@@ -51,6 +52,10 @@ router.get ('/:id', async function(req, res) {
 	let bbParser = new bbcode();
 	bbParser.initializeBbcodeToHtml();
 	try {
+		var user;
+		if (req.user)
+			user = await User.findById(req.user._id).populate("rated.fiche")
+
 		let fiche = await Fiche.findById(ficheID).populate([
 			{path: 'author'},
 			{path: 'comments',
@@ -61,13 +66,25 @@ router.get ('/:id', async function(req, res) {
 					path:'author'
 				}
 			}])
-		if ( !fiche || (fiche.visibility.hidden &&  !( req.user && (String(req.user._id) === String(fiche.author._id) 
-			|| req.user.privilege === 10) )))
-			return ( res.render("404")  )
 		let parsedContent  = bbParser.BbcodeToHtml(fiche.publishedContent.content);
-		res.render('categories/fiches/show', {fiche: fiche, parsedContent: parsedContent})
+		let fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+		var rateType;
+
+		if (user)
+		{
+			for (ratedObject of user.rated)
+			{
+				if (String(ratedObject.fiche._id) === String(fiche._id))
+				{
+					rateType = ratedObject.rateType
+				}
+			}
+		}
+
+		res.render('categories/fiches/show', {fiche: fiche, parsedContent: parsedContent, fullUrl: fullUrl, rateType: rateType})
 	}
 	catch(err) {
+		console.log(err);
 		res.render("404");
 	}
 
@@ -136,12 +153,12 @@ router.get("/:ficheId/edit", authMW.isLoggedIn, async function(req, res){
 		categories = await Category.find({});
 
 		fiche = await Fiche.findById(ficheId).populate([
-		{
-			path: "category"
-		},
-		{
-			path: "author"
-		}
+			{
+				path: "category"
+			},
+			{
+				path: "author"
+			}
 		]);
 
 		/* Checks if user owns the fiche or if it's super user  */
@@ -157,18 +174,18 @@ router.get("/:ficheId/edit", authMW.isLoggedIn, async function(req, res){
 });
 
 /* 
-	* UPDATE - fiche can be updated in two ways : currentSave or publish. 
-	* Current save is like a smart draft : it's a way to live-register changes that are made without 
-	* making them visible of everyone. It's used by the autosave feature  available in the fiche editor. It's handled by jQuery AJAX.
-	* publish is used to make visible all the changes registered by the currentSave method. It's triggered when user click on the button
-	* "publish changes".
-*/
+ * UPDATE - fiche can be updated in two ways : currentSave or publish. 
+ * Current save is like a smart draft : it's a way to live-register changes that are made without 
+ * making them visible of everyone. It's used by the autosave feature  available in the fiche editor. It's handled by jQuery AJAX.
+ * publish is used to make visible all the changes registered by the currentSave method. It's triggered when user click on the button
+ * "publish changes".
+ */
 router.post("/:ficheId", authMW.isLoggedIn, async function(req, res){
 
 	let ficheId	 = req.params.ficheId,
-	categoryId	 = req.params.catId,
-	ficheData	 = req.body.fiche,
-	method		 = req.query.method
+		categoryId	 = req.params.catId,
+		ficheData	 = req.body.fiche,
+		method		 = req.query.method
 	try
 	{
 		let fiche = await Fiche.findById(ficheId).populate("author");;
@@ -187,8 +204,8 @@ router.post("/:ficheId", authMW.isLoggedIn, async function(req, res){
 			if ((ficheData.content.length >= 300 && ficheData.content.length <= 25000)
 				&& (ficheData.title.length >= 10 && ficheData.title.length <= 100) )
 			{
-			fiche.publishedContent = ficheData;
-			fiche.currentSave = ficheData;		
+				fiche.publishedContent = ficheData;
+				fiche.currentSave = ficheData;		
 			}
 		}
 		else if (method === "changeCategory")
@@ -203,7 +220,7 @@ router.post("/:ficheId", authMW.isLoggedIn, async function(req, res){
 					oldCategory.fiches.splice(i, 1);
 				i += 1;
 			}
-	
+
 			await newCategory.fiches.push(fiche._id);
 			await newCategory.save();
 			await oldCategory.save();
@@ -227,7 +244,7 @@ router.post("/:ficheId", authMW.isLoggedIn, async function(req, res){
 	{
 		console.log(err); 
 	}
-		
+
 	res.redirect("/categories/" +categoryId+ "/fiches/" +ficheId);
 
 });
@@ -250,11 +267,6 @@ router.post('/:ficheId/delete', authMW.isLoggedIn, async function(req, res){
 	}
 	res.redirect('/');
 });
-
-router.get("*", function(req, res){
-	return res.render("404");
-})
-
 
 /* ============================================ */
 

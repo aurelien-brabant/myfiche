@@ -5317,3 +5317,18 @@ License - nucleoapp.com/license/
 }
 
 /* all icon font classes list here */
+
+#usersContent .avatarImg
+{
+	transition: all 0.3s;
+}
+
+#usersContent .avatarImg:hover
+{
+	opacity: 0.5;
+}
+
+#usersContent .avatarList {
+	display: flex;
+}
+

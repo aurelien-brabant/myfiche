@@ -3,7 +3,8 @@ let express = require('express'),
 	myficheDB = require('../myfiche_modules/myfiche-db'),
 	authMW = require('./authMiddlewares'),
 	Fiche = require('../models/fiche'),
-	Category = require('../models/category')
+	Category = require('../models/category'),
+	User = require('../models/user')
 
 
 router.get("/", authMW.isLoggedIn, function(req, res){
@@ -62,6 +63,27 @@ router.get('/admin/fiches', authMW.isLoggedAsAdmin, function(req, res){
 	myficheDB.findAllFiches(function(fiches){
 		res.render('pannel/admin/fiches', {fiches: fiches, action: passedAction, parameter1: parameter1, parameter2: parameter2});
 	});
+});
+
+
+/*
+ * USERS ADMINISTRATION INTERFACE 
+*/
+router.get("/admin/users", authMW.isLoggedAsAdmin, async function(req, res){
+
+	try 
+	{
+		let users = await User.find({})
+		console.log(users);
+		return (res.render("pannel/admin/users", {users: users}))
+	}
+	catch (err)
+	{
+		console.log(err);
+	}
+
+
+	return res.render("404")
 });
 
 

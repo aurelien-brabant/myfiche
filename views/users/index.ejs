@@ -1,0 +1,59 @@
+<%- include('../pannel/partials/header.ejs') %>
+
+    <div class="content" id="usersContent">
+
+        <div class="container-fluid">
+
+            <div class="row">
+
+                <div class="col-md-12">
+
+                    <div class="card">
+
+						<div class="card-header ">
+
+							<div class="d-flex flex-column align-items-center">
+
+							<h4 class="card-title text-center">
+								<% if ( String(user._id) === String(tUser._id)) { %>
+								Bienvenue
+							<% } 
+							else {%>
+							Compte de 
+						<% } %>
+							
+								<%= tUser.username  %>    
+							</h4>
+							<img src="/myfiche_assets/img/user/2.png" height=200 width=200>
+							<% if ( String(user._id) === String(tUser._id)) { %>
+								<button class="btn btn-primary btn-fill mb-2" id="changeAvatar">Changer d'avatar</button>
+								<div class="row p-2 justify-content-center" id="avatarList">
+									<% console.log(avatars); for (avatar of avatars) { %>
+									<img src="/myfiche_assets/img/user/<%=avatar%>" class="img-fluid col-6 col-md-3 col-lg-2 avatarImg">
+									<% } %>
+								</div>
+
+							<% } %>
+							<p class="mb-0">Inscrit le : <%= tUser.created.toLocaleDateString() %></p>
+							<p>Vu pour la derniere fois le : <%= tUser.lastConnexion.toLocaleDateString() %></p>
+
+							</div>
+
+                        </div>
+
+                        
+                    </div>
+
+                    <!-- End of card -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+<%- include('../pannel/partials/scripts.ejs') %>">
+	<script src="/myfiche_assets/js/plugins/users.js">
+	</script>
+<%- include('../pannel/partials/footer.ejs') %>
+
