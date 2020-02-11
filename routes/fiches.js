@@ -54,7 +54,7 @@ router.get ('/:id', async function(req, res) {
 	try {
 		var user;
 		if (req.user)
-			user = await User.findById(req.user._id).populate("rated.fiche")
+			user = await User.findById(req.user._id).populate([{path:"rated.fiche"}, {path: "avatar"}])
 
 		let fiche = await Fiche.findById(ficheID).populate([
 			{path: 'author'},
@@ -63,8 +63,12 @@ router.get ('/:id', async function(req, res) {
 					sort: {"date": -1}
 				},
 				populate: {
-					path:'author'
-				}
+					path: "author",
+					populate: 
+					{
+						path: "avatar"
+					}
+					}
 			}])
 		let parsedContent  = bbParser.BbcodeToHtml(fiche.publishedContent.content);
 		let fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;

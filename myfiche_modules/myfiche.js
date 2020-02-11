@@ -1,126 +1,89 @@
-let Category = require('../models/category'),
-	User = require('../models/user'),
-	Fiche = require('../models/fiche'),
-	request = require('request-promise')
+let Category =	require('../models/category'),
+	User =		require('../models/user'),
+	Fiche =		require('../models/fiche'),
+	Avatar =	require('../models/avatar'),
+	path =		require("path"),
+	fs =		require("fs")
 
 
 
 let myfiche =
 {
-	fetchContentFromV3: async function() 
+
+	/* 
+	 * Below function will generate at each restart the list of available avatars
+	*/
+	generateAvatars: async function()
 	{
-
-		async function requestV3AndPutToCurrent(fromOldMatiere, toNewMatiere)
-		{
-			var options = {
-				uri: 'https://myfiche.fr/api/service.php?apikey=myfiche_apikey&bymatiere=' +fromOldMatiere,
-			    qs: {
-			        access_token: 'xxxxx xxxxx' // -> uri + '?access_token=xxxxx%20xxxxx'
-			    },
-			    headers: {
-			        'User-Agent': 'Request-Promise'
-			    },
-			    json: true // Automatically parses the JSON string in the response
-			};
-
-			request(options)
-				.then(async function(fiches){
-					for (fiche of fiches)
-					{
-						saveToDB(fiche, toNewMatiere);
-					}
-				})
-				.catch(function(err){
-					console.log('Something went wrong while requesting myfiche.fr ' +err)
-				});
-
-		}
-
-		async function saveToDB(ficheData, category) 
-		{
-
-			let compatibleObject = 
+		let dirPath = path.join(__dirname, "../public/myfiche_assets/img/user")
+		
+		/* 
+		 * Read all the files that are in the directory dedicated to avatars 
+		 * Each file in dirPath will create an associated Avatar DB object.
+		*/
+		fs.readdir(dirPath, async function(err, avatars){
+			if (err)
 			{
-				publishedContent: {
-					title: ficheData.fiche_titre,
-					description: ficheData.fiche_descr,
-					content: ficheData.contenu,
-					image: 'https://myfiche.fr/img_fiche/' + ficheData.img
-				},
-				currentSave: 
-				{
-					title: ficheData.fiche_titre,
-					description: ficheData.fiche_descr,
-					content: ficheData.contenu,
-					image: 'https://myfiche.fr/img_fiche/' + ficheData.img
-				}
+				return console.log("AVATAR GENERATION FAILED : \n" +err);
 			}
 
-			try {
-				if (ficheData.locked == 0)
+			try 
+			{
+				await Avatar.remove()
+
+				for (avatar of avatars)
 				{
-					let newFiche = await Fiche.create(compatibleObject);
-					let defaultAuthor = await User.findOne({username: 'myfiche-root'});
-					newFiche.author = defaultAuthor;
-
-					let targetedCategory = await Category.findOne({title: category});
-
-					newFiche.category = targetedCategory._id;
-
-					targetedCategory.fiches.push(newFiche._id);
-
-					let savedFiche = await newFiche.save(); 
-					await targetedCategory.save();
-
-					console.log('==============/ MYFICHE V3 FETCHER \\==============')
-					console.log('[FETCHED] ' +savedFiche.publishedContent.title + '\n\n\n')
+					await Avatar.create({
+						path: "/myfiche_assets/img/user/" +avatar,
+					})	
 				}
 			}
-
-			catch(err) {
+			catch (err)
+			{
 				console.log(err)
 			}
-		}
 
-		let oldMatiere = [
-			'S.E.S',
-			'Français',
-			'Mathématiques',
-			'Histoire',
-			'Géographie',
-			'Sciences - ES et L',
-			'Philosophie',
-			'S.S.P'
-		]
+			return console.log("AVATARS GENERATED.");
+		})	
+	},
 
-		let newCategories = [
-			'S.E.S',
-			'Français',
-			'Mathématiques',
-			'Histoire',
-			'Géographie',
-			'Sciences',
-			'Philosophie',
-			'Sciences Politiques'
-		]
-
-		for (var i = 0; i < newCategories.length ; i++)
+	/* Only for local dev purpose - DO NOT USE on live server!!!! */
+	seedUsers: async function()
+	{
+		try 
 		{
-			requestV3AndPutToCurrent(oldMatiere[i], newCategories[i]);
+			let defaultAvatar = await Avatar.findOne({path: "/myfiche_assets/img/user/default.png"})
+			await User.remove();
+			let user = await User.register(
+			new User({email: "myfiche@root.fr", username: "myfiche-root", privilege: 10, avatar: defaultAvatar})
+				,"root",)
+			console.log(user);
+
 		}
+		catch(err)
+		{
+			console.log("ERROR WHILE REGISTERING ROOT : \n" +err)
+		}	
+	},	
 
-		
-
-
-
+	updateAvatars: async function()
+	{
+		let users = await User.find({})
+		let defaultAvatar = await Avatar.findOne({path: "/myfiche_assets/img/user/default.png"})
+		for (user of users)
+		{
+			if (!user.avatar)
+			{
+				console.log("default avatar added for" +user.username)
+				console.log(defaultAvatar);
+				user.avatar = defaultAvatar._id
+				await user.save()
+				
+			}
+		}
 	}
 
-
-
-
-
-
-}
+	}
 
 
 module.exports = myfiche;

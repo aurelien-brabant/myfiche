@@ -28,7 +28,7 @@ Mes fiches
 
 	<% fiches.forEach(function(fiche) {
 
-			if (fiche.author.username === user.username)
+			if (String(fiche.author._id) === String(user._id))
 			{
 			%>
 

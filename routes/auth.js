@@ -2,6 +2,7 @@ let express = require('express'),
     router = express.Router({mergeParams: true}),
     passport = require('passport'),
     User = require('../models/user')
+    Avatar = require('../models/avatar')
 
 
 router.get('/', async function(req, res){
@@ -27,8 +28,9 @@ router.get('/register', function(req, res){
 	res.render('register');
 });
 
-router.post('/register', function(req, res){
-	User.register(new User({email: req.body.email, username: req.body.username}), req.body.password, function(err, user){
+router.post('/register', async function(req, res){
+	let defaultAvatar = await Avatar.findOne({path: "/myfiche_assets/img/user/default.png"})
+	User.register(new User({email: req.body.email, username: req.body.username, avatar: defaultAvatar._id}), req.body.password, function(err, user){
 		if (err) {
 			console.log(err);
 			return res.render('register');

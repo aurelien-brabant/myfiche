@@ -1,66 +1,65 @@
-               
+
 <%- include("partials/header.ejs") %>
 <!-- Material form login -->
-<div class="container-fluid d-flex flex-column align-items-center justify-content-center p-0" id="registerFormContainer">
-    <div class="card col-12 col-md-5 px-0" id="registerForm">
-      <h5 class="card-header white-text text-center py-4">
-        <strong>Inscription</strong>
-      </h5>
+<div class="container-fluid px-0" id="registerFormContainer">
 
-    <!--Card content-->
-    <div class="card-body px-lg-5 pt-0 d-flex flex-column justify-content-center">
+	<div class="card col-12 col-md-7 px-0 mx-auto my-md-3" id="registerForm">
+		<h5 class="card-header white-text text-center">
+			<strong>Inscription</strong>
+		</h5>
 
-        <!-- Form -->
-        <form class="text-center" style="color: #757575;" action="/register" method="POST" id="registerForm">
+		<!--Card content-->
+		<div class="card-body px-lg-5 pt-0 d-flex flex-column justify-content-center">
 
-          <!-- Email -->
+			<!-- Form -->
+			<form class="text-center" style="color: #757575;" action="/register" method="POST" id="registerForm">
 
-          <div class="md-form">
-            <i class="far fa-envelope registerFormIcon"></i>
-            <input type="email" name="email" id="email" class="form-control" placeholder="Adresse e-mail" required>
-            <small id="passwordHelpBlock" class="form-text text-muted">
-                Votre adresse e-mail ne sera jamais visible : elle ne sert qu'à vous identifier.
-            </small>
-        </div>         
+				<!-- Email -->
 
-        <!-- Username -->
+				<div class="md-form">
+					<i class="far fa-envelope registerFormIcon"></i>
+					<input type="email" name="email" id="email" class="form-control" placeholder="Adresse e-mail" required>
+					<small id="passwordHelpBlock" class="form-text text-muted">
+						Votre adresse e-mail ne sera jamais visible : elle ne sert qu'à vous identifier.
+					</small>
+				</div>         
 
-          <div class="md-form">
-            <i class="fa fa-address-card registerFormIcon"></i>
-            <input type="text" name="username" id="materialLoginFormUsername" class="form-control" placeholder="Pseudo" required> 
-            <small class="form-text text-muted">
-                C'est le nom qui sera affiché pour toutes vos activités sur le site. 
-            </small>
-        </div>
+				<!-- Username -->
 
-        <!-- Password -->
-        <div class="md-form">
-			<i class="fas fa-key registerFormIcon"></i>
-			<input type="password" name="password" id="password" class="form-control" placeholder="Mot de passe">
-			<i class="fas fa-eye" id="showPassword"></i>
-			<div class="alert alert-danger" id="passwordAlert">Mot de passe trop court</div>
-            <input type="password" name="password-validation" id="passwordValidation" class="form-control" placeholder="Confirmer le mot de passe">
-			<div class="alert alert-danger" id="passwordMatchAlert">Les mots de passe ne correspondent pas.</div>
-        </div>
+				<div class="md-form">
+					<i class="fa fa-address-card registerFormIcon"></i>
+					<input type="text" name="username" id="materialLoginFormUsername" class="form-control" placeholder="Pseudo" required> 
+					<small class="form-text text-muted">
+						C'est le nom qui sera affiché pour toutes vos activités sur le site. 
+					</small>
+				</div>
 
-        <div class="d-flex justify-content-around">
-  </div>
-
-  <!-- Sign in button -->
-  <button class="btn btn-outline btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" id="submitRegister">Je m'inscris !</button>
-
-  <!-- Register -->
-  <p>Déjà un compte ?
-    <a href="/login">Se connecter</a>
-</p>
+				<!-- Password -->
+				<div class="md-form">
+					<i class="fas fa-key registerFormIcon"></i>
+					<input type="password" name="password" id="password" class="form-control" placeholder="Mot de passe">
+					<i class="fas fa-eye" id="showPassword"></i>
+					<div class="alert alert-danger" id="passwordAlert">Mot de passe trop court</div>
+					<input type="password" name="password-validation" id="passwordValidation" class="form-control" placeholder="Confirmer le mot de passe">
+					<div class="alert alert-danger" id="passwordMatchAlert">Les mots de passe ne correspondent pas.</div>
+				</div>
 
 
-</form>
-<!-- Form -->
 
-</div>
+				<!-- Sign in button -->
+				<button class="btn btn-outline btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" id="submitRegister">Je m'inscris !</button>
 
-</div>
+				<!-- Register -->
+				<p>Déjà un compte ?
+				<a href="/login">Se connecter</a>
+				</p>
+
+
+			</form>
+			<!-- Form -->
+
+		</div>
+	</div>
 </div>
 <!-- Material form login -->
 <%- include("partials/scripts.ejs") %>

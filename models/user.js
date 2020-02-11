@@ -1,7 +1,10 @@
 var mongoose = require("mongoose");
 
 var Fiche = require("./fiche.js")
+var Avatar = require("./avatar.js")
 var passportLocalMongoose = require('passport-local-mongoose');
+
+let defaultAvatar = Avatar.findOne({path: "/myfiche_assets/img/user/default.png"})
 
 var UserSchema = new mongoose.Schema({
 	email: String,
@@ -42,12 +45,16 @@ var UserSchema = new mongoose.Schema({
 			fiche:
 			{
 				type: mongoose.Schema.Types.ObjectId,
-				ref: "Fiche"
+				ref: "Fiche",
 			}
 		}
-	]
+	],
 
-
+	avatar:
+	{
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "Avatar",
+	}
 
 });
 

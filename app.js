@@ -44,9 +44,15 @@ passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-app.use(function(req, res, next){
-  res.locals.user = req.user;
-  next();
+
+app.use(async function(req, res, next){
+	
+	if (req.user)
+	{
+		req.user = await User.findById(req.user._id).populate({path: "avatar"})
+	}
+	res.locals.user = req.user
+ 	next();
 })
 
 // ROUTES 
@@ -80,12 +86,14 @@ async function initalize() {
   }
 
 }
-
-initalize();
 */
+async function initialize()
+{
+	await myfiche.generateAvatars()
+	await myfiche.updateAvatars();
+}
 
-
-
+initialize();
 
 app.listen("3000", function(){
 	console.log("Myfiche server is now running !");

@@ -24,13 +24,13 @@
 							
 								<%= tUser.username  %>    
 							</h4>
-							<img src="/myfiche_assets/img/user/2.png" height=200 width=200>
+							<img src="<%=tUser.avatar.path%>"id="currentUserAvatar" class="img-fluid" height=200 width=200>
 							<% if ( String(user._id) === String(tUser._id)) { %>
 								<button class="btn btn-primary btn-fill mb-2" id="changeAvatar">Changer d'avatar</button>
 								<div class="row p-2 justify-content-center" id="avatarList">
-									<% console.log(avatars); for (avatar of avatars) { %>
-									<img src="/myfiche_assets/img/user/<%=avatar%>" class="img-fluid col-6 col-md-3 col-lg-2 avatarImg">
-									<% } %>
+									<% for (avatar of avatars) { if (String(avatar._id) != String(tUser.avatar._id)) { %>
+										<img src="<%=avatar.path%>" class="img-fluid col-6 col-md-3 col-lg-2 avatarImg" id="<%=avatar._id%>">
+									<% }} %>
 								</div>
 
 							<% } %>

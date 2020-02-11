@@ -30,12 +30,12 @@ router.get("/:userId", authMW.isLoggedIn, async function(req, res){
 	}
 })
 
-router.post("/:userId/editAvatar", authMW.isLoggedIn, async function(req, res){
+router.get("/:userId/editAvatar", authMW.isLoggedIn, async function(req, res){
 
 	let tUser = await User.findById(req.params.userId)
 	if (tUser && (String(tUser._id) === String(req.user._id) || req.user.privilege == 10 ))
 	{
-		let avatarId = req.body.avatarId;
+		let avatarId = req.query.id;
 		if (avatarId) 
 		{
 			let avatar = await Avatar.findById(avatarId)
