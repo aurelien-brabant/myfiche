@@ -69,24 +69,6 @@ app.get("*", function(req, res){
 	return (res.render("404"))
 })
 
-/*
-User.register(new User({email: "myfiche@root.fr", username: "myfiche-root", privilege: 10}), "root", function(err, user){
-	console.log("root user registered.")
-})
-*/
-
-/*
-async function initalize() {
-  try {
-      await seedDB();
-      await myfiche.fetchContentFromV3();
-  }
-  catch(err) {
-    console.log(err);
-  }
-
-}
-*/
 async function initialize()
 {
 	await myfiche.updateAvatars();
