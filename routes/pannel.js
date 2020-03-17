@@ -18,7 +18,7 @@ router.get('/myFiches', authMW.isLoggedIn, async function(req, res){
 	res.render("pannel/myFiches", {fiches: fiches})
 });
 
-router.get('/newfiche', async function(req, res){
+router.get('/newfiche', authMW.isLoggedIn ,async function(req, res){
 	
 	try 
 	{
