@@ -89,7 +89,6 @@ async function initalize() {
 */
 async function initialize()
 {
-	await myfiche.generateAvatars()
 	await myfiche.updateAvatars();
 }
 

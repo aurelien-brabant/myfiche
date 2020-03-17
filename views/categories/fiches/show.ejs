@@ -46,11 +46,11 @@
 			%>
 			  
 
-		<a href="<%=fullUrl%>/rate?action=rate&rateType=1" class="btn <%=btnLike%>">
+		<a href="/categories/<%=fiche.category._id%>/fiches/<%=fiche._id%>/rate?action=rate&rateType=1" class="btn <%=btnLike%>">
 				  <i class="fas fa-heart mr-2"></i><%=fiche.rating.up%>
             </a>
 
-			<a href="<%=fullUrl%>/rate?action=rate&rateType=-1" class="btn <%=btnDislike%>">
+			<a href="/categories/<%=fiche.category._id%>/fiches/<%=fiche._id%>/rate?action=rate&rateType=-1" class="btn <%=btnDislike%>">
 				<i class="fas fa-heart-broken mr-2"></i><%=fiche.rating.down%>
             </a>
 
