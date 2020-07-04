@@ -65,7 +65,7 @@
                   <i class="fas fa-star"></i>
                 </h5>
 
-                <% category.fiches.forEach(function(fiche, index){ if (index < 5) { %>
+                <% category.fiches.forEach(function(fiche, index){ if (index < 5 && !fiche.visibility.hidden) { %>
                 <span class="px-3 d-block m-3 best-rated-item" id="<%= fiche._id %>">
                   <i class="fas fa-arrow-right mr-2"></i><%=fiche.publishedContent.title%> - Recommandée à 90%
                 </span>
