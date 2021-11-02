@@ -24,7 +24,7 @@
 							
 								<%= tUser.username  %>    
 							</h4>
-							<img src="<%=tUser.avatar.path%>"id="currentUserAvatar" class="img-fluid" height=200 width=200>
+							<img src="<%=tUser.avatar ? tUser.avatar.path : '/myfiche_assets/img/user/1.png'%>"id="currentUserAvatar" class="img-fluid" height=200 width=200>
 							<% if ( String(user._id) === String(tUser._id)) { %>
 								<button class="btn btn-primary btn-fill mb-2" id="changeAvatar">Changer d'avatar</button>
 								<div class="row p-2 justify-content-center" id="avatarList">

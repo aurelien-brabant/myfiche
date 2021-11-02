@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+
+  myfiche:
+    build:
+      context: ./myfiche
+      dockerfile: Dockerfile
+    environment:
+      MONGO_HOST: ${MONGO_HOST}
+      MONGO_DB: ${MONGO_DB}
+      MONGO_USER: ${MONGO_USER}
+      MONGO_PASSWORD: ${MONGO_PASSWORD}
+    ports:
+      - 80:3000
+    depends_on:
+      - myfiche-mongodb
+
+  myfiche-mongodb:
+    image: mongo:focal
+    volumes:
+      - ./dump:/myfiche-dump
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}

@@ -128,8 +128,9 @@ let ficheCommentsSeeds = [
 	}
 ]
 
+
 async function seedDB(){
-	await myficheDB.deleteAllFiches();
+	myficheDB.deleteAllFiches();
 
 	await Category.remove();
 
@@ -139,9 +140,6 @@ async function seedDB(){
 
 	await User.register(new User({email: "brabantaurelien@icloud.com", username: "Aurelle", privilege: 0}), "rere");
 
-	for(categorySeed of categorySeeds) {
-		await Category.create(categorySeed);
-	}
 
 	await ficheSeeds.forEach(async function(seed, i){
 		try
@@ -177,19 +175,14 @@ async function seedDB(){
 			console.log(err);
 		}
 	})
-
-	// await categorySeeds.forEach(async function(seed){
-	// 	let category = await myficheDB.category.createNew(seed);
-	// })
-
-
-
-
-
-
-
-
-
 }
 
-module.exports = seedDB;
+async function seedCategories() {
+	for(const categorySeed of categorySeeds) {
+		await Category.create(categorySeed);
+	}
+}
+
+module.exports = {
+	seedCategories
+}

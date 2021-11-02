@@ -83,7 +83,7 @@
           <% } else { %>
 
             <li class="nav-item">
-				<a class="nav-link" href="/pannel"><img height="70" width="70" src="<%=user.avatar.path%>">
+				<a class="nav-link" href="/pannel"><img height="70" width="70" src="<%= user.avatar ? user.avatar.path : '/myfiche_assets/img/user/1.png' %>">
 Connecté en tant que <%= user.username %></a>
 			</li>
 
